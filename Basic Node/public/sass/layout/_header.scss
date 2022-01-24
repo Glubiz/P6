@@ -1,0 +1,97 @@
+header, footer{
+	width: 100%;
+	color: $color-primary;
+	
+	display: -webkit-box; 
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex; 
+	display: flex;
+	justify-content: center;
+	-webkit-box-align: center;
+	-moz-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	position: relative;
+	& > div{
+		margin: 0 2rem;
+	}
+}
+
+header{
+	height: 6vh;
+	background-image: radial-gradient( circle farthest-side ,$color-secondary, transparent);
+	@include respond(tab) {
+		height: 8.5vh;
+    }
+}
+footer{
+	-webkit-box-align: center;
+	-moz-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	flex-direction: column;
+	height: 6vh;
+	// background-color: $color-secondary;
+	background-image: radial-gradient( circle farthest-side ,$color-secondary, transparent);
+	@include respond(tab) {
+		height: 8.5vh;
+    }
+}
+
+.nav{
+	width: 100%;
+	display: -webkit-box; 
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex; 
+	display: flex;
+	position: relative;
+	
+	@include respond(phone) {
+        justify-content: space-evenly;
+		flex-wrap: wrap;
+
+    }
+
+	&-button{
+		width: calc(100% / 3);
+		text-align: center;
+		background-color: rgba($color-secondary, 0.2);
+		border: 2px solid rgba($color-secondary, 0.2);
+		padding: .5rem;
+		color: $color-text;
+
+		@include respond(phone) {
+			width: 40rem;
+
+			& > h3{
+
+				font-size: 1.5rem;
+			}
+		}
+	}
+}
+
+.choosen{
+	background-color: $color-secondary;
+	border: 3px solid $color-secondary;
+	color: $color-primary;
+}
+
+.page > a{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.page > a > img{
+	height: 4.5vh;
+}
+
+.hide-onphone{
+	@include respond(tab) {
+		display: none;
+	}
+}
