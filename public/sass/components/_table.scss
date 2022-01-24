@@ -1,0 +1,145 @@
+table{
+    overflow: scroll;
+    text-align: center;
+    width: 100%;
+    
+    border-collapse: collapse;
+}
+
+.Table{
+    display: -webkit-box; 
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex; 
+    display: flex;
+    justify-content: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    flex-direction: column;
+    
+    & > th, td {
+        border-bottom: 1px solid rgba($color-secondary,0.2);
+    }
+
+    & > table{
+        table-layout: fixed;
+        @include respond(tab-land) {
+            table-layout: auto;
+        }
+    }
+
+    &-desktop{
+        display: flex;
+        @include respond(tab-up) {
+            display: none;
+        }
+    }
+
+    &-phone{
+        display: none;
+        @include respond(tab-up) {
+            display: flex;
+        }
+    }
+}
+
+tr:not(:last-child) {
+    border-bottom: 1px solid $color-secondary;
+    
+}
+th, td{
+    overflow: scroll;
+    padding: 0.2rem 1rem;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    &::-webkit-scrollbar{
+        display: none;
+    }
+}
+td{
+    font-size: 2rem;
+
+    & > a {
+        color: inherit;
+    }
+
+    @include respond(tab-land) {
+        font-size: 1.4rem;
+    }
+}
+th{
+    font-size: 1.8rem;
+    @include respond(tab-land) {
+        font-size: 1.2rem;
+    }
+}
+
+.col1{
+    text-align: center;
+    width: 10rem;
+    @include respond(tab-up) {
+        width: 4rem;
+    }
+}
+
+.tableColumnWeek{
+    @include respond(tab-land) {
+        display: none;
+    }
+}
+
+.transactions{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+    & > th, td {
+        border-bottom: 1px solid $color-primary;
+    }
+
+    & > table{
+        width: 40%;
+        @include respond(phone) {
+            width: 50%;
+        }
+
+    }
+
+    &-desktop{
+        display: flex;
+        & > table{
+            width: 30%;
+        }
+        @include respond(tab-up) {
+            display: none;
+        }
+    }
+
+    &-phone{
+        display: none;
+        @include respond(tab-up) {
+            display: flex;
+            & > table{
+                width: 40%;
+                @include respond(phone) {
+                    width: 50%;
+                }
+        
+            }
+        }
+    }
+}
+
+.holders_row{
+    border-bottom: 1px solid $color-secondary;
+    & > th {
+
+    }
+    & > td {
+
+    }
+}
