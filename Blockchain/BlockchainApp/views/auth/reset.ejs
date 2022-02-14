@@ -1,0 +1,59 @@
+<section class="container">
+  <div class="login__container" style="min-height: 71vh;">
+    <h2>
+      <%= pageTitle %>
+    </h2>
+    <% if (errorMessage) { %>
+      <%= errorMessage %>
+    <% } %>
+    <form action="Reset" method="POST">
+      <div class="login__group">
+        <div>
+          <input type="text" name="Username" class="login__input" placeholder="Username" id="Username" required>
+          <label for="Username" class="login__label">Username</label>
+
+        </div>
+      </div>
+        
+      <div class="login__group">
+        <div>
+            <input type="password" name="Password" class="login__input" placeholder="Password" id="Password" required>
+            <label for="Password" class="login__label">Password</label>
+
+        </div>
+    </div>
+
+    <div class="login__group">
+        <div>
+            <input type="password" name="RPassword" class="login__input" placeholder="Repeat Password" id="RPassword" required>
+            <label for="RPassword" class="login__label">Repeat Password</label>
+
+        </div>
+    </div>
+
+    <div class="login__group">
+        <div>
+            <input type="text" name="Phrase" class="login__input" placeholder="Secret" id="Phrase" required>
+            <label for="Phrase" class="login__label">Secret</label>
+
+        </div>
+    </div>
+
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <!-- submit -->
+      <div class="login__group">
+        <input class="login__submit" type="submit" name="submit" value="Reset">
+      </div>
+      <a href="/Signup">
+        <div name="signup-submit" style="color:#fff; text-align:center;">
+          Signup
+        </div>
+      </a>
+      <a href="/Login">
+        <div name="signup-submit" style="color:#fff; text-align:center;">
+          Login
+        </div>
+      </a>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+<section class="container">
+  <div class="login__container" style="min-height: 71vh;">
+    <h2>
+      <%= pageTitle %>
+    </h2>
+    <% if (errorMessage) { %>
+      <%= errorMessage %>
+    <% } %>
+    <form action="Login" method="POST">
+      <div class="login__group">
+        <div>
+          <input type="text" name="Username" class="login__input" placeholder="Username" id="Username" required>
+          <label for="Username" class="login__label">Username</label>
+
+        </div>
+      </div>
+        
+      <div class="login__group">
+        <div>
+          <input type="password" name="Password" class="login__input" placeholder="Password" id="Password" required>
+          <label for="Password" class="login__label">Password</label>
+
+        </div>
+      </div>
+
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <!-- submit -->
+      <div class="login__group">
+        <input class="login__submit" type="submit" name="submit" value="Login">
+      </div>
+      <a href="/Signup">
+        <div name="signup-submit" style="color:#fff; text-align:center;">
+          Signup
+        </div>
+      </a>
+      <a href="/Reset">
+        <div name="signup-submit" style="color:#fff; text-align:center;">
+          Reset password
+        </div>
+      </a>
+    </form>
+  </div>
+</section>
