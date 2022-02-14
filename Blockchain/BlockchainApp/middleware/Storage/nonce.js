@@ -1,19 +1,22 @@
 const SHA256 = require('crypto-js/sha256');
-const previousBlock = require('./previousBlock')
+const getPreviousBlock = require('./previousBlock')
 
-function nonce() {
-    var previousHash = previousBlock.Hash
+module.exports = function nonce(chainID) {
+    var previousBlock = getPreviousBlock(chainID)
+    var previousHash = previousBlock.hash
+    var previousNonce = previousBlock.nonce
     var newNonce = 1
-    var checkNonce = False
+    var checkNonce = false
     while (!checkNonce){
-        var hashOperation = SHA256(index + newNonce.toString() + chainID.toString() + previousHash).toString();
-        if (hashOperation.substring(0, 4) == '0000'){
-            checkNonce = True
+        var hashOperation = SHA256((newNonce**2 - previousNonce**2).toString() + previousHash).toString()
+        console.log(hashOperation)
+        console.log(previousNonce)
+        console.log(newNonce)
+        if (hashOperation.substring(0, 3) == '000'){
+            checkNonce = true
         } else {
             newNonce += 1
         }
     }
     return newNonce
 }
-
-module.exports = nonce()
