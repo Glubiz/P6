@@ -1,4 +1,24 @@
-<form action="Data" method="POST">
-    <input type="text" name="Data" id="Data" required>
-    <input type="submit" value="Send">
-</form>
+<div class="main">
+    <div class="main-container">
+        <form action="Data" method="POST" class="main-container__form u-margin-bottom-medium">
+            <input type="text" name="Data" id="Data" required>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="submit" value="Send">
+        </form>
+        <form action="Data" method="POST" class="main-container__form u-margin-bottom-medium">
+            <input type="text" name="Data" id="Data" required>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="submit" value="Send">
+        </form>
+        <form action="Data" method="POST" class="main-container__form u-margin-bottom-medium">
+            <input type="text" name="Data" id="Data" required>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="submit" value="Send">
+        </form>
+        <form action="Data" method="POST" class="main-container__form">
+            <input type="text" name="Data" id="Data" required>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="submit" value="Send">
+        </form>
+    </div>
+</div>

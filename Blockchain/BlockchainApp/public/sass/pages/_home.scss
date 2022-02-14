@@ -1,0 +1,25 @@
+main{
+    width: 100vw;
+    height: 2000vh;
+    padding: 3rem 8rem;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    &::-webkit-scrollbar{
+        display: none;
+    }
+    @include respond(tab) {
+        padding: .5rem 1rem;
+        height: auto;
+        overflow: auto;
+    }
+}
+.main{
+    &-container{
+        text-align: center;
+    }
+}
