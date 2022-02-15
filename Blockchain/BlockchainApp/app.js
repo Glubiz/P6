@@ -11,9 +11,9 @@ const csrf = require('csurf')
 const options = {
 	host: 'web1.netgiganten.dk',
 	port: 3306,
-	user: 'damibfko_josj',
-	password: 'Glubben13!',
-	database: 'damibfko_mym'
+	user: 'damibfko_iot',
+	password: 'c@5fK*8DBhVl',
+	database: 'damibfko_bachelor'
 };
 // const BlockChain = require('./middleware/blockchain');
 const errorController = require('./controllers/error');
