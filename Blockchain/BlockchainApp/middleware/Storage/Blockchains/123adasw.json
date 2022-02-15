@@ -1,30 +1,22 @@
 {
     "chainID": "123adasw",
-    "instanciated": "1644869954256",
+    "instantiated": "1644911981156",
     "data": [
         {
             "index": 0,
             "nonce": 1,
             "data": "Genesis",
-            "hash": "d20f67624b23a177911d924768871ee0f5d4a29b341e60573b8e95f18886c662",
+            "hash": "f2092d6828014b8b94acfb7166e2df534785dbc131689ebe5fa129119234b68a",
             "previousHash": "None",
-            "timeStamp": "1644869954256"
+            "timeStamp": "1644911981156"
         },
         {
             "index": 2,
-            "nonce": 1669,
-            "data": "lfllsdfa",
-            "hash": "f92366ba9b24483cf078e3ebb6d90e8c2b440c9903042f8b91eb4f0462f680a6",
-            "previousHash": "d20f67624b23a177911d924768871ee0f5d4a29b341e60573b8e95f18886c662",
-            "timeStamp": "1644869974299"
-        },
-        {
-            "index": 3,
-            "nonce": 7476,
-            "data": "llsdlfsaagg",
-            "hash": "406741c08a380ca9b32b7794ad33d4df5772692507a13a9d0ef888a0b403a783",
-            "previousHash": "f92366ba9b24483cf078e3ebb6d90e8c2b440c9903042f8b91eb4f0462f680a6",
-            "timeStamp": "1644870025720"
+            "nonce": 11255,
+            "data": "gasfagsss",
+            "hash": "198fc9335dd2738327fe6ba389d1cc4c2faa71795a1b06bc9bd2d9961f5b8b61",
+            "previousHash": "f2092d6828014b8b94acfb7166e2df534785dbc131689ebe5fa129119234b68a",
+            "timeStamp": "1644911981293"
         }
     ]
 }
