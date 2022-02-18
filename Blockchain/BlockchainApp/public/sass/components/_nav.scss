@@ -8,14 +8,19 @@
 		height: 7rem;
 		width: 7rem;
 		position: fixed;
-		top: 6rem;
-		right: 6rem;
+		top: 2.5rem;
+		right: 2.5rem;
 		z-index: 10000;
 		border-radius: 50%;
 
 		text-align: center;
 		cursor: pointer;
 		box-shadow: 0 1rem 3rem $color-secondary;
+
+		@include respond(tab-up) {
+			top: 6rem;
+			right: 6rem;
+		}
 	}
 
 	&__background {
@@ -23,11 +28,15 @@
 		width: 6rem;
 		border-radius: 50%;
 		position: fixed;
-		top: 6.5rem;
-		right: 6.5rem;
+		top: 2.75rem;
+		right: 2.75rem;
 		background-image: radial-gradient($color-primary, $color-secondary);
 		z-index: 1000;
 		transition: transform .8s cubic-bezier(0.86, 0, .07, 1);
+		@include respond(tab-up) {
+			top: 6.5rem;
+			right: 6.5rem;
+		}
 	}
 
 	&__nav {

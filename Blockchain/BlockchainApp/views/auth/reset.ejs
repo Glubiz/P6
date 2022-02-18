@@ -6,11 +6,11 @@
     <% if (errorMessage) { %>
       <%= errorMessage %>
     <% } %>
-    <form action="Reset" method="POST">
+    <form action="SavePassword" method="POST">
       <div class="login__group">
         <div>
-          <input type="text" name="Username" class="login__input" placeholder="Username" id="Username" required>
-          <label for="Username" class="login__label">Username</label>
+          <input type="text" name="Email" class="login__input" placeholder="Email" id="Email" required>
+          <label for="Email" class="login__label">Email</label>
 
         </div>
       </div>
@@ -21,39 +21,31 @@
             <label for="Password" class="login__label">Password</label>
 
         </div>
-    </div>
+      </div>
 
-    <div class="login__group">
-        <div>
-            <input type="password" name="RPassword" class="login__input" placeholder="Repeat Password" id="RPassword" required>
-            <label for="RPassword" class="login__label">Repeat Password</label>
+      <div class="login__group">
+          <div>
+              <input type="password" name="RPassword" class="login__input" placeholder="Repeat Password" id="RPassword" required>
+              <label for="RPassword" class="login__label">Repeat Password</label>
 
-        </div>
-    </div>
-
-    <div class="login__group">
-        <div>
-            <input type="text" name="Phrase" class="login__input" placeholder="Secret" id="Phrase" required>
-            <label for="Phrase" class="login__label">Secret</label>
-
-        </div>
-    </div>
+          </div>
+      </div>
 
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <!-- submit -->
       <div class="login__group">
         <input class="login__submit" type="submit" name="submit" value="Reset">
       </div>
-      <a href="/Signup">
-        <div name="signup-submit" style="color:#fff; text-align:center;">
-          Signup
-        </div>
-      </a>
       <a href="/Login">
         <div name="signup-submit" style="color:#fff; text-align:center;">
-          Login
+            Login
         </div>
-      </a>
+    </a>
+    <a href="/Signup">
+        <div name="signup-submit" style="color:#fff; text-align:center;">
+            Sign up
+        </div>
+    </a>
     </form>
   </div>
 </section>

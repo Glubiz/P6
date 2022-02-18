@@ -1,56 +1,22 @@
-// const SHA256 = require('crypto-js/sha256');
-// const fs = require('fs');
+const SHA256 = require('crypto-js/sha256');
+const getPreviousBlock = require('./previousBlock')
 
-// class BlockChain {
-//     constructor(){
-//         this.chain = []
-//         this.block = this.createBlock(nonce = '0', previousHash = '0')
-//     }
+module.exports = function nonce(chainID) {
+    // Calls the getPreviousBlock function to collect the hash of the previous block
+    var previousBlock = getPreviousBlock(chainID)
 
-//     calculateHash(index, nonce, chainID, previousHash, dateTime){
-//         return SHA256(index + nonce + chainID + previousHash + dateTime).toString();
-//     }
+    // Instantiates the newNonce variable, which is used to calculate the nonce of the block
+    var newNonce = 1
+    var checkNonce = false
 
-//     createBlock(nonce, chainID = '0', key = '0', previousHash) {
-//         if (this.chain.length){
-//             var dateTime = new Date().toString()
-//             var index = this.chain.length + 1
-
-//             var block = {
-//                 'index' : index, 
-//                 'nonce' : nonce,
-//                 'chainID' : chainID,
-//                 'key' : key,
-//                 'hash' : calculateHash(index.toString(), nonce, chainID, previousHash, dateTime.toString()),
-//                 'previousHash' : previousHash,
-//                 'timeStamp' : dateTime,
-//             }
-            
-//             this.chain.append(block)
-//             return block
-//         }
-//     }
-
-//     getPreviousBlock(){
-//         return this.chain[-1]
-//     }
-    
-//     proofOfWork(previousNonce){
-//         var hashOperation
-//         var newNonce = 1
-//         var checkNonce = False
-//         while (!checkNonce){
-//             hashOperation = SHA256(newNonce**2 - previousNonce**2).toString()
-//             if (hashOperation.substring(0, 3) == '0000'){
-//                 checkNonce = True
-//             } else {
-//                 newNonce += 1
-//             }
-//         }
-//         return newNonce
-//     }
-// }
-
-// new BlockChain
-
-// module.exports = BlockChain
+    // Runs the while loop where it calculates the nonce from the problem newNonce^2 - previousNonce^2 concatenated with previousHash, if the hash of the problem starts with three zeros the while loop is terminated and the nonce is returned
+    while (!checkNonce){
+        var hashOperation = SHA256((newNonce**2 - previousBlock.nonce**2).toString() + previousBlock.hash).toString()
+        if (hashOperation.substring(0, 3) == '000'){
+            checkNonce = true
+        } else {
+            newNonce += 1
+        }
+    }
+    return newNonce
+}

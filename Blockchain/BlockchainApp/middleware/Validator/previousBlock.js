@@ -1,8 +1,10 @@
 const fs = require('fs')
 
-function getPreviousBlock(chainID){
-    var chain = JSON.parse(fs.readFileSync(chainID.toString() + '.json'))
-    return chain.Data[-1]
-}
+module.exports = function getPreviousBlock(chainID){
+    // Loads the blockchain into the chain variable
+    var chain = JSON.parse(fs.readFileSync('./Blockchains/' + chainID + '.json'))
 
-module.exports = getPreviousBlock()
+    // The previousblock is equal to the length of the chain minus 1, since it is zero indexed
+    var previousBlock = chain.data[chain.data.length-1]
+    return previousBlock
+}

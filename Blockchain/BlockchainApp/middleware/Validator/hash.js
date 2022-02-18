@@ -1,7 +1,6 @@
 const SHA256 = require('crypto-js/sha256');
 
-function hash(index, nonce, chainID, previousHash, dateTime){
-    return SHA256(index + nonce + chainID + previousHash + dateTime).toString();
+module.exports = function hash(index, nonce, data, previousHash, dateTime){
+    //Returns the hash of the block
+    return SHA256(index + nonce + data + previousHash + dateTime).toString();
 }
-
-module.exports = hash()

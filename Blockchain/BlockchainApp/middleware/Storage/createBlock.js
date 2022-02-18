@@ -81,6 +81,4 @@ function createBlock(chainID, data) {
     
 }
 
-createBlock("123adasw", "gasfagsss")
-
 // module.exports = createBlock()

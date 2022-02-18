@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const { Op } = require("sequelize");
 const UserDB = require('../models/user')
 
+//OK
 exports.getLogin = (req, res, next) => {
     res.render('main/login', {
         errorMessage: req.flash('error'),
@@ -10,18 +11,17 @@ exports.getLogin = (req, res, next) => {
     });
 };
 
+// NOT OK (Skal måske fjernes)
 exports.getUser = (req, res, next) => {
     const UserID = req.session.userID
-    res.render('main/user', {
+    res.render('main/dashboard', {
         errorMessage: req.flash('error'),
         pageTitle: 'User',
-        WalletIDs: WalletIDs,
-        price: Data.Price,
-        supply: parseFloat(Data.Supply / 1000000000).toFixed(3),
         path: '/User'
     });
 };
 
+// OK 
 exports.getSignup = (req, res, next) => {
     res.render('main/signup', {
         pageTitle: 'Signup',
@@ -30,6 +30,7 @@ exports.getSignup = (req, res, next) => {
     });
 };
 
+// OK 
 exports.getReset = (req, res, next) => {
     res.render('main/reset', {
         errorMessage: req.flash('error'),
@@ -38,23 +39,22 @@ exports.getReset = (req, res, next) => {
     });
 };
 
-//Done
+// OK
 exports.postLogin = (req, res, next) => {
-    const Username = req.body.Username;
+    const Email = req.body.Email;
     const Password = req.body.Password;
 
-    UserDB.findOne({where: {Username : Username}})
+    UserDB.findOne({where: {Email : Email}})
     .then(user => {
         if (!user){
-            req.flash('error', 'Invalid Username or Password.');
+            req.flash('error', 'Invalid Email or Password.');
             return res.redirect('/Login');  
         }
-        console.log("Test")
         bcrypt.compare(Password, user.Password)
             .then(doMatch => {
                 if (doMatch){
                     req.session.isLoggedIn = true;
-                    req.session.userName = Username
+                    req.session.Email = Email
                     req.session.userID = user.id
                     return res.redirect('/User');
                 }
@@ -67,85 +67,82 @@ exports.postLogin = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
+// OK
 exports.postSignup = (req, res, next) => {
-    const Username = req.body.Username;
+    const Email = req.body.Email;
     const Password = req.body.Password;
     const RepeatPassword = req.body.RPassword;
-    const Phrase = req.body.Phrase;
 
-    if(Password != RepeatPassword || !Phrase){
-        req.flash('error', 'Invalid Password or Secret.');
+    if(Password != RepeatPassword){
+        req.flash('error', 'Passwords does not match');
         return res.redirect('/Signup'); 
     }
-    UserDB.findOne({where: {Username: Username}})
-        .then(userDoc => {
-            if (userDoc){
-                req.flash('error', 'User exists');
-                res.redirect('/Signup');
-            } else {
-                bcrypt.hash(Password, 12)
-                .then(hashedPassword => {
-                    bcrypt.hash(Phrase, 12)
-                    .then(hashedPhrase => {
-                        UserDB.create({
-                            Username : Username,
-                            Phrase : hashedPhrase,
-                            Password : hashedPassword
-                        });
-                    })
-                })
-                .then(result => {
-                    res.redirect('/');
-                })
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        });
+    UserDB.findOne({where: {Email: Email}})
+    .then(userDoc => {
+        if (userDoc){
+            req.flash('error', 'User exists');
+            res.redirect('/Signup');
+        } else {
+            bcrypt.hash(Password, 12)
+            .then(hashedPassword => {
+                UserDB.create({
+                    Email : Email,
+                    Password : hashedPassword
+                });
+            })
+            .then(() => {
+                res.redirect('/');
+            })
+        }
+    })
+    .catch(err => {
+        console.log(err)
+    });
 };
 
+// NOT OK (Skal ændres til request reset)
 exports.postReset = (req, res, next) => {
-    const Username = req.body.Username;
+    const Email = req.body.Email;
     const Password = req.body.Password;
     const RepeatPassword = req.body.RPassword;
-    const Phrase = req.body.Phrase;
 
-    if(Password != RepeatPassword || !Phrase){
-        req.flash('error', 'Invalid Password or Secret.');
+    if(Password != RepeatPassword){
+        req.flash('error', 'Passwords does not match');
         return res.redirect('/Signup'); 
     }
-    UserDB.findOne({where: {Username: Username}})
-        .then(userDoc => {
-            if (!userDoc){
-                req.flash('error', 'User does not exist');
-                res.redirect('/Reset');
-            } else {
-                bcrypt.hash(Password, 12)
-                .then(hashedPassword => {
-                    UserDB.update({
-                        Password : hashedPassword
-                        }, {
-                            where: {
-                            Username: Username
-                        }
-                    });
-                })
-                .then(result => {
-                    res.redirect('/');
-                })
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        });
+    UserDB.findOne({where: {Email: Email}})
+    .then(userDoc => {
+        if (!userDoc){
+            req.flash('error', 'User does not exist');
+            res.redirect('/Reset');
+        } else {
+            bcrypt.hash(Password, 12)
+            .then(hashedPassword => {
+                UserDB.update({
+                    Password : hashedPassword
+                    }, {
+                        where: {
+                        Email: Email
+                    }
+                });
+            })
+            .then(() => {
+                res.redirect('/');
+            })
+        }
+    })
+    .catch(err => {
+        console.log(err)
+    });
 };
 
+// OK
 exports.postDeleteUser = (req, res, next) => {
-    const Username = res.locals.userName
+    const Email = res.locals.Email
     UserDB.destroy({
         where: 
         {
-            Username: Username
+            Email: Email
         }
     })
     .then(() => {
@@ -153,29 +150,42 @@ exports.postDeleteUser = (req, res, next) => {
         return res.redirect('/'); 
     })
 };
-
+// OK
 exports.getLogout = (req, res, next) => {
     req.session.destroy();
     return res.redirect('/');
 };
 
+// OK
 exports.postChangePassword = (req, res, next) => {
-    const Password = req.body.Password;
-    const Username = res.locals.userName
-    
-    bcrypt.hash(Password, 12)
-    .then(hashedPassword => {
-        UserDB.update({
-            Password: hashedPassword
-        }, {
-            where: {
-                Username: Username
-            }
-        })
-    })
-    .then(() => {
-        req.flash('error', 'Password Changed');
-        return res.redirect('/User');
+    const RepeatPassword = req.body.RPassword
+    const Password = req.body.Password
+    const Email = res.locals.Email
+    if(Password != RepeatPassword){
+        req.flash('error', 'Passwords does not match')
+        return res.redirect('/Signup')
+    }
+    UserDB.findOne({where: {Email: Email}})
+    .then(userDoc => {
+        if (!userDoc){
+            req.flash('error', 'User does not exist');
+            res.redirect('/Reset');
+        } else {
+            bcrypt.hash(Password, 12)
+            .then(hashedPassword => {
+                UserDB.update({
+                    Password : hashedPassword
+                    }, {
+                        where: {
+                        Email: Email
+                    }
+                });
+            })
+            .then(() => {
+                req.flash('error', 'Password Changed');
+                return res.redirect('/Login');
+            })
+        }
     })
     .catch(err => console.log(err));
 };

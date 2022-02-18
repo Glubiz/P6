@@ -15,7 +15,7 @@ header, footer{
 	align-items: center;
 	position: relative;
 	height: 6vh;
-	background-color: $color-tertiary;
+	
 	
 	@include respond(tab) {
 		height: 8.5vh;
@@ -26,7 +26,7 @@ header, footer{
 	}
 }
 header {
-	border-bottom: 1px solid $color-secondary;
+	background: linear-gradient(to bottom, $color-secondary, $color-tertiary);
 	& > #icon__box{
 		
 		& > img {
@@ -40,7 +40,4 @@ header {
 		width: 20%;
 	}
 	
-}
-footer{
-	border-top: 1px solid $color-secondary;
 }
