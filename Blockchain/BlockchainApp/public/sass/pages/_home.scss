@@ -30,3 +30,15 @@ main{
     align-items: center;
     justify-content: center;
 }
+
+.module{
+    &-outer{
+        background-color: $color-primary-module;
+        border-radius: 2rem;
+    }
+    &-inner{
+        background-color: $color-primary-inner;
+        padding: 1rem 3rem;
+        border-radius: 2rem;
+    }
+}

@@ -86,6 +86,9 @@ a, p, h1 {
   text-decoration: none;
   color: inherit; }
 
+a:hover {
+  text-decoration: underline; }
+
 .u-center-text {
   text-align: center; }
 
@@ -179,12 +182,14 @@ a, p, h1 {
   text-transform: uppercase;
   background-image: linear-gradient(120deg, transparent 0%, transparent 50%, #000000 50%);
   background-size: 220%;
-  transition: all .5s; }
+  transition: all .5s;
+  border-radius: 2rem; }
 
 .navigation__link:hover, .navigation__link:active {
   background-position: 100%;
   color: #1db381;
-  transform: translateX(1rem); }
+  transform: translateX(1rem);
+  border-radius: 2rem; }
 
 .navigation__checkbox:checked ~ .navigation__background {
   transform: scale(80); }
@@ -279,6 +284,7 @@ input, select {
   min-width: 30rem;
   display: block;
   text-align: center;
+  border-radius: 2rem;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none; }
@@ -292,10 +298,10 @@ input, select {
   .login__input:last-child {
     margin-bottom: 2rem; }
   .login__input:hover {
-    background-color: #1db381;
+    background-color: rgba(29, 179, 129, 0.2);
     color: #000000;
     transform: scale(1.02);
-    box-shadow: 0 0.5rem 1.5rem #1db381; }
+    box-shadow: 0 0.5rem 1.5rem rgba(29, 179, 129, 0.2); }
     .login__input:hover::after {
       opacity: 0; }
 
@@ -328,14 +334,23 @@ input, select {
 .login__container {
   margin-top: 2rem;
   text-align: center;
-  width: 100%; }
+  padding: 2rem 8rem;
+  height: fit-content; }
 
 .login__submit {
   padding: .5rem 5rem;
   background-color: #1db381;
   color: #000000;
-  transform: scale(1.02);
-  box-shadow: 0 0.5rem 1.5rem #1db381; }
+  box-shadow: 0 0.5rem 1.5rem rgba(29, 179, 129, 0.2);
+  border-radius: 2rem; }
+  .login__submit:hover {
+    transform: scale(1.02); }
+    .login__submit:hover::after {
+      opacity: 0; }
+
+::placeholder {
+  color: #6c757d;
+  opacity: 1; }
 
 table {
   overflow: scroll;
@@ -462,3 +477,12 @@ main {
   display: flex;
   align-items: center;
   justify-content: center; }
+
+.module-outer {
+  background-color: #222222;
+  border-radius: 2rem; }
+
+.module-inner {
+  background-color: #313131;
+  padding: 1rem 3rem;
+  border-radius: 2rem; }

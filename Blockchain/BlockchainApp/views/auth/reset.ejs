@@ -1,12 +1,12 @@
 <section class="container">
-  <div class="login__container" style="min-height: 71vh;">
-    <h2>
+  <div class="login__container module-outer">
+    <h2 class="module-inner">
       <%= pageTitle %>
     </h2>
     <% if (errorMessage) { %>
       <%= errorMessage %>
     <% } %>
-    <form action="SavePassword" method="POST">
+    <form action="SavePassword" method="POST" class="module-inner">
       <div class="login__group">
         <div>
           <input type="text" name="Email" class="login__input" placeholder="Email" id="Email" required>
