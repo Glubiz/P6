@@ -6,6 +6,7 @@ const UserDB = require('../models/user')
 exports.getLogin = (req, res, next) => {
     res.render('main/login', {
         errorMessage: req.flash('error'),
+        successMessage: req.flash('success'),
         pageTitle: 'Login',
         path: '/Login'
     });
@@ -34,6 +35,7 @@ exports.getSignup = (req, res, next) => {
 exports.getReset = (req, res, next) => {
     res.render('main/reset', {
         errorMessage: req.flash('error'),
+        successMessage: req.flash('success'),
         pageTitle: 'Reset',
         path: '/Reset'
     });
@@ -47,7 +49,7 @@ exports.postLogin = (req, res, next) => {
     UserDB.findOne({where: {Email : Email}})
     .then(user => {
         if (!user){
-            req.flash('error', 'Invalid Email or Password.');
+            req.flash('error', 'Invalid Email or Password');
             return res.redirect('/Login');  
         }
         bcrypt.compare(Password, user.Password)
@@ -56,6 +58,7 @@ exports.postLogin = (req, res, next) => {
                     req.session.isLoggedIn = true;
                     req.session.Email = Email
                     req.session.userID = user.id
+                    req.flash('success', 'Success');
                     return res.redirect('/User');
                 }
             })
@@ -73,14 +76,18 @@ exports.postSignup = (req, res, next) => {
     const Password = req.body.Password;
     const RepeatPassword = req.body.RPassword;
 
-    if(Password != RepeatPassword){
+    if(Password != RepeatPassword && validateEmail(Email)){
         req.flash('error', 'Passwords does not match');
+        return res.redirect('/Signup'); 
+    }
+    if(validateEmail(Email)){
+        req.flash('error', 'Invalid Email');
         return res.redirect('/Signup'); 
     }
     UserDB.findOne({where: {Email: Email}})
     .then(userDoc => {
         if (userDoc){
-            req.flash('error', 'User exists');
+            req.flash('error', 'User already exists');
             res.redirect('/Signup');
         } else {
             bcrypt.hash(Password, 12)
@@ -91,7 +98,8 @@ exports.postSignup = (req, res, next) => {
                 });
             })
             .then(() => {
-                res.redirect('/');
+                req.flash('success', 'Success');
+                res.redirect('/Login');
             })
         }
     })
@@ -127,7 +135,8 @@ exports.postReset = (req, res, next) => {
                 });
             })
             .then(() => {
-                res.redirect('/');
+                req.flash('success', 'Success');
+                res.redirect('/Login');
             })
         }
     })
@@ -190,3 +199,10 @@ exports.postChangePassword = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
+function validateEmail(){
+    if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value)){
+        return true 
+    } else {
+        return false
+    }
+}

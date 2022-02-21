@@ -34,11 +34,21 @@ main{
 .module{
     &-outer{
         background-color: $color-primary-module;
-        border-radius: 2rem;
+        border-radius: .5rem;
     }
     &-inner{
         background-color: $color-primary-inner;
         padding: 1rem 3rem;
-        border-radius: 2rem;
+        border-radius: .5rem;
+    }
+    &-error{
+        background-color: rgba(#ff7730, 0.2);
+        padding: 1rem 3rem;
+        border-radius: .5rem;
+    }
+    &-success{
+        background-color: rgba($color-secondary,0.2);
+        padding: 1rem 3rem;
+        border-radius: .5rem;
     }
 }

@@ -3,9 +3,11 @@
         <h2 class="module-inner">
             <%= pageTitle %>
         </h2>
-        <% if (errorMessage) { %>
-            <%= errorMessage %>
-        <% } %>
+        <% if (errorMessage.length > 0) { %>
+            <div class="module-error">
+              <%= errorMessage %>
+            </div>
+          <% } %>
         <form action="Signup" method="POST" class="module-inner">
             <div class="login__group">
                 <div>
