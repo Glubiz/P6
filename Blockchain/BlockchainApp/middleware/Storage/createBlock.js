@@ -77,8 +77,8 @@ function createBlock(chainID, data) {
     } catch(err) {
         console.log(err)
     }
-
-    
 }
+
+
 
 // module.exports = createBlock()
