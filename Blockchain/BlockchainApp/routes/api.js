@@ -11,4 +11,6 @@ router.post('/Data', Controller.postData);
 
 router.get('/Data', Controller.getData);
 
+router.get('/addme/:apiKey', Controller.addMe);
+
 module.exports = router;

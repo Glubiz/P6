@@ -22,10 +22,11 @@ function createGenesis(){
         'chainID' : "Genesis",
         'IP' : "127.0.0.1",
         'port' : '0000',
-        'hash' : hash("0", "1", "Genesis" , "127.0.0.1", "0000", "None", dateTime),
+        'hash' : hash("0", "1", "Genesis" , "0000", "None", dateTime),
         'previousHash' : "None",
         'timeStamp' : dateTime,
-        'validatorCandicate' : false
+        'validatorCandicate' : false,
+        'blocked' : false
     }
 
     // Adds the block to the chain
@@ -35,15 +36,15 @@ function createGenesis(){
     fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
 }
 
-function createBlock(chainID, ip, port) {
+function createBlock(chainID, ip) {
     // Checks if the blockchain is created before adding the new block
     try {
-        if (fs.existsSync('./Blockchains/Validator.json')) {
+        if (fs.existsSync('./Blockchain/Validator.json')) {
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
-            var snapshot = fs.readFileSync('./Blockchains/Validator.json')
+            var snapshot = fs.readFileSync('./Blockchain/Validator.json')
             var json = JSON.parse(snapshot)
             var chain = json
-            var index = chain.data.length + 1
+            var index = chain.data.length
 
             // Calls the getPreviousBlock function to collect the hash of the previous block
             var previousBlock = getPreviousBlock(chainID)
@@ -61,30 +62,33 @@ function createBlock(chainID, ip, port) {
                 'nonce' : nonce,
                 'chainID' : chainID,
                 'IP' : ip,
-                'port' : port,
-                'hash' : hash(index.toString(), nonce, chainID, port.toString(), previousHash, dateTime.toString()),
+                'port' : '4000',
+                'hash' : hash(index.toString(), nonce, chainID, '4000', previousHash, dateTime.toString()),
                 'previousHash' : previousHash,
                 'timeStamp' : dateTime,
-                'validatorCandicate' : false
+                'validatorCandicate' : false,
+                'blocked' : false
             }
 
             // Adds the block to the chain
             chain.data.push(block)
 
             // Writes the updated blockchain to the json file belonging to the correct household
-            fs.writeFileSync('./Blockchains/Validator.json', JSON.stringify(chain, null, 4))
+            fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
         } else {
             // Loads the genesis block, this is only done once
             createGenesis()
 
             // Recalls the createBlock function to add the block containing the data to the newly created chain
-            createBlock(chainID, ip, port)
+            createBlock(chainID, ip)
         }
     } catch(err) {
         console.log(err)
     }
 }
 
-
+createBlock('sdlfsoo1312', '127.0.0.1',)
+createBlock('sgdsdfe2e2', '127.0.0.2',)
+createBlock('43f34f3', '127.0.0.3',)
 
 // module.exports = createBlock()

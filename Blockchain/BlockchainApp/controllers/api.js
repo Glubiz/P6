@@ -1,6 +1,12 @@
+//Packages
 const fs = require('fs');
+const axios = require('axios')
+
+//Models
 const Data = require('../models/Data')
-const Validator = require('../middleware/Validator')
+
+//Middleware
+const createBlock = require('../middleware/Validator/createBlock');
 
 //This file contains all the api calls that the domain can handle
 exports.getNumber = (req, res, next) => {
@@ -47,3 +53,21 @@ exports.postData = (req, res, next) => {
 
   res.status(200).send("OK")
 };
+
+exports.addMe = (req, res, next) => {
+  const IP = req.body.IP
+  const apiKey = req.params.apiKey
+
+  if (apiKey === 'api'){
+    axios.get(IP + ':4000/addMe')
+    .then(data => {
+      var chainID = data.chainID 
+      createBlock(chainID, IP)
+      .then(response => {
+        return response
+      })
+    })
+  } else {
+    return 500
+  }
+}
