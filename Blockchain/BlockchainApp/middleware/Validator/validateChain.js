@@ -1,56 +1,23 @@
-// const SHA256 = require('crypto-js/sha256');
-// const fs = require('fs');
+const fs = require('fs')
+const hash = require('./hash')
 
-// class BlockChain {
-//     constructor(){
-//         this.chain = []
-//         this.block = this.createBlock(nonce = '0', previousHash = '0')
-//     }
+module.exports = function validateChain(chainID){
+    var now = new Date().getTime().toString()
+    // Loads the blockchain into the chain variable
+    var chain = JSON.parse(fs.readFileSync('./Blockchains/Validator.json'))
 
-//     calculateHash(index, nonce, chainID, previousHash, dateTime){
-//         return SHA256(index + nonce + chainID + previousHash + dateTime).toString();
-//     }
-
-//     createBlock(nonce, chainID = '0', key = '0', previousHash) {
-//         if (this.chain.length){
-//             var dateTime = new Date().toString()
-//             var index = this.chain.length + 1
-
-//             var block = {
-//                 'index' : index, 
-//                 'nonce' : nonce,
-//                 'chainID' : chainID,
-//                 'key' : key,
-//                 'hash' : calculateHash(index.toString(), nonce, chainID, previousHash, dateTime.toString()),
-//                 'previousHash' : previousHash,
-//                 'timeStamp' : dateTime,
-//             }
-            
-//             this.chain.append(block)
-//             return block
-//         }
-//     }
-
-//     getPreviousBlock(){
-//         return this.chain[-1]
-//     }
-    
-//     proofOfWork(previousNonce){
-//         var hashOperation
-//         var newNonce = 1
-//         var checkNonce = False
-//         while (!checkNonce){
-//             hashOperation = SHA256(newNonce**2 - previousNonce**2).toString()
-//             if (hashOperation.substring(0, 3) == '0000'){
-//                 checkNonce = True
-//             } else {
-//                 newNonce += 1
-//             }
-//         }
-//         return newNonce
-//     }
-// }
-
-// new BlockChain
-
-// module.exports = BlockChain
+    // The previousblock is equal to the length of the chain minus 1, since it is zero indexed
+    for(let data of chain.data){
+        if (now - parseInt(data.dateTime) >= 10080 && !data.validaterCandidate ){
+            data.validaterCandidate = true
+        }
+        var Hash = hash(data.index, data.nonce, data.data, data.previousHash, data.dateTime)
+        if(Hash == data.hash){
+            continue
+        } else {
+            //Skal indhente ledger fra noder til at validere chainen.
+            return data.index
+        }
+    }
+    return 200
+}

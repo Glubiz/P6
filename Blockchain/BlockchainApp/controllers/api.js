@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Data = require('../models/Data')
+const Validator = require('../middleware/Validator')
 
 //This file contains all the api calls that the domain can handle
 exports.getNumber = (req, res, next) => {
@@ -37,4 +38,12 @@ exports.getData = (req, res, next) => {
   .then(() => {
     res.status(200).send(temp)
   })
+};
+
+exports.postData = (req, res, next) => {
+  console.log(req.body)
+  const Data = req.body.Data
+  fs.writeFileSync('Chains/blockchain.json', Data)
+
+  res.status(200).send("OK")
 };
