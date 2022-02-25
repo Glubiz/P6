@@ -1,10 +1,11 @@
 const fs = require('fs');
-function search(chainID, data){
-    var chain = JSON.parse(fs.readFileSync('./Blockchains/' + chainID + '.json'))
+
+function searchChain(data){
+    var chain = JSON.parse(fs.readFileSync('./Blockchain/Validator.json'))
     chain = chain.data
     console.log(chain.data)
-    const result = chain.filter(block => block.data == data)
+    const result = chain.filter(block => block.chainID == data)
     console.log(result);
 }
 
-search("kfkaksfkas", "gfgjfjghk")
+searchChain("sgdsdfe2e2")

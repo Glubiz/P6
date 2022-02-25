@@ -2,7 +2,7 @@ const fs = require('fs')
 var arr = []
 
 function findValidatorNode(){
-    var chain = JSON.parse(fs.readFileSync('./Blockchains/' + 'kfkaksfkas' + '.json'))
+    var chain = JSON.parse(fs.readFileSync('./Blockchain/Validator.json'))
     var maxIndex = chain.data.length
     // If the network of nodes (IoT gateways) is big enough, we want 10% of the network to validate the chain. the nodes that has been in the network the longest weighs the most on the proccess
     // for (var i = 0; i < parseInt(maxIndex * 0.1); i++){
