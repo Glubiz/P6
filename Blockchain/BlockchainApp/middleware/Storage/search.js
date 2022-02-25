@@ -7,4 +7,4 @@ function search(chainID, data){
     console.log(result);
 }
 
-search("kfkaksfkas", "gfgjfjghk")
+// search("kfkaksfkas", "gfgjfjghk")

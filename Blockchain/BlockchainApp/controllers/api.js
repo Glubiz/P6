@@ -1,6 +1,5 @@
 //Packages
 const fs = require('fs');
-const axios = require('axios')
 
 //Models
 const Data = require('../models/Data')
@@ -56,18 +55,25 @@ exports.postData = (req, res, next) => {
 
 exports.addMe = (req, res, next) => {
   const IP = req.body.IP
-  const apiKey = req.params.apiKey
+  const apiKey = req.body.apikey
 
+  //Skal skiftes
   if (apiKey === 'api'){
-    axios.get(IP + ':4000/addMe')
+    require('axios')
+    .get('http://' + IP + ':3033/sendData')
     .then(data => {
-      var chainID = data.chainID 
+      var chainID = data.data 
       createBlock(chainID, IP)
       .then(response => {
-        return response
+        res.status(response).send("OK")
       })
     })
   } else {
-    return 500
+    res.status(500)
   }
+}
+
+//Kun til test, skal laves i Python eller Java på gatewayen
+exports.sendData = (req, res, next) => {
+  res.status(200).send("ckskkdkcskkasa12")
 }

@@ -20,6 +20,6 @@ function findValidatorNode(){
     }
     console.log(arr)
 }
-setInterval(findValidatorNode, 3000)
+// setInterval(findValidatorNode, 3000)
 
 module.exports = [arr]

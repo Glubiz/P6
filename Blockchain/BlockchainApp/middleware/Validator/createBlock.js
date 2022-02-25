@@ -3,45 +3,45 @@ const hash = require('./hash')
 const calculateNonce = require('./nonce')
 const getPreviousBlock = require('./previousBlock')
 
-function createGenesis(){
-    // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-    var dateTime = new Date().getTime().toString()
+// function createGenesis(){
+//     // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
+//     var dateTime = new Date().getTime().toString()
 
-    // Instantiate the new chain with the ID, and the timestamp. All the blocks are added to the data array in the block
-    var chain = 
-    {
-        Chain : "Validator",
-        instantiated : dateTime,
-        data : []
-    }
+//     // Instantiate the new chain with the ID, and the timestamp. All the blocks are added to the data array in the block
+//     var chain = 
+//     {
+//         Chain : "Validator",
+//         instantiated : dateTime,
+//         data : []
+//     }
 
-    // Loads the genesis data into the block with key value pairs to be ready to be sent to the blockchain
-    var block = {
-        'index' : 0, 
-        'nonce' : 1,
-        'chainID' : "Genesis",
-        'IP' : "127.0.0.1",
-        'port' : '0000',
-        'hash' : hash("0", "1", "Genesis" , "0000", "None", dateTime),
-        'previousHash' : "None",
-        'timeStamp' : dateTime,
-        'validaterCandidate' : false,
-        'blocked' : false
-    }
+//     // Loads the genesis data into the block with key value pairs to be ready to be sent to the blockchain
+//     var block = {
+//         'index' : 0, 
+//         'nonce' : 1,
+//         'chainID' : "Genesis",
+//         'IP' : "127.0.0.1",
+//         'port' : '0000',
+//         'hash' : hash("0", "1", "Genesis" , "0000", "None", dateTime),
+//         'previousHash' : "None",
+//         'timeStamp' : dateTime,
+//         'validaterCandidate' : false,
+//         'blocked' : false
+//     }
 
-    // Adds the block to the chain
-    chain.data.push(block)
+//     // Adds the block to the chain
+//     chain.data.push(block)
 
-    // Creates and writes the blockchain to the json file belonging to the correct household
-    fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
-}
+//     // Creates and writes the blockchain to the json file belonging to the correct household
+//     fs.writeFileSync('./middleware/Validator/Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+// }
 
 function createBlock(chainID, ip) {
     // Checks if the blockchain is created before adding the new block
     try {
-        if (fs.existsSync('./Blockchain/Validator.json')) {
+        if (fs.existsSync('./middleware/Validator/Blockchain/Validator.json')) {
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
-            var snapshot = fs.readFileSync('./Blockchain/Validator.json')
+            var snapshot = fs.readFileSync('./middleware/Validator/Blockchain/Validator.json')
             var json = JSON.parse(snapshot)
             var chain = json
             var index = chain.data.length
@@ -74,7 +74,10 @@ function createBlock(chainID, ip) {
             chain.data.push(block)
 
             // Writes the updated blockchain to the json file belonging to the correct household
-            fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+            fs.writeFileSync('./middleware/Validator/Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+            return new Promise((resolve, reject) => {
+                resolve(200)
+            });
         } else {
             // Loads the genesis block, this is only done once
             createGenesis()
@@ -83,12 +86,11 @@ function createBlock(chainID, ip) {
             createBlock(chainID, ip)
         }
     } catch(err) {
-        console.log(err)
+        return new Promise((resolve, reject) => {
+            reject(500)
+        });
     }
 }
 
-createBlock('sdlfsoo1312', '127.0.0.1',)
-createBlock('sgdsdfe2e2', '127.0.0.2',)
-createBlock('43f34f3', '127.0.0.3',)
 
-// module.exports = createBlock()
+module.exports = createBlock

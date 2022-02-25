@@ -2,4 +2,10 @@
     <h2>
         You are now logged in
     </h2>
+    <form action="addme" method="post">
+        <input type="hidden" value="api" name="apikey" id="apikey">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="text" name="IP" id="IP">
+        <input type="submit" value="Submit">
+    </form>
 </section>

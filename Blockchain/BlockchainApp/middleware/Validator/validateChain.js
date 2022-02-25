@@ -28,5 +28,3 @@ function validateChain(){
     }
     return 200
 }
-
-console.log(validateChain())

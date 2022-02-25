@@ -6,6 +6,9 @@
     "start": "nodemon app.js",
     "compile:sass": "node-sass public/sass/main.scss public/css/main.css -w"
   },
+  "nodemonConfig": {
+    "ignore": ["middleware/Validator/Blockchain/*.json"]
+  },
   "author": "solskov",
   "license": "ISC",
   "dependencies": {

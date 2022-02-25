@@ -8,4 +8,4 @@ function searchChain(data){
     console.log(result);
 }
 
-searchChain("sgdsdfe2e2")
+// searchChain("sgdsdfe2e2")
