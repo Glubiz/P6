@@ -11,7 +11,7 @@
             "hash": "1a78348ad96f81c8d0e5a20f218030ab7f5411b9493223fc309fe6395c62f0e2",
             "previousHash": "None",
             "timeStamp": "1645705096113",
-            "validatorCandicate": false,
+            "validaterCandidate": true,
             "blocked": false
         },
         {
@@ -23,7 +23,7 @@
             "hash": "afb0d4477be8537a2bdc6ca71e4fe9178ed4d4c9df27ced4004d9325e1858417",
             "previousHash": "1a78348ad96f81c8d0e5a20f218030ab7f5411b9493223fc309fe6395c62f0e2",
             "timeStamp": "1645705096126",
-            "validatorCandicate": false,
+            "validaterCandidate": true,
             "blocked": false
         },
         {
@@ -35,7 +35,7 @@
             "hash": "605734edc89c448ba456d96b7f7a344933e6a1aae02f72ee422550284e683b5b",
             "previousHash": "afb0d4477be8537a2bdc6ca71e4fe9178ed4d4c9df27ced4004d9325e1858417",
             "timeStamp": "1645705096131",
-            "validatorCandicate": false,
+            "validaterCandidate": true,
             "blocked": false
         },
         {
@@ -47,7 +47,7 @@
             "hash": "9f719c8d62a25900cb37de15362c5e8192aad8c9eb455343b7d08d43ad4627e2",
             "previousHash": "605734edc89c448ba456d96b7f7a344933e6a1aae02f72ee422550284e683b5b",
             "timeStamp": "1645705096202",
-            "validatorCandicate": false,
+            "validaterCandidate": true,
             "blocked": false
         }
     ]

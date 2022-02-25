@@ -25,7 +25,7 @@ function createGenesis(){
         'hash' : hash("0", "1", "Genesis" , "0000", "None", dateTime),
         'previousHash' : "None",
         'timeStamp' : dateTime,
-        'validatorCandicate' : false,
+        'validaterCandidate' : false,
         'blocked' : false
     }
 
@@ -66,7 +66,7 @@ function createBlock(chainID, ip) {
                 'hash' : hash(index.toString(), nonce, chainID, '4000', previousHash, dateTime.toString()),
                 'previousHash' : previousHash,
                 'timeStamp' : dateTime,
-                'validatorCandicate' : false,
+                'validaterCandidate' : false,
                 'blocked' : false
             }
 

@@ -1,9 +1,9 @@
 const SHA256 = require('crypto-js/sha256');
 const getPreviousBlock = require('./previousBlock')
 
-module.exports = function nonce(chainID) {
+module.exports = function nonce() {
     // Calls the getPreviousBlock function to collect the hash of the previous block
-    var previousBlock = getPreviousBlock(chainID)
+    var previousBlock = getPreviousBlock()
 
     // Instantiates the newNonce variable, which is used to calculate the nonce of the block
     var newNonce = 1
