@@ -62,7 +62,7 @@ exports.addMe = (req, res, next) => {
     require('axios')
     .get('http://' + IP + ':3033/sendData')
     .then(data => {
-      var chainID = data.data 
+      var chainID = data.nodes 
       createBlock(chainID, IP)
       .then(response => {
         res.status(response).send("OK")
