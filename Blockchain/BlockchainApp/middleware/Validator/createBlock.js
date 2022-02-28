@@ -17,6 +17,7 @@ function createGenesis(){
         Chain : "Validator",
         instantiated : dateTime,
         nodes : [],
+        providers : [],
         prices : []
     }
 
@@ -36,6 +37,21 @@ function createGenesis(){
 
     // Adds the block to the chain
     chain.nodes.push(block)
+
+    // Loads the genesis data into the block with key value pairs to be ready to be sent to the blockchain
+    block = {
+        'index' : 0, 
+        'nonce' : 1,
+        'providerID' : "Genesis",
+        'price' : "0",
+        'hash' : hash("0", "1", "Genesis", "None", dateTime),
+        'previousHash' : "None",
+        'timeStamp' : dateTime,
+        'blocked' : false
+    }
+
+    // Adds the block to the chain
+    chain.providers.push(block)
 
     // Loads the genesis data into the block with key value pairs to be ready to be sent to the blockchain
     block = {
