@@ -37,6 +37,30 @@
             "timeStamp": "1646050001142",
             "validaterCandidate": false,
             "blocked": false
+        },
+        {
+            "index": 3,
+            "nonce": 1197,
+            "chainID": "kafkaksdk",
+            "IP": "127.0.0.1",
+            "port": "4000",
+            "hash": "14a61ad40bb0d46cf5a4a9a3768b91651387d4be20616db1eb15145adb4272db",
+            "previousHash": "f375c13909df582c21bdb85334bd1cae5c79d14533717577f56f3c0403d4b864",
+            "timeStamp": "1646052297853",
+            "validaterCandidate": false,
+            "blocked": false
+        },
+        {
+            "index": 4,
+            "nonce": 6641,
+            "chainID": "kafkaksdk",
+            "IP": "127.0.0.1",
+            "port": "4000",
+            "hash": "b9e92d2bcc3d71a6a380d017f13c301cb20a8f5402431d37df13c845cc933f23",
+            "previousHash": "14a61ad40bb0d46cf5a4a9a3768b91651387d4be20616db1eb15145adb4272db",
+            "timeStamp": "1646052302934",
+            "validaterCandidate": false,
+            "blocked": false
         }
     ],
     "providers": [
@@ -80,6 +104,26 @@
             "hash": "0e75b2c8487d398510148b3be2815c6d484a8610be8e6a5a96860b7ebc36bfe6",
             "previousHash": "185c091d2dd050891d028641b42ae60ce1c9d20eb6b38c0333f42d2083116589",
             "timeStamp": "1646050001152",
+            "blocked": false
+        },
+        {
+            "index": 3,
+            "nonce": 3569,
+            "providerID": "gsdgsd",
+            "price": "1.66",
+            "hash": "50de568b3072a8159a564f9679d15b3b93e7ae9e5adf32e6c55b0b7bcb5c799c",
+            "previousHash": "0e75b2c8487d398510148b3be2815c6d484a8610be8e6a5a96860b7ebc36bfe6",
+            "timeStamp": "1646052297898",
+            "blocked": false
+        },
+        {
+            "index": 4,
+            "nonce": 17217,
+            "providerID": "gsdgsd",
+            "price": "1.66",
+            "hash": "a77447302e7f94b117e603a7c8c58ae623525dba527d2791800272264cf72e84",
+            "previousHash": "50de568b3072a8159a564f9679d15b3b93e7ae9e5adf32e6c55b0b7bcb5c799c",
+            "timeStamp": "1646052303057",
             "blocked": false
         }
     ]

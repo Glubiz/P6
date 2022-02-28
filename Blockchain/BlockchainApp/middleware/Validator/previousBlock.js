@@ -16,5 +16,13 @@ module.exports = {
         // The previousblock is equal to the length of the chain minus 1, since it is zero indexed
         var previousBlock = chain.prices[chain.prices.length-1]
         return previousBlock
+    },
+    getPreviousProvider(){
+        // Loads the blockchain into the chain variable
+        var chain = JSON.parse(fs.readFileSync('./middleware/Validator/Blockchain/Validator.json'))
+
+        // The previousblock is equal to the length of the chain minus 1, since it is zero indexed
+        var previousBlock = chain.providers[chain.providers.length-1]
+        return previousBlock
     }
 }

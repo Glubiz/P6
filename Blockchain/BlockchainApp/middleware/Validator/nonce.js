@@ -3,13 +3,16 @@ const getPreviousBlock = require('./previousBlock')
 
 const getPreviousNode = getPreviousBlock.getPreviousNode
 const getPreviousPrice = getPreviousBlock.getPreviousPrice
+const getPreviousProvider = getPreviousBlock.getPreviousProvider
 
 function nonce(type) {
     // Calls the getPreviousBlock function to collect the hash of the previous block
     if (type === 'node'){
         var previousBlock = getPreviousNode()
-    } else {
+    } else if (type === 'price'){
         var previousBlock = getPreviousPrice()
+    } else if (type === 'provider'){
+        var previousBlock = getPreviousProvider()
     }
 
     // Instantiates the newNonce variable, which is used to calculate the nonce of the block
