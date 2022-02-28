@@ -235,6 +235,7 @@ function createProvider(providerID) {
         });
     }
 }
+
 createNode('kafkaksdk', '127.0.0.1')
 createPrice('gsdgsd', '1.66')
 module.exports = {createNode, createPrice, createProvider}
