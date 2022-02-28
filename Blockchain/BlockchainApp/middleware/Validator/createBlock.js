@@ -68,15 +68,15 @@ function createGenesis(){
     // Adds the block to the chain
     chain.prices.push(block)
     // Creates and writes the blockchain to the json file belonging to the correct household
-    fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+    fs.writeFileSync('./middleware/Validator/Blockchain/Validator.json', JSON.stringify(chain, null, 4))
 }
 
 function createNode(chainID, ip) {
     // Checks if the blockchain is created before adding the new block
     try {
-        if (fs.existsSync('./Blockchain/Validator.json')) {
+        if (fs.existsSync('./middleware/Validator/Blockchain/Validator.json')) {
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
-            var snapshot = fs.readFileSync('./Blockchain/Validator.json')
+            var snapshot = fs.readFileSync('./middleware/Validator/Blockchain/Validator.json')
             var json = JSON.parse(snapshot)
             var chain = json
             var index = chain.nodes.length
@@ -109,7 +109,7 @@ function createNode(chainID, ip) {
             chain.nodes.push(block)
 
             // Writes the updated blockchain to the json file belonging to the correct household
-            fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+            fs.writeFileSync('./middleware/Validator/Blockchain/Validator.json', JSON.stringify(chain, null, 4))
             return new Promise((resolve, reject) => {
                 resolve(200)
             });
@@ -131,9 +131,9 @@ function createNode(chainID, ip) {
 function createPrice(providerID, price) {
     // Checks if the blockchain is created before adding the new block
     try {
-        if (fs.existsSync('./Blockchain/Validator.json')) {
+        if (fs.existsSync('./middleware/Validator/Blockchain/Validator.json')) {
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
-            var snapshot = fs.readFileSync('./Blockchain/Validator.json')
+            var snapshot = fs.readFileSync('./middleware/Validator/Blockchain/Validator.json')
             var json = JSON.parse(snapshot)
             var chain = json
             var index = chain.prices.length
@@ -164,7 +164,7 @@ function createPrice(providerID, price) {
             chain.prices.push(block)
 
             // Writes the updated blockchain to the json file belonging to the correct household
-            fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+            fs.writeFileSync('./middleware/Validator/Blockchain/Validator.json', JSON.stringify(chain, null, 4))
             return new Promise((resolve, reject) => {
                 resolve(200)
             });

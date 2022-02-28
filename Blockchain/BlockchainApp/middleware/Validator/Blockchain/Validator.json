@@ -1,6 +1,6 @@
 {
     "Chain": "Validator",
-    "instantiated": "1646042863302",
+    "instantiated": "1646049953980",
     "nodes": [
         {
             "index": 0,
@@ -8,22 +8,46 @@
             "chainID": "Genesis",
             "IP": "127.0.0.1",
             "port": "0000",
-            "hash": "b030e31fca372016cee75a5cac809ba9c6cc130f4c077b85793ce544e60741fc",
+            "hash": "56af872a8fcd030f2e2647dcb93bd53085ba807c4d9c06e7adee63c7e5b51004",
             "previousHash": "None",
-            "timeStamp": "1646042863302",
+            "timeStamp": "1646049953980",
             "validaterCandidate": false,
             "blocked": false
         },
         {
             "index": 1,
-            "nonce": 13740,
+            "nonce": 7375,
             "chainID": "kafkaksdk",
             "IP": "127.0.0.1",
             "port": "4000",
-            "hash": "135f01cdef2a4664334ce1a352151a3ff7b46a27a815a4f5d17d3533b4b58c32",
-            "previousHash": "b030e31fca372016cee75a5cac809ba9c6cc130f4c077b85793ce544e60741fc",
-            "timeStamp": "1646042863413",
+            "hash": "781cb698e02a2024f470062e2b2d157e9273e9d7233ebbe53ae42bb043b647ec",
+            "previousHash": "56af872a8fcd030f2e2647dcb93bd53085ba807c4d9c06e7adee63c7e5b51004",
+            "timeStamp": "1646049993324",
             "validaterCandidate": false,
+            "blocked": false
+        },
+        {
+            "index": 2,
+            "nonce": 15169,
+            "chainID": "kafkaksdk",
+            "IP": "127.0.0.1",
+            "port": "4000",
+            "hash": "f375c13909df582c21bdb85334bd1cae5c79d14533717577f56f3c0403d4b864",
+            "previousHash": "781cb698e02a2024f470062e2b2d157e9273e9d7233ebbe53ae42bb043b647ec",
+            "timeStamp": "1646050001142",
+            "validaterCandidate": false,
+            "blocked": false
+        }
+    ],
+    "providers": [
+        {
+            "index": 0,
+            "nonce": 1,
+            "providerID": "Genesis",
+            "price": "0",
+            "hash": "56af872a8fcd030f2e2647dcb93bd53085ba807c4d9c06e7adee63c7e5b51004",
+            "previousHash": "None",
+            "timeStamp": "1646049953980",
             "blocked": false
         }
     ],
@@ -33,19 +57,29 @@
             "nonce": 1,
             "providerID": "Genesis",
             "price": "0",
-            "hash": "b030e31fca372016cee75a5cac809ba9c6cc130f4c077b85793ce544e60741fc",
+            "hash": "56af872a8fcd030f2e2647dcb93bd53085ba807c4d9c06e7adee63c7e5b51004",
             "previousHash": "None",
-            "timeStamp": "1646042863302",
+            "timeStamp": "1646049953980",
             "blocked": false
         },
         {
             "index": 1,
-            "nonce": 13740,
+            "nonce": 7375,
             "providerID": "gsdgsd",
             "price": "1.66",
-            "hash": "950f0538ec2f06821f3380f554bdb9f123c8032c1138eced383883fba91cb06f",
-            "previousHash": "b030e31fca372016cee75a5cac809ba9c6cc130f4c077b85793ce544e60741fc",
-            "timeStamp": "1646042863501",
+            "hash": "185c091d2dd050891d028641b42ae60ce1c9d20eb6b38c0333f42d2083116589",
+            "previousHash": "56af872a8fcd030f2e2647dcb93bd53085ba807c4d9c06e7adee63c7e5b51004",
+            "timeStamp": "1646049993388",
+            "blocked": false
+        },
+        {
+            "index": 2,
+            "nonce": 1245,
+            "providerID": "gsdgsd",
+            "price": "1.66",
+            "hash": "0e75b2c8487d398510148b3be2815c6d484a8610be8e6a5a96860b7ebc36bfe6",
+            "previousHash": "185c091d2dd050891d028641b42ae60ce1c9d20eb6b38c0333f42d2083116589",
+            "timeStamp": "1646050001152",
             "blocked": false
         }
     ]
