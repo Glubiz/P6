@@ -8,5 +8,6 @@ const router = express.Router();
 
 //Pages
 router.get('/', mainController.getIndex);
+router.get('/about', mainController.getAbout);
 
 module.exports = router;

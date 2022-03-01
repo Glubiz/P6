@@ -61,6 +61,18 @@
             "timeStamp": "1646052302934",
             "validaterCandidate": false,
             "blocked": false
+        },
+        {
+            "index": 5,
+            "nonce": 543,
+            "chainID": "kafkaksdk",
+            "IP": "127.0.0.1",
+            "port": "4000",
+            "hash": "6f0e3fcf6d2e6890feccee4b84a1e3385da65cb48a3424d8971555df8117e674",
+            "previousHash": "b9e92d2bcc3d71a6a380d017f13c301cb20a8f5402431d37df13c845cc933f23",
+            "timeStamp": "1646144045748",
+            "validaterCandidate": false,
+            "blocked": false
         }
     ],
     "providers": [
@@ -124,6 +136,16 @@
             "hash": "a77447302e7f94b117e603a7c8c58ae623525dba527d2791800272264cf72e84",
             "previousHash": "50de568b3072a8159a564f9679d15b3b93e7ae9e5adf32e6c55b0b7bcb5c799c",
             "timeStamp": "1646052303057",
+            "blocked": false
+        },
+        {
+            "index": 5,
+            "nonce": 1312,
+            "providerID": "gsdgsd",
+            "price": "1.66",
+            "hash": "584dad579b84b7143183b6d50df5ab240a3830570d77015889a468906fbc40da",
+            "previousHash": "a77447302e7f94b117e603a7c8c58ae623525dba527d2791800272264cf72e84",
+            "timeStamp": "1646144045761",
             "blocked": false
         }
     ]

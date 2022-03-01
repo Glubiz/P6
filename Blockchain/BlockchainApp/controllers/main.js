@@ -9,3 +9,10 @@ exports.getIndex = (req, res, next) => {
     });
   }
 };
+
+exports.getAbout = (req, res, next) => {
+    res.render('main/about', {
+      pageTitle: 'About',
+      path: '/'
+    });
+};
