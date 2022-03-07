@@ -1,12 +1,6 @@
 const SHA256 = require('crypto-js/sha256');
 const fs = require('fs');
 
-const getPreviousBlock = require('./previousBlock')
-
-const getPreviousNode = getPreviousBlock.getPreviousNode
-const getPreviousPrice = getPreviousBlock.getPreviousPrice
-const getPreviousProvider = getPreviousBlock.getPreviousProvider
-
 function nonce(hash) {
     // Instantiates the newNonce variable, which is used to calculate the nonce of the block
     var newNonce = 1
