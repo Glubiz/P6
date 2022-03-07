@@ -1,11 +1,12 @@
 const fs = require('fs')
 const hash = require('./hash')
-const calculateNonce = require('./nonce')
 const getPreviousBlock = require('./previousBlock')
 
 const getPreviousNode = getPreviousBlock.getPreviousNode
 const getPreviousPrice = getPreviousBlock.getPreviousPrice
 
+// './middleware/Validator/Blockchain/Validator.json'
+// './Blockchain/Validator.json'
 
 function createGenesis(){
     // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
@@ -28,7 +29,7 @@ function createGenesis(){
         'chainID' : "Genesis",
         'IP' : "127.0.0.1",
         'port' : '0000',
-        'hash' : hash("0", "1", "Genesis", "None", dateTime),
+        'hash' : hash("0", "Genesis", "None", dateTime),
         'previousHash' : "None",
         'timeStamp' : dateTime,
         'validaterCandidate' : false,
@@ -43,7 +44,7 @@ function createGenesis(){
         'index' : 0, 
         'nonce' : 1,
         'providerID' : "Genesis",
-        'hash' : hash("0", "1", "Genesis", "None", dateTime),
+        'hash' : hash("0", "Genesis", "None", dateTime),
         'previousHash' : "None",
         'timeStamp' : dateTime,
         'blocked' : false
@@ -58,7 +59,7 @@ function createGenesis(){
         'nonce' : 1,
         'providerID' : "Genesis",
         'price' : "0",
-        'hash' : hash("0", "1", "Genesis", "None", dateTime),
+        'hash' : hash("0", "Genesis", "None", dateTime),
         'previousHash' : "None",
         'timeStamp' : dateTime,
         'blocked' : false
@@ -67,15 +68,15 @@ function createGenesis(){
     // Adds the block to the chain
     chain.prices.push(block)
     // Creates and writes the blockchain to the json file belonging to the correct household
-    fs.writeFileSync('./middleware/Validator/Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+    fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
 }
 
 function createNode(chainID, ip) {
     // Checks if the blockchain is created before adding the new block
     try {
-        if (fs.existsSync('./middleware/Validator/Blockchain/Validator.json')) {
+        if (fs.existsSync('./Blockchain/Validator.json')) {
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
-            var snapshot = fs.readFileSync('./middleware/Validator/Blockchain/Validator.json')
+            var snapshot = fs.readFileSync('./Blockchain/Validator.json')
             var json = JSON.parse(snapshot)
             var chain = json
             var index = chain.nodes.length
@@ -85,19 +86,21 @@ function createNode(chainID, ip) {
             var previousHash = previousBlock.hash
             
             // Calls the nonce function to get to calculate the nonce of the block and thereby making the block immutable
-            var nonce = calculateNonce('node')
+            // var nonce = calculateNonce('node')
 
+            
             // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
             var dateTime = new Date().getTime().toString()
-
+            
+            var calculatedHash = hash(index.toString(), chainID + '4000', previousHash, dateTime.toString())
             // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
             var block = {
                 'index' : index, 
-                'nonce' : nonce,
+                'nonce' : 0,
                 'chainID' : chainID,
                 'IP' : ip,
                 'port' : '4000',
-                'hash' : hash(index.toString(), nonce, chainID + '4000', previousHash, dateTime.toString()),
+                'hash' : calculatedHash,
                 'previousHash' : previousHash,
                 'timeStamp' : dateTime,
                 'validaterCandidate' : false,
@@ -108,7 +111,7 @@ function createNode(chainID, ip) {
             chain.nodes.push(block)
 
             // Writes the updated blockchain to the json file belonging to the correct household
-            fs.writeFileSync('./middleware/Validator/Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+            fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
             return new Promise((resolve, reject) => {
                 resolve(200)
             });
@@ -130,40 +133,43 @@ function createNode(chainID, ip) {
 function createPrice(providerID, price) {
     // Checks if the blockchain is created before adding the new block
     try {
-        if (fs.existsSync('./middleware/Validator/Blockchain/Validator.json')) {
+        if (fs.existsSync('./Blockchain/Validator.json')) {
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
-            var snapshot = fs.readFileSync('./middleware/Validator/Blockchain/Validator.json')
+            var snapshot = fs.readFileSync('./Blockchain/Validator.json')
             var json = JSON.parse(snapshot)
             var chain = json
             var index = chain.prices.length
+            console.log(index)
 
             // Calls the getPreviousBlock function to collect the hash of the previous block
             var previousBlock = getPreviousPrice()
             var previousHash = previousBlock.hash
             
             // Calls the nonce function to get to calculate the nonce of the block and thereby making the block immutable
-            var nonce = calculateNonce('price')
+            // var nonce = calculateNonce('price')
 
+            
             // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
             var dateTime = new Date().getTime().toString()
-
+            
+            var calculatedHash = hash(index.toString(), providerID + price.toString(), previousHash, dateTime.toString())
             // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
             var block = {
                 'index' : index, 
-                'nonce' : nonce,
+                'nonce' : 0,
                 'providerID' : providerID,
                 'price' : price,
-                'hash' : hash(index.toString(), nonce, providerID + price.toString(), previousHash, dateTime.toString()),
+                'hash' : calculatedHash,
                 'previousHash' : previousHash,
                 'timeStamp' : dateTime,
-                'blocked' : false
+                'blocked' : false,
             }
 
             // Adds the block to the chain
             chain.prices.push(block)
 
             // Writes the updated blockchain to the json file belonging to the correct household
-            fs.writeFileSync('./middleware/Validator/Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+            fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
             return new Promise((resolve, reject) => {
                 resolve(200)
             });
@@ -185,9 +191,9 @@ function createPrice(providerID, price) {
 function createProvider(providerID) {
     // Checks if the blockchain is created before adding the new block
     try {
-        if (fs.existsSync('./middleware/Validator/Blockchain/Validator.json')) {
+        if (fs.existsSync('./Blockchain/Validator.json')) {
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
-            var snapshot = fs.readFileSync('./middleware/Validator/Blockchain/Validator.json')
+            var snapshot = fs.readFileSync('./Blockchain/Validator.json')
             var json = JSON.parse(snapshot)
             var chain = json
             var index = chain.providers.length
@@ -197,17 +203,19 @@ function createProvider(providerID) {
             var previousHash = previousBlock.hash
             
             // Calls the nonce function to get to calculate the nonce of the block and thereby making the block immutable
-            var nonce = calculateNonce('provider')
+            // var nonce = calculateNonce('provider')
 
+            
             // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
             var dateTime = new Date().getTime().toString()
-
+            
+            var calculatedHash = hash(index.toString(),providerID, previousHash, dateTime.toString())
             // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
             var block = {
                 'index' : index, 
-                'nonce' : nonce,
+                'nonce' : 0,
                 'providerID' : providerID,
-                'hash' : hash(index.toString(), nonce, providerID, previousHash, dateTime.toString()),
+                'hash' : calculatedHash,
                 'previousHash' : previousHash,
                 'timeStamp' : dateTime,
                 'blocked' : false
@@ -217,7 +225,7 @@ function createProvider(providerID) {
             chain.providers.push(block)
 
             // Writes the updated blockchain to the json file belonging to the correct household
-            fs.writeFileSync('./middleware/Validator/Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+            fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
             return new Promise((resolve, reject) => {
                 resolve(200)
             });
