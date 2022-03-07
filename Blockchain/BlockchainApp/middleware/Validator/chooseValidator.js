@@ -71,7 +71,7 @@ function generateValidatorNode(){
         // Finds a random validator node
         var index = Math.floor(Math.random() * parseInt(maxIndex))
         console.log(index)
-        if (arr.includes(index)){
+        if (arr.includes(index) || index == 0){
             i--
         } else {
             arr.push(index)
@@ -79,7 +79,6 @@ function generateValidatorNode(){
     }
     pingCandidates()
 }
-validate()
 // setInterval(generateValidatorNode, 90000)
 
 // module.exports = [arr]

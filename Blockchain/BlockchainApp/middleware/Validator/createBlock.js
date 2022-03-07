@@ -3,7 +3,6 @@ const hash = require('./hash')
 const getPreviousBlock = require('./previousBlock')
 const paths = require('../../util/blockchainPath');
 
-
 const getPreviousNode = getPreviousBlock.getPreviousNode
 const getPreviousPrice = getPreviousBlock.getPreviousPrice
 
@@ -246,6 +245,6 @@ function createProvider(providerID) {
     }
 }
 
-createNode('kafkaksdk', '127.0.0.1')
-createPrice('gsdgsd', '1.66')
+// createNode('kafkaksdk', '127.0.0.1')
+// createPrice('gsdgsd', '1.66')
 module.exports = {createNode, createPrice, createProvider}

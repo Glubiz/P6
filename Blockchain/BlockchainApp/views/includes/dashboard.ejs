@@ -1,11 +1,13 @@
-<section class="container">
-    <h2>
-        You are now logged in
-    </h2>
-    <form action="addme" method="post">
+<section class="container module-outer login__container">
+    <form action="addme" method="post" class="module-inner">
+        <div class="login__group">
+            <div>
+                <input type="text" name="IP" id="IP">
+                <label for="IP" class="login__label">IP</label>
+            </div>
+        </div>
         <input type="hidden" value="api" name="apikey" id="apikey">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <input type="text" name="IP" id="IP">
         <input type="submit" value="Submit">
     </form>
 </section>
