@@ -2,7 +2,7 @@ const fs = require('fs');
 const paths = require('../../util/blockchainPath');
 
 function searchIndex(data){
-    var chain = JSON.parse(fs.readFileSync(paths.testPath))
+    var chain = JSON.parse(fs.readFileSync(paths.path))
     chain = chain.nodes
     const result = chain.filter(block => block.index == data)
     return result
@@ -10,7 +10,7 @@ function searchIndex(data){
 }
 
 function searchNonce(){
-    var chain = JSON.parse(fs.readFileSync(paths.testPath))
+    var chain = JSON.parse(fs.readFileSync(paths.path))
     chain = chain.nodes
     const result = chain.filter(block => block.nonce == 0)
     return result
