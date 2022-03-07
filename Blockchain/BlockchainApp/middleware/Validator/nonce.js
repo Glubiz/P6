@@ -1,5 +1,6 @@
 const SHA256 = require('crypto-js/sha256');
 const fs = require('fs');
+const paths = require('../../util/blockchainPath');
 
 function nonce(hash) {
     // Instantiates the newNonce variable, which is used to calculate the nonce of the block
@@ -19,37 +20,34 @@ function nonce(hash) {
 }
 
 function getNodes(){
-    var chain = JSON.parse(fs.readFileSync('./Blockchain/Validator.json'))
+    var chain = JSON.parse(fs.readFileSync(paths.path))
     var nodes = chain.nodes
     const result = nodes.filter(block => block.nonce == 0)
     for (let block of result) {
         nodes[block.index].nonce = nonce(block.hash)
     }
     console.log(result)
-    fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+    fs.writeFileSync(paths.path, JSON.stringify(chain, null, 4))
 }
 
 function getPrices(){
-    var chain = JSON.parse(fs.readFileSync('./Blockchain/Validator.json'))
+    var chain = JSON.parse(fs.readFileSync(paths.path))
     var prices = chain.prices
     const result = prices.filter(block => block.nonce == 0)
     for (let block of result) {
         prices[block.index].nonce = nonce(block.hash)
     }
-    fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+    fs.writeFileSync(paths.path, JSON.stringify(chain, null, 4))
 }
 
 function getProviders(){
-    var chain = JSON.parse(fs.readFileSync('./Blockchain/Validator.json'))
+    var chain = JSON.parse(fs.readFileSync(paths.path))
     var providers = chain.providers
     const result = providers.filter(block => block.nonce == 0)
     for (let block of result) {
         providers[block.index].nonce = nonce(block.hash)
     }
-    fs.writeFileSync('./Blockchain/Validator.json', JSON.stringify(chain, null, 4))
+    fs.writeFileSync(paths.path, JSON.stringify(chain, null, 4))
 }
 
-getNodes()
-getPrices()
-getProviders()
-module.exports = {getNodes, getPrices, getProviders}
+module.exports = {getNodes, getPrices, getProviders, nonce}
