@@ -1,8 +1,8 @@
 const fs = require('fs')
-const Nonce = require('./nonce')
+// const Nonce = require('./nonce')
 const search = require('./search')
 const paths = require('../../util/blockchainPath');
-const calcNonce = Nonce.nonce
+// const calcNonce = Nonce.nonce
 
 var arr = []
 var success = []
@@ -10,9 +10,9 @@ var success = []
 function validate(){
     var chain = JSON.parse(fs.readFileSync(paths.path))
     var nodes = chain.nodes
-    var work = search.searchNonce()
+    // var work = search.searchNonce()
     for (var i = 0; i < work.length; i++) {
-        nodes[work[i].index].nonce = calcNonce(work[i].hash)
+        // nodes[work[i].index].nonce = calcNonce(work[i].hash)
     }
     chain.nodes = nodes
     fs.writeFileSync(paths.path, JSON.stringify(chain, null, 4))

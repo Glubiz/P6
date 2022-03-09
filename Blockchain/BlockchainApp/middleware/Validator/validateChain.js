@@ -1,6 +1,6 @@
 const fs = require('fs')
 const hash = require('./hash')
-const nonce = require('./nonce')
+// const nonce = require('./nonce')
 const paths = require('../../util/blockchainPath');
 
 // module.exports = 
