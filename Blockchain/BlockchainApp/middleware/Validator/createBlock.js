@@ -76,44 +76,52 @@ function createNode(areaCode, chainID, ip) {
         if (fs.existsSync(paths.path)) {
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
             var snapshot = fs.readFileSync(paths.path)
-            var json = JSON.parse(snapshot)
-            var chain = json
-            var index = chain.nodes.length
+            var search = snapshot.nodes
+            const result = search.filter(block => block.chainID == chainID)
+            if (!result){
+                var json = JSON.parse(snapshot)
+                var chain = json
+                var index = chain.nodes.length
 
-            // Calls the getPreviousBlock function to collect the hash of the previous block
-            var previousBlock = getPreviousNode()
-            var previousHash = previousBlock.hash
-            
-            // Calls the nonce function to get to calculate the nonce of the block and thereby making the block immutable
-            // var nonce = calculateNonce('node')
+                // Calls the getPreviousBlock function to collect the hash of the previous block
+                var previousBlock = getPreviousNode()
+                var previousHash = previousBlock.hash
+                
+                // Calls the nonce function to get to calculate the nonce of the block and thereby making the block immutable
+                // var nonce = calculateNonce('node')
 
-            
-            // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-            var dateTime = new Date().getTime().toString()
-            
-            var calculatedHash = hash(index.toString(), chainID + '4000', previousHash, dateTime.toString())
-            // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
-            var block = {
-                'index' : index, 
-                'areaCode' : areaCode,
-                'chainID' : chainID,
-                'IP' : ip,
-                'port' : '4000',
-                'hash' : calculatedHash,
-                'previousHash' : previousHash,
-                'timeStamp' : dateTime,
-                'validaterCandidate' : false,
-                'blocked' : false
+                
+                // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
+                var dateTime = new Date().getTime().toString()
+                
+                var calculatedHash = hash(index.toString(), chainID + '4000', previousHash, dateTime.toString())
+                // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
+                var block = {
+                    'index' : index, 
+                    'areaCode' : areaCode,
+                    'chainID' : chainID,
+                    'IP' : ip,
+                    'port' : '4000',
+                    'hash' : calculatedHash,
+                    'previousHash' : previousHash,
+                    'timeStamp' : dateTime,
+                    'validaterCandidate' : false,
+                    'blocked' : false
+                }
+
+                // Adds the block to the chain
+                chain.nodes.push(block)
+
+                // Writes the updated blockchain to the json file belonging to the correct household
+                fs.writeFileSync(paths.path, JSON.stringify(chain, null, 4))
+                return new Promise((resolve, reject) => {
+                    resolve(200)
+                });
+            } else {
+                return new Promise((resolve, reject) => {
+                    resolve(500)
+                });
             }
-
-            // Adds the block to the chain
-            chain.nodes.push(block)
-
-            // Writes the updated blockchain to the json file belonging to the correct household
-            fs.writeFileSync(paths.path, JSON.stringify(chain, null, 4))
-            return new Promise((resolve, reject) => {
-                resolve(200)
-            });
         } else {
             // Loads the genesis block, this is only done once
             createGenesis()
@@ -133,44 +141,53 @@ function createProvider(providerID, private, areaCode) {
     // Checks if the blockchain is created before adding the new block
     try {
         if (fs.existsSync(paths.path)) {
+            
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
             var snapshot = fs.readFileSync(paths.path)
-            var json = JSON.parse(snapshot)
-            var chain = json
-            var index = chain.providers.length
-            
-            // Calls the getPreviousBlock function to collect the hash of the previous block
-            var previousBlock = getPreviousProvider()
-            var previousHash = previousBlock.hash
-            
-            // Calls the nonce function to get to calculate the nonce of the block and thereby making the block immutable
-            // var nonce = calculateNonce('provider')
-            
-            
-            // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-            var dateTime = new Date().getTime().toString()
-            
-            var calculatedHash = hash(index.toString(),providerID, previousHash, dateTime.toString(), private.toString())
-            // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
-            var block = {
-                'index' : index, 
-                'providerID' : providerID,
-                'hash' : calculatedHash,
-                'previousHash' : previousHash,
-                'timeStamp' : dateTime,
-                'private' : private,
-                'areaCode' : areaCode,
-                'blocked' : false
+            var search = snapshot.providers
+            const result = search.filter(block => block.providerID == providerID)
+            if (!result){
+                var json = JSON.parse(snapshot)
+                var chain = json
+                var index = chain.providers.length
+                
+                // Calls the getPreviousBlock function to collect the hash of the previous block
+                var previousBlock = getPreviousProvider()
+                var previousHash = previousBlock.hash
+                
+                // Calls the nonce function to get to calculate the nonce of the block and thereby making the block immutable
+                // var nonce = calculateNonce('provider')
+                
+                
+                // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
+                var dateTime = new Date().getTime().toString()
+                
+                var calculatedHash = hash(index.toString(),providerID, previousHash, dateTime.toString(), private.toString())
+                // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
+                var block = {
+                    'index' : index, 
+                    'providerID' : providerID,
+                    'hash' : calculatedHash,
+                    'previousHash' : previousHash,
+                    'timeStamp' : dateTime,
+                    'private' : private,
+                    'areaCode' : areaCode,
+                    'blocked' : false
+                }
+                
+                // Adds the block to the chain
+                chain.providers.push(block)
+                
+                // Writes the updated blockchain to the json file belonging to the correct household
+                fs.writeFileSync(paths.path, JSON.stringify(chain, null, 4))
+                return new Promise((resolve, reject) => {
+                    resolve(200)
+                });
+            } else {
+                return new Promise((resolve, reject) => {
+                    resolve(500)
+                });
             }
-            
-            // Adds the block to the chain
-            chain.providers.push(block)
-            
-            // Writes the updated blockchain to the json file belonging to the correct household
-            fs.writeFileSync(paths.path, JSON.stringify(chain, null, 4))
-            return new Promise((resolve, reject) => {
-                resolve(200)
-            });
         } else {
             // Loads the genesis block, this is only done once
             createGenesis()
@@ -243,6 +260,6 @@ function createPrice(providerID, price, amount) {
         });
     }
 }
-// createNode('kafkaksdk', '127.0.0.1')
-// createPrice('gsdgsd', '1.66')
+createNode(9000, 'kafkaksdk', '127.0.0.1')
+createPrice('gsdgsd', '1.66', '1000')
 module.exports = {createNode, createPrice, createProvider}
