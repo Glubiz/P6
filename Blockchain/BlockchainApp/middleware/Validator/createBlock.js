@@ -119,7 +119,7 @@ function createNode(areaCode, chainID, ip) {
                 });
             } else {
                 return new Promise((resolve, reject) => {
-                    resolve(500)
+                    reject(500)
                 });
             }
         } else {
@@ -185,7 +185,7 @@ function createProvider(providerID, private, areaCode) {
                 });
             } else {
                 return new Promise((resolve, reject) => {
-                    resolve(500)
+                    reject(500)
                 });
             }
         } else {
