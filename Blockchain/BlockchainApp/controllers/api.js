@@ -12,6 +12,7 @@ const validateChain = require('../middleware/Validator/validateChain');
 exports.addMe = (req, res, next) => {
   const IP = req.body.IP
   const apiKey = req.body.apikey
+  const areaCode = "9000"
 
   //Skal skiftes
   if (apiKey === 'api'){
@@ -19,7 +20,7 @@ exports.addMe = (req, res, next) => {
     // .get('http://' + IP + ':3033/sendData')
     // .then(data => {
       var chainID = 'adsadjj112'
-      createBlock.createNode(chainID, IP)
+      createBlock.createNode(areaCode, chainID, IP)
       .then(response => {
         res.status(response).send("OK")
       })

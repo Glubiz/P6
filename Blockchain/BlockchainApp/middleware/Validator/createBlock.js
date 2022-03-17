@@ -77,6 +77,7 @@ function createNode(areaCode, chainID, ip) {
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
             var snapshot = fs.readFileSync(paths.path)
             var search = snapshot.nodes
+            console.log(snapshot)
             const result = search.filter(block => block.chainID == chainID)
             if (!result){
                 var json = JSON.parse(snapshot)
@@ -260,6 +261,6 @@ function createPrice(providerID, price, amount) {
         });
     }
 }
-createNode(9000, 'kafkaksdk', '127.0.0.1')
-createPrice('gsdgsd', '1.66', '1000')
+// createNode(9000, 'kafkaksdk', '127.0.0.1')
+// createPrice('gsdgsd', '1.66', '1000')
 module.exports = {createNode, createPrice, createProvider}
