@@ -70,6 +70,7 @@ function createGenesis(){
     fs.writeFileSync(paths.path, JSON.stringify(chain, null, 4))
 }
 
+// Function for adding validation nodes (gateways) to the blockcahin. Will be called once a new gateway is connected to the internet.
 function createNode(areaCode, chainID, ip) {
     // Checks if the blockchain is created before adding the new block
     try {
@@ -138,6 +139,7 @@ function createNode(areaCode, chainID, ip) {
     }
 }
 
+// Function for adding new electricity providers to the blockchain. Will be called once a new provider is signing up to the ecosystem
 function createProvider(providerID, private, areaCode) {
     // Checks if the blockchain is created before adding the new block
     try {
@@ -204,6 +206,7 @@ function createProvider(providerID, private, areaCode) {
     }
 }
 
+// Function for adding prices to the blockchain. Will be called frequently once provides change the price. (may be switched for the transaction chain)
 function createPrice(providerID, price, amount) {
     // Checks if the blockchain is created before adding the new block
     try {
