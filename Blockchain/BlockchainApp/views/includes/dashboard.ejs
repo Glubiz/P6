@@ -1,7 +1,10 @@
 <section class="container module-outer login__container">
-    <form action="addme" method="post" class="module-inner">
+    <form action="addnode" method="post" class="module-inner">
         <div class="login__group">
             <div>
+                <h2>
+                    Test add Node
+                </h2>
                 <input type="text" name="IP" id="IP">
                 <label for="IP" class="login__label">IP</label>
             </div>
@@ -10,4 +13,22 @@
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input type="submit" value="Submit">
     </form>
+
+</section>
+<section class="container module-outer login__container">
+    <form action="addprovider" method="post" class="module-inner">
+        <div class="login__group">
+            <div>
+                <h2>
+                    Test add Provider
+                </h2>
+                <input type="text" name="Name" id="Name">
+                <label for="Name" class="login__label">Name</label>
+            </div>
+        </div>
+        <input type="hidden" value="api" name="apikey" id="apikey">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="submit" value="Submit">
+    </form>
+
 </section>

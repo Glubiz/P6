@@ -107,6 +107,7 @@ function createNode(areaCode, chainID, ip) {
                     'hash' : calculatedHash,
                     'previousHash' : previousHash,
                     'timeStamp' : dateTime,
+                    'pings' : 0,
                     'validaterCandidate' : false,
                     'blocked' : false
                 }

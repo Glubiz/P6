@@ -1,4 +1,4 @@
 //Preinstalled packages
-var path = './middleware/Validator/Blockchain/Validator.json'
-var testPath = './Blockchain/Validator.json'
+var path = './middleware/Blockchain/Storage/Master.json'
+var testPath = './Blockchain/Master.json'
 module.exports = {path, testPath};

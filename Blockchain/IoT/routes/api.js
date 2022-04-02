@@ -7,6 +7,6 @@ const Controller = require('../controllers/api');
 const router = express.Router();
 
 //Pages
-router.get('/api/getNumber', Controller.getNumber);
+router.get('/api/get', Controller.get);
 
 module.exports = router;
