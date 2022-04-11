@@ -1,0 +1,14 @@
+#ChartDiv{
+    width: 35rem;
+    height: 30rem;
+
+    & > canvas {
+        width: 50rem !important;
+        height: 30rem !important;
+    }
+}
+
+#chart{
+    width: 100%;
+    height: 100%;
+}

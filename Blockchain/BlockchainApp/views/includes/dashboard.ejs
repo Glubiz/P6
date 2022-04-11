@@ -1,34 +1,37 @@
-<section class="container module-outer login__container">
-    <form action="addnode" method="post" class="module-inner">
-        <div class="login__group">
-            <div>
-                <h2>
-                    Test add Node
-                </h2>
-                <input type="text" name="IP" id="IP">
-                <label for="IP" class="login__label">IP</label>
+<section class="dashboard">
+    <div class="dashboard-container module-outer"> 
+        <div class="dashboard-container__data">
+            <div class="dashboard-container__data-header">
+                Current provider
+            </div>
+            <div class="dashboard-container__data-text">
+                asd
             </div>
         </div>
-        <input type="hidden" value="api" name="apikey" id="apikey">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <input type="submit" value="Submit">
-    </form>
-
-</section>
-<section class="container module-outer login__container">
-    <form action="addprovider" method="post" class="module-inner">
-        <div class="login__group">
-            <div>
-                <h2>
-                    Test add Provider
-                </h2>
-                <input type="text" name="Name" id="Name">
-                <label for="Name" class="login__label">Name</label>
+        <div class="dashboard-container__data">
+            <div class="dashboard-container__data-header">
+                Current price
+            </div>
+            <div class="dashboard-container__data-text">
+                123
             </div>
         </div>
-        <input type="hidden" value="api" name="apikey" id="apikey">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <input type="submit" value="Submit">
-    </form>
+        <div class="dashboard-container__data">
+            <div class="dashboard-container__data-header">
+                Next purchase
+            </div>
+            <div class="dashboard-container__data-text">
+                10 min
+            </div>
+        </div>
+    </div>
 
+    <div class="dashboard-container module-outer login__container">
+        <div id="ChartDiv">
+
+        </div>
+        <canvas id="chart">
+
+        </canvas>
+    </div>
 </section>

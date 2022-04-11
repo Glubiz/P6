@@ -20,10 +20,17 @@ exports.getDashboard = (req, res, next) => {
       nodes: chain.nodes,
       providers: chain.providers,
       prices: chain.prices,
-      pageTitle: 'Index',
+      pageTitle: 'Dashboard',
       path: '/Dashboard/' +  req.session.userID
     });
   }
+};
+
+exports.getDev = (req, res, next) => {
+  res.render('main/dev', {
+    pageTitle: 'Development',
+    path: '/Dev'
+  });
 };
 
 exports.getAbout = (req, res, next) => {
