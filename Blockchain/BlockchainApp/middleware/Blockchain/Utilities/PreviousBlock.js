@@ -1,7 +1,6 @@
 const fs = require('fs')
 const paths = require('./../../../util/blockchainPath');
 
-
 module.exports = {
     getPreviousEvent(){
         // Loads the blockchain into the chain variable
@@ -29,10 +28,10 @@ module.exports = {
     }, 
     getPreviousPrice(){
         // Loads the blockchain into the chain variable
-        var chain = JSON.parse(fs.readFileSync(paths.path))
+        var Chain = JSON.parse(fs.readFileSync('./../Storage/Master.json'))
 
         // The previousblock is equal to the length of the chain minus 1, since it is zero indexed
-        var previousBlock = chain.prices[chain.prices.length-1]
+        var previousBlock = Chain.PriceFunctions[Chain.PriceFunctions.length - 1]
         return previousBlock
     },
     getPreviousProvider(){

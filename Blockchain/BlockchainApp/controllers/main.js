@@ -3,6 +3,14 @@ const fs = require('fs')
 //This file contains all the pages that can be loaded on the website
 exports.getIndex = (req, res, next) => {
   // console.log("test")
+  res.render('main/index', {
+    pageTitle: 'Home',
+    path: '/'
+  });
+};
+
+exports.getDashboard = (req, res, next) => {
+  // console.log("test")
   if (!res.locals.isAuthenticated){
     res.redirect('/Login')
   } else {
@@ -13,7 +21,7 @@ exports.getIndex = (req, res, next) => {
       providers: chain.providers,
       prices: chain.prices,
       pageTitle: 'Index',
-      path: '/'
+      path: '/Dashboard/' +  req.session.userID
     });
   }
 };

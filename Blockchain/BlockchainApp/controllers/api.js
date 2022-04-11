@@ -35,6 +35,11 @@ exports.validate = (req, res, next) => {
   console.log(temp)
 }
 
+exports.Ping = (req, res, next) => {
+  console.log("Pinged")
+  res.status(200).send("OK")
+}
+
 //Kun til test, skal laves i Python eller Java på gatewayen
 exports.sendData = (req, res, next) => {
   res.status(200).send("ckskkdkcskkasa12")

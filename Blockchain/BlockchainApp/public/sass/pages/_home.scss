@@ -1,10 +1,8 @@
 main{
     width: 100vw;
-    height: 88vh;
-    padding: 3rem 8rem;
+    min-height: 88vh;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -13,7 +11,6 @@ main{
         display: none;
     }
     @include respond(tab) {
-        padding: .5rem 1rem;
         // height: auto;
         // overflow: auto;
     }
@@ -50,5 +47,58 @@ main{
         background-color: rgba($color-secondary,0.2);
         padding: 1rem 3rem;
         border-radius: .5rem;
+    }
+}
+
+.video{
+    background-image: url("/images/power.mp4");
+    background-repeat: no-repeat;
+    background-size: 150rem;
+    background-position: 160% 50%;
+}
+
+.blockchain{
+    background-image: url("/images/blockchain.png");
+    background-repeat: no-repeat;
+    background-size: 120rem;
+    background-position: 0% 50%;
+}
+
+.info{
+    height: 50rem;
+    
+    opacity: .7;
+    & > div{
+
+        height: 100%;
+    }
+    &-box{
+        &-left{
+            clip-path: polygon(0rem 0rem, 45% 0, 55% 100%, 0% 100%);
+            &-text{
+                padding-right: 55%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                hyphens: auto;
+                & > h2{
+                    width: 100%;
+                }
+            }
+        }
+        &-right{
+            clip-path: polygon(100% 0rem, 55% 0, 45% 100%, 100% 100%);
+            &-text{
+                padding-left: 55%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                & > h2{
+                    width: 100%;
+                }
+            }
+        }
     }
 }

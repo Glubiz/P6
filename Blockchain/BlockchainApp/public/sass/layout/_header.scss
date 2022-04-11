@@ -14,18 +14,13 @@ header, footer{
 	-webkit-align-items: center;
 	align-items: center;
 	position: relative;
-	height: 6vh;
 	
-	
-	@include respond(tab) {
-		height: 8.5vh;
-    }
-
 	& > div{
 		margin: 0 2rem;
 	}
 }
 header {
+	height: 6vh;
 	background: linear-gradient(to bottom, $color-secondary, $color-tertiary);
 	& > #icon__box{
 		
@@ -39,5 +34,27 @@ header {
 	& > .header__sides{
 		width: 20%;
 	}
+
+	@include respond(tab) {
+		height: 8.5vh;
+    }
 	
+}
+
+footer{
+	min-height: 6vh;
+	display: flex;
+
+	@include respond(tab) {
+		min-height: 8.5vh;
+    }
+}
+
+.header__index{
+	height: 6vh;
+
+	// &__video{
+	// 	z-index: -1;
+
+	// }
 }

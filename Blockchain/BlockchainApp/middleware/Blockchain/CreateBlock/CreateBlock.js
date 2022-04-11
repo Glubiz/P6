@@ -7,7 +7,7 @@ const PreviousBlock = require('./../Utilities/PreviousBlock')
 const getPreviousEvent = PreviousBlock.getPreviousEvent
 const getPreviousNode = PreviousBlock.getPreviousNode
 const getPreviousArea = PreviousBlock.getPreviousArea
-// const getPreviousPrice = getPreviousBlock.getPreviousPrice
+const getPreviousPrice = PreviousBlock.getPreviousPrice
 
 
 const CreateGenesis = () => {
@@ -47,7 +47,7 @@ const CreateGenesis = () => {
     });
 }
 
-const CreateEvent = async (Type, ID, Area = 0, IP = 0, Port = 0, Areas = "*", Top = 0, Bottom = 0, ...args) => {
+const CreateEvent = async (Type, ID, ...args) => {
     try {
         if (fs.existsSync('./../Storage/Master.json')) {
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
@@ -63,27 +63,28 @@ const CreateEvent = async (Type, ID, Area = 0, IP = 0, Port = 0, Areas = "*", To
             //Event Hash
             var EventHash = Hash(Type + ID, PreviousHash, DateTime)
             // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
-             var Block = { 
-                 'Type' : Type,
-                 'Caller' : ID,
-                 'Hash' : EventHash,
-                 'PreviousHash' : PreviousHash,
-                 'TimeStamp' : DateTime,
-             }
-             Chain = JSON.parse(fs.readFileSync('./../Storage/Master.json'))
-             Chain.Events.push(Block)
-             fs.writeFileSync('./../Storage/Master.json', JSON.stringify(Chain, null, 4)) 
-             console.log('1')
+            var Block = { 
+                'Type' : Type,
+                'Caller' : ID,
+                'Hash' : EventHash,
+                'PreviousHash' : PreviousHash,
+                'TimeStamp' : DateTime,
+                'Status' : 'Pending'
+            }
+
+            // Loads chain
+            Chain = JSON.parse(fs.readFileSync('./../Storage/Master.json'))
+            Chain.Events.push(Block)
+            fs.writeFileSync('./../Storage/Master.json', JSON.stringify(Chain, null, 4)) 
 
             if (Type === 'Create Node'){
-                console.log("Create")
-                await CreateNode(EventHash, ID, IP, Port, Area)
+                await CreateNode(EventHash, ID, args[0], args[1], args[2])
             } else if (Type === 'Create Provider'){
-                CreateProvider(EventHash = EventHash, Areas = Areas)
-                .then(Status = 'Success')
+                await CreateProvider(EventHash, ID, args[0], args[1])
             } else if (Type === 'Create Price Function'){
-                CreatePriceFunction(EventHash = EventHash, ID = ID, Top = Top, Bottom = Bottom)
-                .then(Status = 'Success')
+                await CreatePriceFunction(EventHash, ID, args[0], args[1], args[2])
+            } else if (Type === 'Create Transaction'){
+                await CreateTransaction(EventHash, ID, args[0], args[1], args[2])
             }
 
             return new Promise((resolve) => {
@@ -91,7 +92,7 @@ const CreateEvent = async (Type, ID, Area = 0, IP = 0, Port = 0, Areas = "*", To
             })
         } else {
             await CreateGenesis()
-            CreateEvent(Type, ID, Area, IP, Port, Areas, Top, Bottom, ...args)
+            CreateEvent(Type, ID, ...args)
         }
     } catch (e) {
         console.error(e)
@@ -103,6 +104,7 @@ const CreateEvent = async (Type, ID, Area = 0, IP = 0, Port = 0, Areas = "*", To
 
 const CreateNode = async (EventHash, ID, IP, Port, Area) => {
     var AreaIndex
+    
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
     var Chain = JSON.parse(fs.readFileSync('./../Storage/Master.json'))
     const AreaCheck = Chain.Areas.filter(area => area.AreaID == Area)
@@ -110,7 +112,6 @@ const CreateNode = async (EventHash, ID, IP, Port, Area) => {
         await CreateArea(EventHash, Area)
         Chain = JSON.parse(fs.readFileSync('./../Storage/Master.json'))
     }
-    console.log(ID)
 
     for(let i = 0; i < Chain.Areas.length; i++) {
         if(Chain.Areas[i].AreaID === Area){
@@ -152,7 +153,61 @@ const CreateNode = async (EventHash, ID, IP, Port, Area) => {
     });
 }
 
-const CreateProvider = (EventHash, ID, Areas = '*') => {
+const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
+    var AreaIndex
+    var Price
+    Usage /= 1000 
+
+    // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
+    var Chain = JSON.parse(fs.readFileSync('./../Storage/Master.json'))
+
+    for(let i = 0; i < Chain.Areas.length; i++) {
+        if(Chain.Areas[i].AreaID === Area){
+            if(Chain.Areas[i].Transactions.length > 0){
+                // Calls the getPreviousBlock function to collect the hash of the previous block
+                var PreviousHash = Chain.Areas[i].Transactions[Chain.Areas[i].Transactions.length - 1].Hash
+            } else {
+                var PreviousHash = EventHash
+            }
+            AreaIndex = i
+        }
+    }
+
+
+    var time = new Date()
+    time = parseFloat(time.getHours() + '.' + parseInt((time.getMinutes() / 60) * 100))
+
+    var PriceFunctions = Chain.PriceFunctions.filter(price => price.Areas === '*' || price.Areas === Area && price.ProviderID === Provider)
+    Price = (((parseInt(PriceFunctions[0].Top - PriceFunctions[0].Bottom)) / 2) * Math.sin(0.5 * (time - 6.5)) + 50) * Usage
+
+    Price /= 7.5
+    // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
+    var DateTime = new Date().getTime().toString()
+
+    //Event Hash
+    var NodeHash = Hash(EventHash + ID + Provider + Price, PreviousHash, DateTime)
+
+    // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
+    var Block = { 
+        'EventHash' : EventHash,
+        'NodeID' : ID,
+        'ProviderID' : Provider,
+        'Price' : Price,
+        'Hash' : NodeHash,
+        'PreviousHash' : PreviousHash,
+        'TimeStamp' : DateTime,
+        'AmountBought' : Usage,
+    }
+
+    Chain.Areas[AreaIndex].Transactions.push(Block)
+    fs.writeFileSync('./../Storage/Master.json', JSON.stringify(Chain, null, 4))
+
+    return new Promise((resolve) => {
+        resolve()
+    });
+}
+
+const CreateProvider = (EventHash, ID, Private = false, Areas = '*') => {
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
     var Chain = JSON.parse(fs.readFileSync('./../Storage/Master.json'))
 
@@ -178,7 +233,7 @@ const CreateProvider = (EventHash, ID, Areas = '*') => {
         'PreviousHash' : PreviousHash,
         'TimeStamp' : DateTime,
         'Blocked' : false,
-        'Private' : 0,
+        'Private' : Private,
         'Areas' : Areas
     }
 
@@ -190,13 +245,13 @@ const CreateProvider = (EventHash, ID, Areas = '*') => {
     });
 }
 
-const CreatePriceFunction = (EventHash, ID, Areas = '*') => {
+const CreatePriceFunction = (EventHash, ID, Top, Bottom, Areas) => {
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
     var Chain = JSON.parse(fs.readFileSync('./../Storage/Master.json'))
 
     if(Chain.PriceFunctions.length > 0){
         // Calls the getPreviousBlock function to collect the hash of the previous block
-        var PreviousBlock = getPreviousProvider()
+        var PreviousBlock = getPreviousPrice()
         var PreviousHash = PreviousBlock.Hash
     } else {
         var PreviousHash = EventHash
@@ -204,6 +259,10 @@ const CreatePriceFunction = (EventHash, ID, Areas = '*') => {
 
     // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
     var DateTime = new Date().getTime().toString()
+
+    var Updated = DateTime
+
+    // PriceFunction = ((Top - Bottom) / 2) * Math.sin(0.5 * (x - 6.5)) + 50
 
     //Event Hash
     var PriceFunctionHash = Hash(EventHash + ID, PreviousHash, DateTime)
@@ -215,10 +274,13 @@ const CreatePriceFunction = (EventHash, ID, Areas = '*') => {
         'Hash' : PriceFunctionHash,
         'PreviousHash' : PreviousHash,
         'TimeStamp' : DateTime,
-        'Areas' : Areas
+        'Areas' : Areas,
+        'Top' : Top,
+        'Bottom' : Bottom,
+        'Updated' : Updated
     }
 
-    Chain.Providers.push(Block)
+    Chain.PriceFunctions.push(Block)
 
     fs.writeFileSync('./../Storage/Master.json', JSON.stringify(Chain, null, 4))
     return new Promise((resolve) => {
@@ -256,18 +318,24 @@ const CreateArea = (EventHash, ID) => {
     }
 
     Chain.Areas.push(Block)
-    // console.log(Chain)
-    Chain = JSON.stringify(Chain, null, 4)
-    // console.log(Chain)
 
-    fs.writeFileSync('./../Storage/Master.json', Chain, {flag: 'w'})
+    fs.writeFileSync('./../Storage/Master.json', JSON.stringify(Chain, null, 4), {flag: 'w'})
 
     return new Promise((resolve) => {
         resolve()
     });
 }
 
-CreateEvent(Type = 'Create Node', ID = '555', Area = "9000", IP = '127.0.0.1', Port = '3033')
+// CreateEvent(Type = 'Create Node', ID = '555', IP = '127.0.0.1', Port = '3033', Area = '9000')
+
+// CreateEvent(Type = 'Create Provider', ID = '666', Private = false, Areas = '*')
+// CreateEvent(Type = 'Create Price Function', ID = '666', Top = '60', Bottom = '40', Areas = '*')
+
+
+CreateEvent(Type = 'Create Transaction', ID = '555', Provider = '666', Area = '9000', Usage = '100')
+
+
+// CreateEvent(Type = 'Create Node', ID = '51352345', Area = "9000", IP = '127.0.0.1', Port = '3033')
 
 // CreateArea("aksfaks", "9000d")
 // CreateGenesis()

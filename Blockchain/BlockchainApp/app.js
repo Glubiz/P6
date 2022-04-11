@@ -60,7 +60,7 @@ app.use(errorController.get404);
 sequelize
   .sync()
   .then(result => {
-    app.listen(3033, '0.0.0.0');
+    app.listen(3033);
   })
   .catch(err => {
     console.log(err);
