@@ -1,5 +1,5 @@
 <section class="container module-outer login__container">
-    <form action="addnode" method="post" class="module-inner">
+    <form action="addNode" method="post" class="module-inner">
         <div class="login__group">
             <div>
                 <h2>
@@ -7,8 +7,12 @@
                 </h2>
                 <input type="text" name="IP" id="IP">
                 <label for="IP" class="login__label">IP</label>
+
+                <!-- <input type="text" name="Chain" id="Chain">
+                <label for="Chain" class="login__label">Chain</label> -->
             </div>
         </div>
+        
         <input type="hidden" value="api" name="apikey" id="apikey">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input type="submit" value="Submit">

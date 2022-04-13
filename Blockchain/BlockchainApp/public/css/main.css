@@ -89,6 +89,10 @@ a, p, h1 {
 a:hover {
   text-decoration: underline; }
 
+.subtext {
+  color: #ccc;
+  font-size: 1rem; }
+
 .u-center-text {
   text-align: center; }
 

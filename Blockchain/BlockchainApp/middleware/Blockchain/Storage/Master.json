@@ -1,104 +1,46 @@
 {
     "Chain": "Master",
-    "Instantiated": "1649413385115",
+    "Instantiated": "1649833457123",
     "Events": [
         {
             "Type": "Create Genesis",
             "Caller": "System",
-            "Hash": "e75f08035d2f5a491d054c40117fc58c9f777c36c5f041e08c69a4e9f0a2912f",
+            "Hash": "488be276279cd9254f1b24caf7ab7172340c1d3495d7829268564bb3951dbacb",
             "PreviousHash": "None",
-            "TimeStamp": "1649413385115"
+            "TimeStamp": "1649833457123"
         },
         {
             "Type": "Create Node",
-            "Caller": "555",
-            "Hash": "f7b5bb6dc4a1cad69c0e817de8fface5ba32a8b1c9b6fea9e02557f0b54cfcff",
-            "PreviousHash": "e75f08035d2f5a491d054c40117fc58c9f777c36c5f041e08c69a4e9f0a2912f",
-            "TimeStamp": "1649413385117",
-            "Status": "Pending"
-        },
-        {
-            "Type": "Create Provider",
-            "Caller": "666",
-            "Hash": "d2b0c89cab1f1c1ec1bd9bae540af26f778f955a6de3e8b26b9d21466fd788a0",
-            "PreviousHash": "f7b5bb6dc4a1cad69c0e817de8fface5ba32a8b1c9b6fea9e02557f0b54cfcff",
-            "TimeStamp": "1649413395370",
-            "Status": "Pending"
-        },
-        {
-            "Type": "Create Price Function",
-            "Caller": "666",
-            "Hash": "10c339618eb9ca8e6b2441324bef4732bce96c316ccb400ffaceb32c8bcb1ac0",
-            "PreviousHash": "d2b0c89cab1f1c1ec1bd9bae540af26f778f955a6de3e8b26b9d21466fd788a0",
-            "TimeStamp": "1649413405113",
-            "Status": "Pending"
-        },
-        {
-            "Type": "Create Transaction",
-            "Caller": "555",
-            "Hash": "92662f1007ab245c1f647b50b4bb34f5183ae166bbd7bd1d1c25bdb2b21ec425",
-            "PreviousHash": "10c339618eb9ca8e6b2441324bef4732bce96c316ccb400ffaceb32c8bcb1ac0",
-            "TimeStamp": "1649413414012",
+            "Caller": "bcd057d634045098bd62931d2d9211f7133badf6bed7fe6f397643076dd9075b",
+            "Hash": "92c5f801e63dca5f267e3d314474268a607e0c4823ecba339bddcff33c4ce64b",
+            "PreviousHash": "488be276279cd9254f1b24caf7ab7172340c1d3495d7829268564bb3951dbacb",
+            "TimeStamp": "1649833457124",
             "Status": "Pending"
         }
     ],
-    "Providers": [
-        {
-            "EventHash": "d2b0c89cab1f1c1ec1bd9bae540af26f778f955a6de3e8b26b9d21466fd788a0",
-            "ProviderID": "666",
-            "Hash": "c464f0aa37da1b757eeedda7c77f0f9a8a983e39fe31d6261299b8ceb6fa823f",
-            "PreviousHash": "d2b0c89cab1f1c1ec1bd9bae540af26f778f955a6de3e8b26b9d21466fd788a0",
-            "TimeStamp": "1649413395372",
-            "Blocked": false,
-            "Private": false,
-            "Areas": "*"
-        }
-    ],
-    "PriceFunctions": [
-        {
-            "EventHash": "10c339618eb9ca8e6b2441324bef4732bce96c316ccb400ffaceb32c8bcb1ac0",
-            "ProviderID": "666",
-            "Hash": "76d6df71f12a58bb488da33ad2252abe0d8c1f847c7d5d95c21d3d02f6613af4",
-            "PreviousHash": "10c339618eb9ca8e6b2441324bef4732bce96c316ccb400ffaceb32c8bcb1ac0",
-            "TimeStamp": "1649413405115",
-            "Areas": "*",
-            "Top": "60",
-            "Bottom": "40",
-            "Updated": "1649413405115"
-        }
-    ],
+    "Providers": [],
+    "PriceFunctions": [],
     "Areas": [
         {
-            "EventHash": "f7b5bb6dc4a1cad69c0e817de8fface5ba32a8b1c9b6fea9e02557f0b54cfcff",
+            "EventHash": "92c5f801e63dca5f267e3d314474268a607e0c4823ecba339bddcff33c4ce64b",
             "AreaID": "9000",
-            "Hash": "0e1c0fc5171c01b21584964ac4a00c193257d070841b6c423bfa21bcff55fa43",
-            "PreviousHash": "f7b5bb6dc4a1cad69c0e817de8fface5ba32a8b1c9b6fea9e02557f0b54cfcff",
-            "TimeStamp": "1649413385118",
+            "Hash": "2a29cea8dd77c52dcf8efdfc1b6f2f5f4404c3b648d7f0000eb2d00b7cdb712b",
+            "PreviousHash": "92c5f801e63dca5f267e3d314474268a607e0c4823ecba339bddcff33c4ce64b",
+            "TimeStamp": "1649833457125",
             "Nodes": [
                 {
-                    "EventHash": "f7b5bb6dc4a1cad69c0e817de8fface5ba32a8b1c9b6fea9e02557f0b54cfcff",
-                    "NodeID": "555",
-                    "IP": "127.0.0.1",
+                    "EventHash": "92c5f801e63dca5f267e3d314474268a607e0c4823ecba339bddcff33c4ce64b",
+                    "NodeID": "bcd057d634045098bd62931d2d9211f7133badf6bed7fe6f397643076dd9075b",
+                    "IP": "146.75.181.7",
                     "Port": "3033",
-                    "Hash": "8b930096017acbb55e828d81b57b541edb35ebbda87803d4bf346e5fd4b4e26d",
-                    "PreviousHash": "f7b5bb6dc4a1cad69c0e817de8fface5ba32a8b1c9b6fea9e02557f0b54cfcff",
-                    "TimeStamp": "1649413385118",
+                    "Hash": "3fc936f0b83ba1f2d3d926a076956bfd1976793f0816aadddcdfb85b81ac8b77",
+                    "PreviousHash": "92c5f801e63dca5f267e3d314474268a607e0c4823ecba339bddcff33c4ce64b",
+                    "TimeStamp": "1649833457126",
                     "Blocked": false,
                     "Pings": 0
                 }
             ],
-            "Transactions": [
-                {
-                    "EventHash": "92662f1007ab245c1f647b50b4bb34f5183ae166bbd7bd1d1c25bdb2b21ec425",
-                    "NodeID": "555",
-                    "ProviderID": "666",
-                    "Price": 0.6933639979629027,
-                    "Hash": "23726fdde84c107badee7619d835462de2689722727d548e283040b0d82ef1de",
-                    "PreviousHash": "92662f1007ab245c1f647b50b4bb34f5183ae166bbd7bd1d1c25bdb2b21ec425",
-                    "TimeStamp": "1649413414015",
-                    "AmountBought": 0.1
-                }
-            ]
+            "Transactions": []
         }
     ]
 }
