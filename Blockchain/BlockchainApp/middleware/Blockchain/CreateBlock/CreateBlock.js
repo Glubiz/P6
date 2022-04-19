@@ -340,5 +340,3 @@ const CreateArea = (EventHash, ID) => {
 // CreateGenesis()
 
 module.exports = CreateEvent;
-
-//Mangler locale variabler i Create Event som skal passes til de bagved læggende funktioner

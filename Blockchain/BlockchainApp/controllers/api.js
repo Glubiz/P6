@@ -8,14 +8,14 @@ const ApiKeys = require('../models/Keys')
 
 //Middleware
 const CreateEvent = require('../middleware/Blockchain/CreateBlock/CreateBlock');
-const CreateKey = require('../middleware/Blockchain/Utilities/CreateKey');
 
 exports.addNode = (req, res, next) => {
   var IP = req.body.IP
   const AreaCode = "9000"
   var Now = new Date().getTime().toString()
   var chainID = SHA256(IP, AreaCode, Now).toString()
-  
+  var Key
+
   ApiKeys.findOne({
     where: {
         ChainID : chainID
@@ -26,7 +26,7 @@ exports.addNode = (req, res, next) => {
           res.status(401).send("Not allowed")
       }
 
-      var Key = SHA256(chainID, "none", "hashthis").toString()
+      Key = SHA256(chainID, "none", "hashthis").toString()
       ApiKeys.create({
           Key : Key,
           ChainID : chainID
