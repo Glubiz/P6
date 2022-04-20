@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const { Op } = require("sequelize");
 const UserDB = require('../models/user')
+const PendingDB = require('../models/Pending')
+
 
 //OK
 exports.getLogin = (req, res, next) => {
@@ -53,19 +55,20 @@ exports.postLogin = (req, res, next) => {
             return res.redirect('/Login');  
         }
         bcrypt.compare(Password, user.Password)
-            .then(doMatch => {
-                if (doMatch){
-                    req.session.isLoggedIn = true;
-                    req.session.Email = Email
-                    req.session.userID = user.id
-                    req.flash('success', 'Success');
-                    return res.redirect('/User');
-                }
-            })
-            .catch(err => {
-                console.log(err);
-                res.redirect('/Login'); 
-            });
+        .then(doMatch => {
+            if (doMatch && user.Type !== 'Pending'){
+                req.session.isLoggedIn = true;
+                req.session.Email = Email
+                req.session.userID = user.id
+                req.session.Type = user.Type
+                req.flash('success', 'Success');
+                return res.redirect('/User');
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.redirect('/Login'); 
+        });
     })
     .catch(err => console.log(err));
 };
@@ -75,13 +78,10 @@ exports.postSignup = (req, res, next) => {
     const Email = req.body.Email;
     const Password = req.body.Password;
     const RepeatPassword = req.body.RPassword;
+    const Type = req.body.Type;
 
-    if(Password != RepeatPassword && validateEmail(Email)){
+    if(Password != RepeatPassword){
         req.flash('error', 'Passwords does not match');
-        return res.redirect('/Signup'); 
-    }
-    if(validateEmail(Email)){
-        req.flash('error', 'Invalid Email');
         return res.redirect('/Signup'); 
     }
     UserDB.findOne({where: {Email: Email}})
@@ -92,10 +92,24 @@ exports.postSignup = (req, res, next) => {
         } else {
             bcrypt.hash(Password, 12)
             .then(hashedPassword => {
-                UserDB.create({
-                    Email : Email,
-                    Password : hashedPassword
-                });
+                if(Type === 'Provider' || Type === 'Admin'){
+                    PendingDB.create({
+                        UserID : Email,
+                        Date : new Date().getTime(),
+                        Type : Type
+                    });
+                    UserDB.create({
+                        Email : Email,
+                        Password : hashedPassword,
+                        Type : "Pending"
+                    });
+                } else {
+                    UserDB.create({
+                        Email : Email,
+                        Password : hashedPassword,
+                        Type : Type
+                    });
+                }
             })
             .then(() => {
                 req.flash('success', 'Success');
@@ -199,10 +213,53 @@ exports.postChangePassword = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
-function validateEmail(){
-    if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value)){
-        return true 
-    } else {
-        return false
-    }
+exports.postReject = (req, res) => {
+    const ID = req.body.ID
+    PendingDB.findOne({
+        where: {
+            id: ID
+        }
+    })
+    .then(result => {
+        UserDB.destroy({
+            where: 
+            {
+                Email: result.UserID
+            }
+        })
+        PendingDB.destroy({
+            where: {
+                id: ID
+            }
+        })
+    })
+
+    res.redirect('/Admin');
+}
+
+exports.postApprove = (req, res) => {
+    const ID = req.body.ID
+    PendingDB.findOne({
+        where: {
+            id: ID
+        }
+    })
+    .then(result => {
+        UserDB.update({
+            Type : result.Type
+            }, {
+                where: {
+                Email: result.UserID
+            }
+        });
+        PendingDB.destroy({
+            where: {
+                id: ID
+            }
+        })
+
+        //Add to blockchain here
+    })
+
+    res.redirect('/Admin');
 }

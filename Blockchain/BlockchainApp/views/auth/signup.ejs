@@ -32,6 +32,17 @@
 
                 </div>
             </div>
+
+            <div class="login__group">
+                <div>
+                    <select name="Type" id="Type">
+                    <option value="Customer" selected>Customer</option>
+                    <option value="Provider">Provider</option>
+                    </select>
+                    <label for="Type" class="login__label">Type</label>
+                </div>
+            </div>
+            
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <!-- submit -->
             <div class="login__group">

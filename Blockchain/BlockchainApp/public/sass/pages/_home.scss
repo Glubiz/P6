@@ -56,36 +56,7 @@ main{
     }
 }
 
-.dashboard{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    &-container{
-        padding: 1rem 3rem;
-        margin:2rem;
-        min-width: 30rem;
-        width: 30%;
 
-        &__data{
-            display: flex;
-            justify-content:center;
-            align-items:center;
-            padding: 1rem 0;
-            width: 100%;
-            border-bottom: 1px solid $color-secondary;
-            &-header{
-                text-align: center;
-
-                width: 50%;
-            }
-            &-text{
-                text-align: center;
-                width: 50%;
-            }
-        }
-    }
-}
 
 .video{
     background-image: url("/images/power.mp4");

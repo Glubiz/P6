@@ -12,5 +12,7 @@ router.get('/Dashboard', mainController.getDashboard);
 router.get('/Dev', mainController.getDev);
 
 router.get('/about', mainController.getAbout);
+router.get('/Admin', mainController.getAdmin);
+
 
 module.exports = router;

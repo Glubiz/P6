@@ -1,4 +1,8 @@
 const fs = require('fs')
+const UserDB = require('../models/user')
+const PendingDB = require('../models/Pending')
+
+
 //This file contains all the pages that can be loaded on the website
 exports.getIndex = (req, res, next) => {
   // console.log("test")
@@ -38,3 +42,42 @@ exports.getAbout = (req, res, next) => {
       path: '/'
     });
 };
+
+exports.getAdmin = (req, res, next) => {
+  if(res.locals.Type === 'Admin'){
+    var Providers
+    var Users
+    UserDB.findAll({
+      where: {
+        Type : "Customer"
+      }
+    })
+    .then(result => {
+      Users = result.length
+    })
+    UserDB.findAll({
+      where: {
+        Type : "Provider"
+      }
+    })
+    .then(result => {
+      Providers = result.length
+    })
+    PendingDB.findAll()
+    .then(result => {
+      res.render('main/admin', {
+        pageTitle: 'Admin',
+        path: '/Admin',
+        Users: Users,
+        Providers: Providers,
+        Pending: result,
+      });
+    })
+  } else {
+    res.render('main/index', {
+      pageTitle: 'Home',
+      path: '/'
+    });
+  }
+};
+

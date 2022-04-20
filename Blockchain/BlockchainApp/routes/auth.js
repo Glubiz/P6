@@ -23,4 +23,8 @@ router.get('/Logout', Controller.getLogout);
 router.get('/deleteUser', Controller.postDeleteUser);
 
 router.post('/SavePassword', Controller.postChangePassword);
+
+router.post('/AddBlock', Controller.postApprove);
+router.post('/RejectBlock', Controller.postReject);
+
 module.exports = router;

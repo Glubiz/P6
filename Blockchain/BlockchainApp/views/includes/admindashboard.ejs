@@ -1,0 +1,92 @@
+<section class="dashboard">
+    <div class="dashboard-container module-outer"> 
+        <div class="dashboard-container__data">
+            <div class="dashboard-container__data-header">
+                Number of Providers
+            </div>
+            <div class="dashboard-container__data-text">
+                <%= Providers %> 
+            </div>
+        </div>
+        <div class="dashboard-container__data">
+            <div class="dashboard-container__data-header">
+                Number of customers
+            </div>
+            <div class="dashboard-container__data-text">
+                <%= Users %> 
+            </div>
+        </div>
+        <div class="dashboard-container__data">
+            <div class="dashboard-container__data-header">
+                Pending requests
+            </div>
+            <div class="dashboard-container__data-text">
+                <%= Pending.length %>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-container__full module-outer login__container">
+        <div id="full-table">
+            <% if(Pending.length === 0){ %> 
+                <%= "No pending requests" %>
+            <% } else { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Username 
+                        </th>
+                        <th>
+                            Type 
+                        </th>
+                        <th>
+                            Date 
+                        </th>
+                        <th class="full-table__narrow">
+                            Approve 
+                        </th>
+                        <th class="full-table__narrow">
+                            Reject 
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(Pending.length > 0) { 
+                        for(let entry of Pending){ %>
+                            <tr>
+                                <td>
+                                    <%= entry.UserID %>
+                                </td>
+                                <td>
+                                    <%= entry.Type %>
+                                </td>
+                                <td>
+                                    <%= entry.Date %>
+                                </td>
+                                <td>
+                                    <form action="AddBlock" method="post">
+                                        <input type="hidden" name="ID" id="ID" value="<%= entry.id %>">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+                                        <input type="submit" name="submit" value="Approve">
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="RejectBlock" method="post">
+                                        <input type="hidden" name="ID" id="ID" value="<%= entry.id %>">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+                                        <input type="submit" name="submit" value="Reject">
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }
+                    } %>
+                </tbody>
+            </table>
+            <% } %>
+        </div>
+    </div>
+    </div>
+</section>
