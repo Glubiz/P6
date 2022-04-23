@@ -5,7 +5,15 @@
   </header>
   <main class="main">
     <%- include('../includes/nav.ejs') %>
-    <%- include('../includes/dashboard.ejs') %>
+    <% if(Type === 'Customer') { %>
+      <%- include('../includes/dashboard.ejs') %>
+    <% } %>
+    <% if(Type === 'Provider') { %>
+
+      <% } %>
+    <% if(Type === 'Pending') { %>
+      <%- include('../includes/Pending.ejs') %>
+    <% } %>
   </main>
   <%- include('../includes/footer.ejs') %>
 <%- include('../includes/end.ejs') %>

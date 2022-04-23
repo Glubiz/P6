@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const { Op } = require("sequelize");
 const UserDB = require('../models/user')
 const PendingDB = require('../models/Pending')
+const CreateBlock = require('../middleware/Blockchain/CreateBlock/CreateBlock')
 
 
 //OK
@@ -56,14 +57,17 @@ exports.postLogin = (req, res, next) => {
         }
         bcrypt.compare(Password, user.Password)
         .then(doMatch => {
-            if (doMatch && user.Type !== 'Pending'){
+            if (doMatch){
                 req.session.isLoggedIn = true;
                 req.session.Email = Email
                 req.session.userID = user.id
                 req.session.Type = user.Type
                 req.flash('success', 'Success');
-                return res.redirect('/User');
             }
+            if(user.Type === 'Admin'){
+                return res.redirect('/Admin');
+            }
+            return res.redirect('/User');
         })
         .catch(err => {
             console.log(err);
@@ -239,12 +243,15 @@ exports.postReject = (req, res) => {
 
 exports.postApprove = (req, res) => {
     const ID = req.body.ID
+    var Type
+    var UserID
+
     PendingDB.findOne({
         where: {
             id: ID
         }
     })
-    .then(result => {
+    .then(async result => {
         UserDB.update({
             Type : result.Type
             }, {
@@ -257,9 +264,14 @@ exports.postApprove = (req, res) => {
                 id: ID
             }
         })
-
-        //Add to blockchain here
+        if(result.Type === 'Provider'){
+            Type = 'Create Provider'
+            UserID = SHA256(result.UserID, result.Date).toString()
+        } else if (result.Type === 'Node'){
+            Type = 'Create Node'
+        }
+        await CreateBlock(Type, result.UserID, false, '*')//Add to blockchain here
+        res.redirect('/Admin');
     })
 
-    res.redirect('/Admin');
 }
