@@ -241,18 +241,23 @@ a:hover {
   min-width: 30rem; }
 
 canvas {
-  width: 70rem; }
+  width: 700rem; }
   @media (max-width: 56.25em) {
     canvas {
       width: 35rem;
       height: 30rem; } }
 
 #ChartStatic {
-  min-width: 30rem; }
+  min-width: 60rem; }
   @media (max-width: 56.25em) {
     #ChartStatic {
       width: 35rem;
       height: 30rem; } }
+
+.Button {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
 
 input, select {
   margin-top: 0.5rem;
@@ -592,11 +597,13 @@ main {
         width: 100%; }
 
 #ChartDiv {
-  width: 35rem;
-  height: 30rem; }
+  width: 100%;
+  height: 100%;
+  min-width: 35rem;
+  min-height: 30rem; }
   #ChartDiv > canvas {
-    width: 50rem !important;
-    height: 30rem !important; }
+    width: 100% !important;
+    height: 100% !important; }
 
 #chart {
   width: 100%;
