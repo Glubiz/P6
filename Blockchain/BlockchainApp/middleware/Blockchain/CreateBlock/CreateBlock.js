@@ -179,7 +179,7 @@ const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
     var PriceFunctions = Chain.PriceFunctions.filter(price => price.Areas === '*' || price.Areas === Area && price.ProviderID === Provider)
     Price = (((parseInt(PriceFunctions[0].Top - PriceFunctions[0].Bottom)) / 2) * Math.sin(0.5 * (time - 6.5)) + 50) * Usage
 
-    Price /= 7.5
+    Price *= 7.5
     // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
     var DateTime = new Date().getTime().toString()
 
