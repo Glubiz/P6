@@ -7,6 +7,8 @@ const PreviousBlock = require('./../Utilities/PreviousBlock')
 const getPreviousEvent = PreviousBlock.getPreviousEvent
 const getPreviousArea = PreviousBlock.getPreviousArea
 const getPreviousPrice = PreviousBlock.getPreviousPrice
+const getPreviousProvider = PreviousBlock.getPreviousProvider
+
 
 
 const CreateGenesis = () => {
@@ -49,6 +51,8 @@ const CreateGenesis = () => {
 const CreateEvent = async (Type, ID, ...args) => {
     try {
         if (fs.existsSync('./middleware/Blockchain/Storage/Master.json')) {
+            var CreatedBlock
+
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
             var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
 
@@ -67,8 +71,7 @@ const CreateEvent = async (Type, ID, ...args) => {
                 'Caller' : ID,
                 'Hash' : EventHash,
                 'PreviousHash' : PreviousHash,
-                'TimeStamp' : DateTime,
-                'Status' : 'Pending'
+                'TimeStamp' : DateTime
             }
 
             // Loads chain
@@ -77,17 +80,17 @@ const CreateEvent = async (Type, ID, ...args) => {
             fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4)) 
 
             if (Type === 'Create Node'){
-                await CreateNode(EventHash, ID, args[0], args[1], args[2])
+                CreatedBlock = await CreateNode(EventHash, ID, args[0])
             } else if (Type === 'Create Provider'){
-                await CreateProvider(EventHash, ID, args[0], args[1])
+                CreatedBlock = await CreateProvider(EventHash, ID, args[0], args[1])
             } else if (Type === 'Create Price Function'){
-                await CreatePriceFunction(EventHash, ID, args[0], args[1], args[2])
+                CreatedBlock = await CreatePriceFunction(EventHash, ID, args[0], args[1], args[2])
             } else if (Type === 'Create Transaction'){
-                await CreateTransaction(EventHash, ID, args[0], args[1], args[2])
+                CreatedBlock = await CreateTransaction(EventHash, ID, args[0], args[1], args[2])
             }
 
             return new Promise((resolve) => {
-                resolve()
+                resolve(CreatedBlock)
             })
         } else {
             await CreateGenesis()
@@ -101,7 +104,7 @@ const CreateEvent = async (Type, ID, ...args) => {
     }
 }
 
-const CreateNode = async (EventHash, ID, IP, Port, Area) => {
+const CreateNode = async (EventHash, ID, Area) => {
     var AreaIndex
     
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
@@ -134,8 +137,6 @@ const CreateNode = async (EventHash, ID, IP, Port, Area) => {
     var Block = { 
         'EventHash' : EventHash,
         'NodeID' : ID,
-        'IP' : IP,
-        'Port' : Port,
         'Hash' : NodeHash,
         'PreviousHash' : PreviousHash,
         'TimeStamp' : DateTime,
@@ -327,7 +328,7 @@ const CreateArea = (EventHash, ID) => {
 
 // CreateEvent(Type = 'Create Node', ID = '555', IP = '127.0.0.1', Port = '3033', Area = '9000')
 
-// CreateEvent(Type = 'Create Provider', ID = '666', Private = false, Areas = '*')
+// CreateEvent(Type = 'Create Provider', ID = '66623', Private = false, Areas = '*')
 // CreateEvent(Type = 'Create Price Function', ID = '666', Top = '60', Bottom = '40', Areas = '*')
 
 

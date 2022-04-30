@@ -1,7 +1,13 @@
 const bcrypt = require('bcryptjs');
 const { Op } = require("sequelize");
+const SHA256 = require('crypto-js/sha256');
+
+//Models
 const UserDB = require('../models/user')
 const PendingDB = require('../models/Pending')
+const ApiKeys = require('../models/Keys')
+
+//Functions
 const CreateBlock = require('../middleware/Blockchain/CreateBlock/CreateBlock')
 
 
@@ -48,6 +54,7 @@ exports.getReset = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
     const Email = req.body.Email;
     const Password = req.body.Password;
+    var ApiKey = ""
 
     UserDB.findOne({where: {Email : Email}})
     .then(user => {
@@ -55,13 +62,17 @@ exports.postLogin = (req, res, next) => {
             req.flash('error', 'Invalid Email or Password');
             return res.redirect('/Login');  
         }
+
+        
         bcrypt.compare(Password, user.Password)
         .then(doMatch => {
+            user.Type === 'Provider' && ApiKeys.findOne({where : {UserID : user.HashID}}).then(result => ApiKey = result.Key)
             if (doMatch){
                 req.session.isLoggedIn = true;
                 req.session.Email = Email
                 req.session.userID = user.id
                 req.session.Type = user.Type
+                req.session.ApiKey = ApiKey
                 req.flash('success', 'Success');
             }
             if(user.Type === 'Admin'){
@@ -245,6 +256,9 @@ exports.postApprove = (req, res) => {
     const ID = req.body.ID
     var Type
     var UserID
+    var Key
+    const AreaCode = "9000"
+    var Now = new Date().getTime().toString()
 
     PendingDB.findOne({
         where: {
@@ -252,25 +266,38 @@ exports.postApprove = (req, res) => {
         }
     })
     .then(async result => {
-        UserDB.update({
-            Type : result.Type
-            }, {
-                where: {
-                Email: result.UserID
+        if(result.Type === 'Provider'){
+            Type = 'Create Provider'
+            UserID = SHA256(result.UserID, result.Date).toString()
+            await CreateBlock(Type, UserID, false, '*')//Add to blockchain here
+            
+            UserDB.update({Type : result.Type, HashID: UserID}, {where: {Email: result.UserID}});
+        } else if (result.Type === 'Node'){
+            Type = 'Create Node'
+            UserID = SHA256(result.UserID, Now).toString()
+            await CreateBlock(Type, UserID, Area = AreaCode)
+        }
+        ApiKeys.findOne({
+            where: {
+                HashID : UserID
             }
-        });
+        })
+        .then(result => {
+            if (result){
+                res.redirect('/Admin');
+            }
+        
+            Key = SHA256(UserID, "none", "hashthis").toString()
+            ApiKeys.create({
+                Key : Key,
+                HashID : UserID
+            })
+        })
         PendingDB.destroy({
             where: {
                 id: ID
             }
         })
-        if(result.Type === 'Provider'){
-            Type = 'Create Provider'
-            UserID = SHA256(result.UserID, result.Date).toString()
-        } else if (result.Type === 'Node'){
-            Type = 'Create Node'
-        }
-        await CreateBlock(Type, result.UserID, false, '*')//Add to blockchain here
         res.redirect('/Admin');
     })
 

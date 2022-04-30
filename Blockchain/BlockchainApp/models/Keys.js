@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../util/db');
 
 const ApiKeys = sequelize.define('ApiKeys', {
-    ChainID : {
+    HashID : {
         type : Sequelize.STRING,
         allowNull: false
     },

@@ -14,7 +14,11 @@ const User = sequelize.define('User', {
   Type : {
     type: Sequelize.STRING,
     allowNull: false
-    }
+    },
+  HashID : {
+    type: Sequelize.STRING,
+    allowNull: true
+  }
 }, {
   createdAt: false,
   updatedAt: false

@@ -19,13 +19,10 @@ const LogUsage = () => {
             Usage.push({Usage: CalculatedUsage, Date: now})
             console.log(Usage)
             fs.writeFileSync('./middleware/IoT/Storage/Usage.json', JSON.stringify(Usage, null, 4))
-            // console.log(result.total)
         })
-        // device.getLedState().then(console.log)
-        // device.setLedState(true)
     })
 }
 
 setInterval(LogUsage, 3600 * 1000)
 
-module.exports = LogUsage
+module.exports = LogUsage()

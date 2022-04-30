@@ -4,28 +4,24 @@
     </div>
     <div class="footer-links">
         <div class="footer-links__column">
-            <a href="">Test</a>
-            <a href="">Test</a>
-    
-            <a href="">Test</a>
-    
-            <a href="">Test</a>
+            <h3>
+                About
+            </h3>
+            <a href="">Technology</a>
+            <a href="">Company</a>
+            <a href='/About'>About us</a>
         </div>
         <div class="footer-links__column">
-            <a href="">Test</a>
-            <a href="">Test</a>
-
-            <a href="">Test</a>
-
-            <a href="">Test</a>
+            <h3>
+                Links
+            </h3>
+            <a href="/">Home</a>
+            <% if(isAuthenticated){ %>
+                <a href='/Dashboard'>Dashboard</a>
+            <% } else { %>
+                <a href='/Login'>Login</a>
+                <a href="/Signup">Signup</a>
+            <% } %>  
         </div>
-        <div class="footer-links__column">
-            <a href="">Test</a>
-            <a href="">Test</a>
-            <a href="">Test</a>
-            <a href="">Test</a>
-        </div>
-        
-
     </div>
 </footer>
