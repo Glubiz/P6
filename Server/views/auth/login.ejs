@@ -1,0 +1,49 @@
+<section class="container">
+  <div class="login__container module-outer">
+    <h2 class="module-inner">
+      <%= pageTitle %>
+    </h2>
+    <% if (errorMessage.length > 0) { %>
+      <div class="module-error">
+        <%= errorMessage %>
+      </div>
+    <% } else if (successMessage.length > 0) { %>
+      <div class="module-success">
+        <%= successMessage %>
+      </div>
+    <% } %>
+    <form action="Login" method="POST" class="module-inner">
+      <div class="login__group">
+        <div>
+          <input type="text" name="Email" class="login__input" placeholder="Email" id="Email" required>
+          <label for="Email" class="login__label">Email</label>
+
+        </div>
+      </div>
+        
+      <div class="login__group">
+        <div>
+          <input type="password" name="Password" class="login__input" placeholder="Password" id="Password" required>
+          <label for="Password" class="login__label">Password</label>
+
+        </div>
+      </div>
+
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <!-- submit -->
+      <div class="login__group">
+        <input class="login__submit" type="submit" name="submit" value="Login">
+      </div>
+      <a href="/Signup">
+        <div name="signup-submit" style="color:#fff; text-align:center;">
+          Signup
+        </div>
+      </a>
+      <a href="/Reset">
+        <div name="signup-submit" style="color:#fff; text-align:center;">
+          Reset password
+        </div>
+      </a>
+    </form>
+  </div>
+</section>

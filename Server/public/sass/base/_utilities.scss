@@ -1,0 +1,48 @@
+.u {
+	&-center {
+		&-text {
+			text-align: center;
+		}
+	}
+
+	&-margin {
+
+		&-auto{
+			margin: auto;
+		}
+		&-bottom {
+			&-big {
+				margin-bottom: 8rem;
+			}
+
+			&-medium {
+				margin-bottom: 4rem;
+			}
+
+			&-small {
+				margin-bottom: 1.5rem;
+			}
+		}
+		&-top {
+			&-big {
+				margin-top: 8rem;
+			}
+
+			&-medium {
+				margin-top: 4rem;
+			}
+
+			&-small {
+				margin-top: 1.5rem;
+			}
+		}
+	}
+
+	&-border{
+
+		&-right{
+
+			border-right: 1px solid $color-secondary;
+		}
+	}
+}

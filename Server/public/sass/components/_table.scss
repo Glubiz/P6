@@ -1,0 +1,39 @@
+table{
+    overflow: scroll;
+    text-align: center;
+    width: 100%;
+    
+    border-collapse: collapse;
+}
+
+tr:not(:last-child) {
+    border-bottom: 1px solid $color-secondary;
+    
+}
+th, td{
+    overflow: scroll;
+    padding: 0.2rem 1rem;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    &::-webkit-scrollbar{
+        display: none;
+    }
+}
+td{
+    font-size: 2rem;
+
+    & > a {
+        color: inherit;
+    }
+
+    @include respond(tab-land) {
+        font-size: 1.4rem;
+    }
+}
+th{
+    font-size: 1.8rem;
+    @include respond(tab-land) {
+        font-size: 1.2rem;
+    }
+}
