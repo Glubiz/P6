@@ -7,8 +7,8 @@ const LogUsage = () => {
         device.getPowerState() && device.emeter.getRealtime().then(result => {
             var now = new Date().getTime().toString()
 
-            if(fs.existsSync('./middleware/IoT/Storage/Usage.json')){
-                var Usage = JSON.parse(fs.readFileSync('./middleware/IoT/Storage/Usage.json'))
+            if(fs.existsSync('./middleware/General Storage/Usage.json')){
+                var Usage = JSON.parse(fs.readFileSync('./middleware/General Storage/Usage.json'))
     
                 var LegacyData = Usage.filter(data => data.Date > parseInt(now - 3600 * 1000))
             } else {
@@ -18,7 +18,7 @@ const LogUsage = () => {
             var CalculatedUsage = result.total - LegacyData
             Usage.push({Usage: CalculatedUsage, Date: now})
             console.log(Usage)
-            fs.writeFileSync('./middleware/IoT/Storage/Usage.json', JSON.stringify(Usage, null, 4))
+            fs.writeFileSync('./middleware/General Storage/Usage.json', JSON.stringify(Usage, null, 4))
         })
     })
 }

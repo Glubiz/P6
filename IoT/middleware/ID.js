@@ -7,7 +7,7 @@ var Identity = {
 
 const GetIdentity = async () => {
     try{
-        fs.readFileSync('./middleware/IoT/Keys.json')
+        fs.readFileSync('./middleware/General Storage/Keys.json')
         .then(Keys => {
             Identity.ChainID = Keys.ChainID
             Identity.APIKey = Keys.APIKey
