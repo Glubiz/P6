@@ -423,6 +423,11 @@ th {
     transform: rotate(-25deg);
     animation: reverseSpin 2s linear infinite;
     font-size: 3rem; }
+  .loading-container {
+    height: 100%;
+    width: 100%;
+    filter: blur(1.2rem);
+    display: none; }
 
 @keyframes spin {
   0% {
@@ -613,8 +618,13 @@ main {
   background-size: 120rem;
   background-position: 0% 50%; }
 
+.living-background {
+  background: linear-gradient(-45deg, #313131, rgba(29, 29, 29, 0.8), rgba(22, 144, 104, 0.8), rgba(16, 98, 94, 0.8));
+  background-size: 400% 400%;
+  animation: gradient 30s linear infinite; }
+
 .info {
-  height: 50rem;
+  height: 40rem;
   opacity: 1; }
   .info > div {
     height: 100%; }
@@ -653,6 +663,14 @@ main {
       justify-content: center; }
       .info-box-right-text > h2 {
         width: 100%; }
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
 
 #ChartDiv {
   width: 100%;
@@ -759,7 +777,7 @@ main {
     margin: 2rem 0;
     column-gap: 2rem;
     row-gap: 2rem;
-    filter: blur(1rem); }
+    filter: blur(1.2rem); }
     .pending__background > div {
       justify-self: stretch; }
     .pending__background-deep {

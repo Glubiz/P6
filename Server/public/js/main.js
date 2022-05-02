@@ -3,6 +3,8 @@ window.onload = function() {
   DrawGraph()
 };
 
+
+
 function DrawGraph(){
   console.log("drawing")
   var Graph = []

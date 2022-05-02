@@ -30,6 +30,13 @@
         animation: reverseSpin 2s linear infinite;
         font-size: 3rem;
     }
+
+    &-container{
+        height: 100%;
+        width: 100%;
+        filter: blur(1.2rem);
+        display: none;
+    }
 }
 
 @keyframes spin {

@@ -66,7 +66,7 @@ exports.postLogin = (req, res, next) => {
         
         bcrypt.compare(Password, user.Password)
         .then(doMatch => {
-            user.Type === 'Provider' && ApiKeys.findOne({where : {UserID : user.HashID}}).then(result => ApiKey = result.Key)
+            user.Type === 'Provider' && ApiKeys.findOne({where : {HashID : user.HashID}}).then(result => {if(result){ApiKey = result.Key}})
             if (doMatch){
                 req.session.isLoggedIn = true;
                 req.session.Email = Email
