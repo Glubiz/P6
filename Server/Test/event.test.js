@@ -9,8 +9,8 @@ var data = {
   Usage : '1'
 }
 
-describe("Test the ping API", () => {
-  test("It should response the GET method", done => {
+describe("Test the event hash api", () => {
+  test("It should respond 200 to the POST method", done => {
     request(app)
       .post("/EventHash")
       .send(data)

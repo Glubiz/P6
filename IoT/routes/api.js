@@ -14,7 +14,5 @@ router.post('/fetchEventHash', Controller.addNode);
 
 //GET
 router.post('/Ping', Controller.Ping);
-router.get('/validate', Controller.validate);
-
 
 module.exports = router;

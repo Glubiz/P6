@@ -12,8 +12,7 @@ const UserDB = require('../models/user')
 const CreateEvent = require('../middleware/Blockchain/CreateBlock/CreateBlock');
 const Broadcast = require('../middleware/Blockchain/Utilities/SendTransaction')
 const Reciever = require('../middleware/Blockchain/Utilities/RecieveTransaction')
-const StartUp = require('../middleware/IoT/StartUp')
-const Snap = require('../middleware/Utilities/Snap')
+const StartUp = require('../middleware/StartUp')
 
 
 

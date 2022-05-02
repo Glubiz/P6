@@ -10,12 +10,7 @@ const UserDB = require('../models/user')
 
 //Middleware
 const CreateEvent = require('../middleware/Blockchain/CreateBlock/CreateBlock');
-const Broadcast = require('../middleware/Blockchain/Utilities/SendTransaction')
-const Reciever = require('../middleware/Blockchain/Utilities/RecieveTransaction')
-const StartUp = require('../middleware/IoT/StartUp')
-const Snap = require('../middleware/Utilities/Snap')
-
-
+const Snap = require('../middleware/Blockchain/Utilities/Snap')
 
 exports.addNode = (req, res, next) => {
   var IP = req.body.IP
@@ -31,8 +26,7 @@ exports.addNode = (req, res, next) => {
   .catch(err => {
       console.log(err)
   })
-
-  res.status(200).send("Pending")
+  res.status(200)
 }
 
 exports.Ping = (req, res, next) => {
