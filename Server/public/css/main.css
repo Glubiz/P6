@@ -395,6 +395,57 @@ th {
     th {
       font-size: 1.2rem; } }
 
+.loading {
+  z-index: 100;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+  .loading_spinner {
+    z-index: 200;
+    height: 30vh;
+    width: 30vh;
+    border-radius: 50%;
+    border-top: 30px solid #169068;
+    animation: spin 2s linear infinite;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible; }
+  .loading_text {
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    width: 50vh;
+    transform: rotate(-25deg);
+    animation: reverseSpin 2s linear infinite;
+    font-size: 3rem; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(25deg);
+    border-top: 0px solid #169068; }
+  50% {
+    transform: rotate(205deg);
+    border-top: 20px solid #169068; }
+  100% {
+    transform: rotate(385deg);
+    border-top: 0px solid #169068; } }
+
+@keyframes reverseSpin {
+  0% {
+    transform: rotate(-25deg);
+    margin-bottom: 0px; }
+  50% {
+    transform: rotate(-205deg);
+    margin-bottom: 20px; }
+  100% {
+    transform: rotate(-385deg);
+    margin-bottom: 0px; } }
+
 header, footer {
   width: 100%;
   color: #1d1d1d;
@@ -435,6 +486,13 @@ footer {
 
 .header__index {
   height: 6vh; }
+
+#icon__box {
+  display: flex;
+  justify-content: start;
+  align-items: center; }
+  #icon__box > img {
+    height: 100%; }
 
 .row {
   max-width: 114rem;
@@ -609,12 +667,17 @@ main {
   width: 100%;
   height: 100%; }
 
-.full-table {
-  width: 100%;
-  margin: 2rem; }
-  .full-table > table > thead > tr, .full-table > table > tbody > tr {
-    border-bottom: 1px solid #169068; }
-  .full-table__narrow {
+#full-table {
+  width: 100%; }
+  #full-table > table {
+    table-layout: fixed;
+    width: 100%; }
+    #full-table > table > thead > tr, #full-table > table > tbody > tr {
+      border-bottom: 1px solid #169068; }
+      #full-table > table > thead > tr > td, #full-table > table > tbody > tr > td {
+        overflow: hidden;
+        font-size: 1rem; }
+  #full-table__narrow {
     width: 10%; }
 
 .dashboard {

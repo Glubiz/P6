@@ -58,3 +58,12 @@ footer{
 
 	// }
 }
+
+#icon__box{
+	display: flex;
+	justify-content:start;
+	align-items:center;
+	& > img{
+		height: 100%
+	}
+}

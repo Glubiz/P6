@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 const Startup = () => {
-    if(!fs.existsSync('./middleware/General Storage/Keys.json')){
+    if(!fs.existsSync('./middleware/Storage/Keys.json')){
         var ip
         require('axios')
         .get('https://api.ipify.org/?format=json')
@@ -9,7 +9,7 @@ const Startup = () => {
             ip = Data.ip
 
             require('axios')
-            .post('https://localhost:3033/addNode',{
+            .post('localhost:3033/addNode',{
                 IP: ip,
                 AreaCode: '9000',
             })
@@ -18,10 +18,10 @@ const Startup = () => {
                     ChainID : response[0],
                     APIKey : response[1]
                 }
-                fs.writeFileSync('./middleware/General Storage/Keys.json', JSON.stringify(KeyStorage, null, 4))
+                fs.writeFileSync('./middleware/Storage/Keys.json', JSON.stringify(KeyStorage, null, 4))
             })
         })
     }
 }
 
-module.exports = Startup()
+module.exports = Startup

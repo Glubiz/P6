@@ -141,7 +141,8 @@ const CreateNode = async (EventHash, ID, Area) => {
         'PreviousHash' : PreviousHash,
         'TimeStamp' : DateTime,
         'Blocked' : false,
-        'Pings' : 0
+        'Pings' : 0,
+        'PingUpdated' : DateTime
     }
 
     Chain.Areas[AreaIndex].Nodes.push(Block)

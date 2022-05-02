@@ -15,15 +15,21 @@
     height: 100%;
 }
 
-.full-table{
+#full-table{
     width: 100%;
-    margin: 2rem;
     & > table {
+        table-layout: fixed;
+        width: 100%;
         & > thead, & > tbody {
 
             & > tr{
                 border-bottom: 1px solid $color-secondary;
+                & > td{
+                    overflow: hidden;
+                    font-size:1rem;
+                }
             }
+
         }
     }
 

@@ -114,7 +114,8 @@ const CreateNode = async (EventHash, ID, Area) => {
         await CreateArea(EventHash, Area)
         Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
     }
-
+    
+    //Loops through the chain to find the correct area, and checks if the area contains any nodes
     for(let i = 0; i < Chain.Areas.length; i++) {
         if(Chain.Areas[i].AreaID === Area){
             if(Chain.Areas[i].Nodes.length > 0){
@@ -141,7 +142,8 @@ const CreateNode = async (EventHash, ID, Area) => {
         'PreviousHash' : PreviousHash,
         'TimeStamp' : DateTime,
         'Blocked' : false,
-        'Pings' : 0
+        'Pings' : 0,
+        'PingUpdated' : DateTime
     }
 
     Chain.Areas[AreaIndex].Nodes.push(Block)
