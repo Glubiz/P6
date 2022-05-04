@@ -3,7 +3,7 @@ footer {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	background: linear-gradient(to top, $color-secondary, $color-tertiary);
+	// background: linear-gradient(to top, $color-secondary, $color-tertiary);
 	& > #icon__box{
 		
 		& > img {
@@ -26,6 +26,10 @@ footer {
 		justify-content: center;
 		align-items: center;
 		width: 100%;
+
+		& > img {
+			height: 10rem;
+		}
 	}
 	&-links{
 		width: 100%;
@@ -33,6 +37,8 @@ footer {
 		justify-content: center;
 		align-items: center;
 		flex-wrap: wrap;
+		color: #fff;
+		padding-bottom: 2rem;
 
 		&__column{
 			width: 33%;

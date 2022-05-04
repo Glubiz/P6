@@ -32,6 +32,15 @@ input, select{
 
 }
 
+select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    width: 100%;
+    text-align: center;
+    text-align-last:center;
+}
+
 .login{
     &__input {
         font-size: 2rem;

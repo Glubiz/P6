@@ -21,18 +21,22 @@ header, footer{
 }
 header {
 	height: 6vh;
-	background: linear-gradient(to bottom, $color-secondary, $color-tertiary);
-	& > #icon__box{
-		
-		& > img {
-			height: 4.5vh;
-		}
+	// background: linear-gradient(to bottom, $color-secondary, $color-tertiary);
+
+	& > #icon__box > img{
+		height: 120%;
+
 	}
+
 	& > .header__middle{
 		width: 60%;
 	}
 	& > .header__sides{
 		width: 20%;
+		height: 100%;
+
+		& > img{
+		}
 	}
 
 	@include respond(tab) {
@@ -64,6 +68,6 @@ footer{
 	justify-content:start;
 	align-items:center;
 	& > img{
-		height: 100%
+		height: 10rem;
 	}
 }

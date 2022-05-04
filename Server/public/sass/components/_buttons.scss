@@ -1,6 +1,24 @@
 .Button{
-    display:flex;
-    justify-content: center;
+    display: flex;
     align-items: center;
-    
+    justify-content: center;
+    background-color: $color-secondary;
+    font-size: 1.6rem;
+    padding: .8rem 2rem;
+    margin: 0.5rem;
+    border-radius: .5rem;
+
+    &:hover{
+        background-color: $color-primary;
+        color: $color-secondary;
+        text-decoration: none;
+    }
+
+    &::after, &::before{
+        background-color: $color-secondary;
+        font-size: 1.6rem;
+        padding: .8rem 2rem;
+        margin: 0.5rem;
+        border-radius: .5rem;
+    }
 }

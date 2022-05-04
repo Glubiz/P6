@@ -105,12 +105,14 @@
             border-bottom: 1px solid $color-secondary;
             &-header{
                 text-align: center;
-
-                width: 50%;
+                font-size:1.3rem;
+                width: 30%;
             }
             &-text{
                 text-align: center;
-                width: 50%;
+                width: 70%;
+                font-size:1.3rem;
+                overflow: scroll;
             }
         }
     }
