@@ -44,14 +44,14 @@ exports.getUser = (req, res, next) => {
             // var Customers = Chain.Transactions.filter(e => e.ProviderID === result.HashID && parseInt(e.DateTime) >= parseInt(now - (3600 * 1000)))
             // Customers = Customers.length
             // Data.push(Customers.length)
-            res.render('main/dashboard', {
-                errorMessage: req.flash('error'),
-                pageTitle: 'User',
-                path: '/User',
-                data: Data
-            });
         })
     }
+    res.render('main/dashboard', {
+        errorMessage: req.flash('error'),
+        pageTitle: 'User',
+        path: '/User',
+        data: Data
+    });
 };
 
 // OK 
