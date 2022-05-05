@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const { Op } = require("sequelize");
 const SHA256 = require('crypto-js/sha256');
+const fs = require('fs');
 
 //Models
 const UserDB = require('../models/user')
@@ -23,12 +24,34 @@ exports.getLogin = (req, res, next) => {
 
 // NOT OK (Skal måske fjernes)
 exports.getUser = (req, res, next) => {
-    const UserID = req.session.userID
-    res.render('main/dashboard', {
-        errorMessage: req.flash('error'),
-        pageTitle: 'User',
-        path: '/User'
-    });
+    const Email = req.session.Email
+    const Data = []
+    var now = new Date().getTime().toString()
+    var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
+    if(req.session.Type === 'Provider'){
+        UserDB.findOne(
+            {
+                where : {
+                    Email : Email
+                }
+            }
+            )
+            .then(result => {
+            var Areas = Chain.Providers.filter(e => e.ProviderID === result.HashID)
+            Areas = Areas[0].Areas
+            Data.push(Areas)
+
+            // var Customers = Chain.Transactions.filter(e => e.ProviderID === result.HashID && parseInt(e.DateTime) >= parseInt(now - (3600 * 1000)))
+            // Customers = Customers.length
+            // Data.push(Customers.length)
+            res.render('main/dashboard', {
+                errorMessage: req.flash('error'),
+                pageTitle: 'User',
+                path: '/User',
+                data: Data
+            });
+        })
+    }
 };
 
 // OK 
@@ -63,11 +86,10 @@ exports.postLogin = (req, res, next) => {
             return res.redirect('/Login');  
         }
 
-        
         bcrypt.compare(Password, user.Password)
         .then(doMatch => {
-            user.Type === 'Provider' && ApiKeys.findOne({where : {HashID : user.HashID}}).then(result => {if(result){ApiKey = result.Key}})
             if (doMatch){
+                user.Type === 'Provider' && ApiKeys.findOne({where : {HashID : user.HashID}}).then(result => {if(result){ApiKey = result.Key}})
                 req.session.isLoggedIn = true;
                 req.session.Email = Email
                 req.session.userID = user.id

@@ -1,4 +1,6 @@
-
+<% if(data[0] === '*'){
+    data[0] = 'All'
+} %>
 <div class="loading-container">
     <div class="loading">
         <div class="loading_spinner">
@@ -88,7 +90,7 @@
                 Distribution area
             </div>
             <div class="dashboard-container__data-text">
-                *
+                <%= data[0] %>
             </div>
         </div>
         
@@ -132,19 +134,19 @@
         </div>
     </div>
     <div class="dashboard-container module-outer Button">
-        Party
+        Button
         
     </div>
     <div class="dashboard-container module-outer Button">
-        Away
+        Button
         
     </div>
     <div class="dashboard-container module-outer Button">
-        Vacation
+        Button
         
     </div>
     <div class="dashboard-container module-outer Button">
-        Work
+        Button
         
     </div>
 </section>
