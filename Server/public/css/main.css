@@ -296,7 +296,10 @@ input, select {
   color: #fff;
   border: 1px solid #169068;
   border-radius: .5rem;
-  box-shadow: 0rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5); }
+  box-shadow: 0rem 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none; }
   input:focus, select:focus {
     outline: none;
     border-bottom: 0.3rem solid #169068;
@@ -401,6 +404,9 @@ table {
   overflow: scroll;
   text-align: center;
   width: 100%;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
   border-collapse: collapse; }
 
 tr:not(:last-child) {
