@@ -3,7 +3,6 @@ const fs = require('fs');
 const SHA256 = require('crypto-js/sha256');
 
 //Models
-const Data = require('../models/Data')
 const ApiKeys = require('../models/Keys')
 const PendingDB = require('../models/Pending')
 const UserDB = require('../models/user')
@@ -11,6 +10,8 @@ const UserDB = require('../models/user')
 //Middleware
 const CreateEvent = require('../middleware/Blockchain/CreateBlock/CreateBlock');
 const Snap = require('../middleware/Blockchain/Utilities/Snap')
+const TruncateChain = require('../middleware/Blockchain/Utilities/TruncateChain')
+
 
 exports.addNode = (req, res, next) => {
   var IP = req.body.IP
@@ -26,7 +27,7 @@ exports.addNode = (req, res, next) => {
   .catch(err => {
       console.log(err)
   })
-  res.status(200)
+  res.status(200).send(TruncateChain(AreaCode))
 }
 
 exports.Ping = (req, res, next) => {

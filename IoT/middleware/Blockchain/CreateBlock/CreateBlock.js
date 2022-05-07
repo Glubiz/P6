@@ -9,8 +9,6 @@ const getPreviousArea = PreviousBlock.getPreviousArea
 const getPreviousPrice = PreviousBlock.getPreviousPrice
 const getPreviousProvider = PreviousBlock.getPreviousProvider
 
-
-
 const CreateGenesis = () => {
     // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
     var DateTime = new Date().getTime().toString()

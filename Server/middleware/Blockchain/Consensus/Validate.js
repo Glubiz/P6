@@ -1,91 +1,83 @@
 const fs = require('fs')
 const hash = require('./../Utilities/Hash')
 // const nonce = require('./nonce')
-const paths = require('../../util/blockchainPath');
+const path = '../Storage/Master.json'
+// './middleware/Blockchain/Storage/Master.json'
 
-module.exports = function validateChain(){
-    var now = new Date().getTime().toString()
+const failed = {}
+
+function validateChain(){
     // Loads the blockchain into the chain variable
-    var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
+    var Chain = JSON.parse(fs.readFileSync(path))
     
     for(let Event in Chain.Events){
-        var Hash = Hash(Event.EventHash + Event.Caller, Event.PreviousHash, Event.DateTime)
-        if(Hash == data.Hash){
+        var Hash = hash(Event.EventHash + Event.Caller, Event.PreviousHash, Event.DateTime)
+        if(Hash == Event.Hash){
             continue
         } else {
-            //Skal indhente ledger fra noder til at validere chainen.
-            return new Promise((reject) => {
-                reject(Event)
-            });
+            failed.Events = Event
+            break
         }
     }
 
     for(let Area in Chain.Areas){
-        var Hash = Hash(Area.EventHash + Area.AreaID, Area.PreviousHash, Area.DateTime)
-        if(Hash == data.Hash){
+        var Hash = hash(Area.EventHash + Area.AreaID, Area.PreviousHash, Area.DateTime)
+        if(Hash == Area.Hash){
             continue
         } else {
-            //Skal indhente ledger fra noder til at validere chainen.
-            return new Promise((reject) => {
-                reject(Area)
-            });
+            failed.Areas = Area
+            break
         }
     }
 
-    for(let Node in Chain.Areas.Nodes[0]){
-        var Hash = Hash(Node.EventHash + Node.NodeID, Node.PreviousHash, Node.DateTime)
-        if(Hash == data.Hash){
+    for(let Node in Chain.Areas.Nodes){
+        var Hash = hash(Node.EventHash + Node.NodeID, Node.PreviousHash, Node.DateTime)
+        if(Hash == Node.Hash){
             continue
         } else {
-            //Skal indhente ledger fra noder til at validere chainen.
-            return new Promise((reject) => {
-                reject(Node)
-            });
+            failed.Nodes = Node
+            break
         }
     }
 
-    for(let Transaction in Chain.Areas.Transactions[0]){
-        var Hash = Hash(Transaction.EventHash + Transaction.NodeID + Transaction.Provider + Transaction.Price, Transaction.PreviousHash, Transaction.DateTime)
-        if(Hash == data.Hash){
+    for(let Transaction in Chain.Areas.Transactions){
+        var Hash = hash(Transaction.EventHash + Transaction.NodeID + Transaction.Provider + Transaction.Price, Transaction.PreviousHash, Transaction.DateTime)
+        if(Hash == Transaction.Hash){
             continue
         } else {
-            //Skal indhente ledger fra noder til at validere chainen.
-            return new Promise((reject) => {
-                reject(Transaction)
-            });
+            failed.Transactions = Transaction
+            break
         }
     }
 
     for(let Provider in Chain.Provider){
-        var Hash = Hash(Provider.EventHash + Provider.ProviderID, Provider.PreviousHash, Provider.DateTime)
-        if(Hash == data.Hash){
+        var Hash = hash(Provider.EventHash + Provider.ProviderID, Provider.PreviousHash, Provider.DateTime)
+        if(Hash == Provider.Hash){
             continue
         } else {
-            //Skal indhente ledger fra noder til at validere chainen.
-            return new Promise((reject) => {
-                reject(Provider)
-            });
+            failed.Providers = Provider
+            break
         }
     }
 
-    for(let Price in Chain.Price){
-        var Hash = Hash(Price.EventHash + Price.ProviderID, Price.PreviousHash, Price.DateTime)
-        if(Hash == data.Hash){
+    for(let Price in Chain.PriceFunctions){
+        var Hash = hash(Price.EventHash + Price.ProviderID, Price.PreviousHash, Price.DateTime)
+        if(Hash == Price.Hash){
             continue
         } else {
-            //Skal indhente ledger fra noder til at validere chainen.
-            return new Promise((reject) => {
-                reject(Price)
-            });
+            failed.PriceFunctions = Price
+            break
         }
     }
 
     return new Promise((resolve) => {
-        resolve()
+        if(failed.length > 0){
+            resolve(failed)
+        }
+        resolve('ok')
     });
 }
 
-// Skal bruges et andet sted
-// if (now - parseInt(data.timeStamp) >= 10080 && data.Pings > 100){
-//     fs.writeFileSync('./../Storage/Master.json', JSON.stringify(Chain, null, 4))
-// }
+validateChain().then(result => console.log(result))
+
+// module.exports = validateChain

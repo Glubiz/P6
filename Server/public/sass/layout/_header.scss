@@ -23,8 +23,14 @@ header {
 	height: 6vh;
 	// background: linear-gradient(to bottom, $color-secondary, $color-tertiary);
 
-	& > #icon__box > img{
-		height: 120%;
+	& > #icon__box{
+		& > a {
+			height: 100%;
+			width: 100%;
+			& > img{
+				height: 100%;
+			}
+		}
 
 	}
 
@@ -67,7 +73,7 @@ footer{
 	display: flex;
 	justify-content:start;
 	align-items:center;
-	& > img{
+	& > a > img{
 		height: 10rem;
 	}
 }

@@ -111,7 +111,9 @@ a:hover {
 
 .subtext {
   color: #ccc;
-  font-size: 1rem; }
+  font-size: 1rem;
+  display: block;
+  text-align: center; }
 
 .u-center-text {
   text-align: center; }
@@ -278,6 +280,7 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   background-color: #169068;
   font-size: 1.6rem;
   padding: .8rem 2rem;
@@ -520,8 +523,11 @@ header, footer {
 
 header {
   height: 6vh; }
-  header > #icon__box > img {
-    height: 120%; }
+  header > #icon__box > a {
+    height: 100%;
+    width: 100%; }
+    header > #icon__box > a > img {
+      height: 100%; }
   header > .header__middle {
     width: 60%; }
   header > .header__sides {
@@ -545,7 +551,7 @@ footer {
   display: flex;
   justify-content: start;
   align-items: center; }
-  #icon__box > img {
+  #icon__box > a > img {
     height: 10rem; }
 
 .row {

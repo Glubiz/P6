@@ -9,8 +9,6 @@ const getPreviousArea = PreviousBlock.getPreviousArea
 const getPreviousPrice = PreviousBlock.getPreviousPrice
 const getPreviousProvider = PreviousBlock.getPreviousProvider
 
-
-
 const CreateGenesis = () => {
     // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
     var DateTime = new Date().getTime().toString()
@@ -330,7 +328,7 @@ const CreateArea = (EventHash, ID) => {
 // CreateEvent(Type = 'Create Node', ID = '555', IP = '127.0.0.1', Port = '3033', Area = '9000')
 
 // CreateEvent(Type = 'Create Provider', ID = '66623', Private = false, Areas = '*')
-// CreateEvent(Type = 'Create Price Function', ID = '666', Top = '60', Bottom = '40', Areas = '*')
+// CreateEvent(Type = 'Create Price Function', ID = '472590ae974d4c1f44b3780df0b152d9119f076c61bfb3e8cb6affd7889ac0a8', Top = '60', Bottom = '40', Areas = '*')
 
 
 // CreateEvent(Type = 'Create Transaction', ID = '555', Provider = '666', Area = '9000', Usage = '100')

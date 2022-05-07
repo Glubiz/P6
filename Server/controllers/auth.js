@@ -23,7 +23,7 @@ exports.getLogin = (req, res, next) => {
 };
 
 // NOT OK (Skal måske fjernes)
-exports.getUser = (req, res, next) => {
+exports.getUser = async (req, res, next) => {
     const Email = req.session.Email
     const Data = []
     var now = new Date().getTime().toString()
@@ -41,11 +41,17 @@ exports.getUser = (req, res, next) => {
             Areas = Areas[0].Areas
             Data.push(Areas)
 
-            // var Customers = Chain.Transactions.filter(e => e.ProviderID === result.HashID && parseInt(e.DateTime) >= parseInt(now - (3600 * 1000)))
+            var Customers = []
+            for (let i = 0; i < Chain.Areas.length; i++){
+                var temp = Chain.Areas[i].Transactions.filter(e => e.ProviderID === result.HashID && parseInt(e.DateTime) >= parseInt(now - (3600 * 1000)))
+                Customers.push(temp)
+            }
             // Customers = Customers.length
-            // Data.push(Customers.length)
+            Data.push(Customers)
         })
     }
+    req.session.Type === 'Provider' && await new Promise((resolve => setTimeout(resolve,5000)))
+
     res.render('main/dashboard', {
         errorMessage: req.flash('error'),
         pageTitle: 'User',

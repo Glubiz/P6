@@ -46,15 +46,14 @@ const Add = () => {
         Usage : Usage.Usage
     })
     .then(response => {
-        Broadcast(response.data)
+        Broadcast(response.data, 'Transaction', Self.AreaCode)
     })
     .catch(err => {
         console.error(err)
     })
 
 }
-Add()
 
 setInterval(Add, 3600 * 1000)
 
-module.exports = Add()
+module.exports = Add
