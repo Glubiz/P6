@@ -1,27 +1,48 @@
 const fs = require('fs')
+const axios = require('axios')
+const Server = require('./../util/server.js')
 
 const Startup = () => {
+    console.log("Start")
     if(!fs.existsSync('./middleware/Storage/Keys.json')){
         var ip
         require('axios')
         .get('https://api.ipify.org/?format=json')
-        .then(Data =>  {
-            ip = Data.ip
+        .then(async Data =>  {
+            ip = Data.data.ip
+            await new Promise((resolve => setTimeout(resolve,5000)))
 
-            require('axios')
-            .post('localhost:3033/addNode',{
-                IP: ip,
-                AreaCode: '9000',
+            axios({
+                method: 'post',
+                url: Server + 'addNode',
+                data: {
+                    IP : ip,
+                    AreaCode : '9000'
+                },
             })
-            .then(response => {
+            .then(async response => {
                 var KeyStorage = {
-                    ChainID : response[0],
-                    APIKey : response[1]
+                    ChainID : response.data.ChainID,
+                    APIKey : response.data.APIKey
                 }
                 fs.writeFileSync('./middleware/Storage/Keys.json', JSON.stringify(KeyStorage, null, 4))
+
+                await new Promise((resolve => setTimeout(resolve,5000)))
+                axios({
+                    method: 'post',
+                    url: Server + 'fetchTruncatedChain',
+                    params: {
+                        APIKey : response.data.APIKey,
+                        AreaCode : '9000'
+                    },
+                })
+                .then(result => {
+                    result = result.data
+                    fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(result, null, 4))
+                })
             })
         })
     }
 }
 
-module.exports = Startup
+module.exports = Startup()

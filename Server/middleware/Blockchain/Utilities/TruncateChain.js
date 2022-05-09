@@ -14,7 +14,7 @@ const TruncateChain = (Area) => {
             continue
         }
 
-        AreaData = Chain.Areas[i]
+        AreaData = [Chain.Areas[i]]
     }
 
     Data.Area = AreaData
@@ -23,7 +23,9 @@ const TruncateChain = (Area) => {
 
     Data.PriceFunctions = Prices
 
-    return Data
+    return new Promise((resolve) => {
+        resolve(Data)
+    });
 }
 
 module.exports = TruncateChain

@@ -9,7 +9,11 @@
   },
   "nodemonConfig": {
     "ignore": [
-      "middleware/Blockchain/Storage/*.json"
+      "./middleware/Blockchain/Storage/*.json",
+      "./middleware/Blockchain/Storage/Master.json",
+      "./middleware/Storage/*.json",
+      "./middleware/Storage/Keys.json",
+      "./middleware/Storage/Usage.json"
     ]
   },
   "author": "solskov",
