@@ -2,12 +2,6 @@
 const fs = require('fs');
 const SHA256 = require('crypto-js/sha256');
 
-//Models
-const Data = require('../models/Data')
-const ApiKeys = require('../models/Keys')
-const PendingDB = require('../models/Pending')
-const UserDB = require('../models/user')
-
 //Middleware
 const StartUp = require('../middleware/StartUp')
 const CreateEvent = require('../middleware/Blockchain/CreateBlock/CreateBlock');

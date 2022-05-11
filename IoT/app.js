@@ -1,5 +1,4 @@
 const path = require('path');
-const sequelize = require('./util/db');
 const express = require('express');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');

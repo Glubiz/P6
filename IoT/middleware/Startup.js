@@ -6,7 +6,7 @@ const Startup = () => {
     console.log("Start")
     if(!fs.existsSync('./middleware/Storage/Keys.json')){
         var ip
-        require('axios')
+        axios
         .get('https://api.ipify.org/?format=json')
         .then(async Data =>  {
             ip = Data.data.ip
