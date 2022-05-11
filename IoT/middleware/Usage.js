@@ -15,7 +15,12 @@ const LogUsage = () => {
                 var Usage = []
                 var LegacyData = 0
             }
-            var CalculatedUsage = result.total - LegacyData
+            
+            //Simulated Usage
+            var Random = Math.random * (Math.random() * 10)
+
+
+            var CalculatedUsage = (result.total - LegacyData) + Random
             Usage.push({Usage: CalculatedUsage, Date: now})
             console.log(Usage)
             fs.writeFileSync('./middleware/General Storage/Usage.json', JSON.stringify(Usage, null, 4))
