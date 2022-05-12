@@ -4,9 +4,12 @@ const hash = require('./../Utilities/Hash')
 const path = '../Storage/Master.json'
 // './middleware/Blockchain/Storage/Master.json'
 
-const failed = {}
+var delay = 60
 
 function validateChain(){
+    delay = Math.random() * 1000
+
+    const failed = {}
     // Loads the blockchain into the chain variable
     var Chain = JSON.parse(fs.readFileSync(path))
     
@@ -78,6 +81,6 @@ function validateChain(){
     });
 }
 
-validateChain().then(result => console.log(result))
+setInterval(validateChain, delay * 1000)
 
-// module.exports = validateChain
+module.exports = validateChain

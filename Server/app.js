@@ -11,13 +11,13 @@ const app = express();
 
 
 const options = {
-  host: 'web1.netgiganten.dk',
+  host: 'web2.netgiganten.dk',
 	port: 3306,
 	user: 'damibfko_iot',
 	password: 'c@5fK*8DBhVl',
-	database: 'damibfko_bachelor'
+	database: 'damibfko_bachelor3'
 };
-// const BlockChain = require('./middleware/blockchain');
+
 const errorController = require('./controllers/error');
 const sessionStore = new MySQLStore(options);
 
@@ -47,7 +47,8 @@ const authRoutes = require('./routes/auth');
 
 app.use(cors())
 
-app.use(csrfProtection);
+app.use(csrfProtection)
+
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn
   res.locals.Email = req.session.Email
@@ -57,15 +58,15 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(mainRoutes);
-app.use(authRoutes);
-app.use(errorController.get404);
+app.use(mainRoutes)
+app.use(authRoutes)
+app.use(errorController.get404)
 
 sequelize
-  .sync()
-  .then(result => {
-    app.listen(process.env.PORT || 3033);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+.sync()
+.then(result => {
+  app.listen(process.env.PORT || 3033);
+})
+.catch(err => {
+  console.log(err);
+});

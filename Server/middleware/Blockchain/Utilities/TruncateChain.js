@@ -8,6 +8,9 @@ const TruncateChain = (Area) => {
 
     Data.Events = Chain.Events
 
+    var Prices = Chain.PriceFunctions.filter(e => e.Areas === '*' || e.Areas === Area)
+    Data.PriceFunctions = Prices
+
     var AreaData
     for(var i = 0; i < Chain.Areas.length; i++){
         if(Chain.Areas[i].AreaID != Area){
@@ -18,10 +21,6 @@ const TruncateChain = (Area) => {
     }
 
     Data.Area = AreaData
-
-    var Prices = Chain.PriceFunctions.filter(e => e.Areas === '*' || e.Areas === Area)
-
-    Data.PriceFunctions = Prices
 
     return new Promise((resolve) => {
         resolve(Data)

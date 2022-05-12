@@ -12,10 +12,10 @@ const router = express.Router();
 router.post('/addNode', Controller.addNode);
 router.post('/fetchEventHash', Controller.fetchEventHash);
 router.post('/fetchTruncatedChain', Controller.fetchTruncatedChain);
+router.post('/Ping', Controller.Ping);
 
 
 //GET
-router.get('/Ping', Controller.Ping);
 
 
 module.exports = router;

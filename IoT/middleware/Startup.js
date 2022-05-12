@@ -23,7 +23,8 @@ const Startup = () => {
             .then(async response => {
                 var KeyStorage = {
                     ChainID : response.data.ChainID,
-                    APIKey : response.data.APIKey
+                    APIKey : response.data.APIKey,
+                    AreaCode : '9000'
                 }
                 fs.writeFileSync('./middleware/Storage/Keys.json', JSON.stringify(KeyStorage, null, 4))
 

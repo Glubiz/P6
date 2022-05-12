@@ -15,7 +15,7 @@ const TruncateChain = require('../middleware/Blockchain/Utilities/TruncateChain'
 
 exports.addNode = (req, res, next) => {
   var IP = req.query.IP
-  const AreaCode = req.query.AreaCode
+  var AreaCode = req.query.AreaCode
   var Now = new Date().getTime().toString()
   var chainID = SHA256(IP, AreaCode, Now).toString()
 
@@ -36,11 +36,12 @@ exports.addNode = (req, res, next) => {
 }
 
 exports.Ping = (req, res, next) => {
-  var ID = req.body.ID
-  var AreaCode = "9000"
+  var Pings
+  var ID = req.query.ID
+  var AreaCode = req.query.AreaCode
   var now = new Date().getTime().toString()
 
-  var Blockchain = fs.readFileSync('./middleware/Blockchain/Storage/Master.json')
+  var Blockchain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
   for(let i = 0; i < Blockchain.Areas.length; i++){
     if(Blockchain.Areas[i].AreaID !== AreaCode){
       continue
@@ -52,10 +53,13 @@ exports.Ping = (req, res, next) => {
           Blockchain.Areas[i].Nodes[x].Pings++
           Blockchain.Areas[i].Nodes[x].UpdatedAt = now
         }
+        Pings = Blockchain.Areas[i].Nodes[x].Pings
+        now = Blockchain.Areas[i].Nodes[x].UpdatedAt
         break
       }
     }
   }
+  res.status(200).send({Pings : Pings, Now : now})
 }
 
 exports.fetchEventHash = (req, res, next) => {

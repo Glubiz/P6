@@ -102,6 +102,30 @@
             "TimeStamp": "1651753833814"
         }
     ],
+    "PriceFunctions": [
+        {
+            "EventHash": "6590422a7c30bf63aa4bde11bf6d0ed58c8a4c52479391bb7af610d20ce36f4f",
+            "ProviderID": "472590ae974d4c1f44b3780df0b152d9119f076c61bfb3e8cb6affd7889ac0a8",
+            "Hash": "264fcbdae6823df2a9538a756b81027cea1a24c696c30ea5f68d7addda83ef9e",
+            "PreviousHash": "6590422a7c30bf63aa4bde11bf6d0ed58c8a4c52479391bb7af610d20ce36f4f",
+            "TimeStamp": "1651753831272",
+            "Areas": "*",
+            "Top": "60",
+            "Bottom": "40",
+            "Updated": "1651753831272"
+        },
+        {
+            "EventHash": "d0ef530dd0ba77b1e20f85ac191ad07ec82336622c14fd21b8eeacdd264454d7",
+            "ProviderID": "472590ae974d4c1f44b3780df0b152d9119f076c61bfb3e8cb6affd7889ac0a8",
+            "Hash": "f5da6f7c21ac6926c75b5de4dbe364998ca008494195f6dcd224aa4a5b390ee4",
+            "PreviousHash": "264fcbdae6823df2a9538a756b81027cea1a24c696c30ea5f68d7addda83ef9e",
+            "TimeStamp": "1651753833816",
+            "Areas": "*",
+            "Top": "60",
+            "Bottom": "40",
+            "Updated": "1651753833816"
+        }
+    ],
     "Area": [
         {
             "EventHash": "ccb9ee92ece6d018b6ec8e080e54f9e50c9912cdfb6eef957ecdf6826e3e3209",
@@ -142,30 +166,6 @@
                     "AmountBought": 0.1
                 }
             ]
-        }
-    ],
-    "PriceFunctions": [
-        {
-            "EventHash": "6590422a7c30bf63aa4bde11bf6d0ed58c8a4c52479391bb7af610d20ce36f4f",
-            "ProviderID": "472590ae974d4c1f44b3780df0b152d9119f076c61bfb3e8cb6affd7889ac0a8",
-            "Hash": "264fcbdae6823df2a9538a756b81027cea1a24c696c30ea5f68d7addda83ef9e",
-            "PreviousHash": "6590422a7c30bf63aa4bde11bf6d0ed58c8a4c52479391bb7af610d20ce36f4f",
-            "TimeStamp": "1651753831272",
-            "Areas": "*",
-            "Top": "60",
-            "Bottom": "40",
-            "Updated": "1651753831272"
-        },
-        {
-            "EventHash": "d0ef530dd0ba77b1e20f85ac191ad07ec82336622c14fd21b8eeacdd264454d7",
-            "ProviderID": "472590ae974d4c1f44b3780df0b152d9119f076c61bfb3e8cb6affd7889ac0a8",
-            "Hash": "f5da6f7c21ac6926c75b5de4dbe364998ca008494195f6dcd224aa4a5b390ee4",
-            "PreviousHash": "264fcbdae6823df2a9538a756b81027cea1a24c696c30ea5f68d7addda83ef9e",
-            "TimeStamp": "1651753833816",
-            "Areas": "*",
-            "Top": "60",
-            "Bottom": "40",
-            "Updated": "1651753833816"
         }
     ]
 }
