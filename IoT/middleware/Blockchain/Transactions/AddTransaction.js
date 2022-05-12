@@ -51,7 +51,6 @@ const Add = () => {
     .catch(err => {
         console.error(err)
     })
-
 }
 
 setInterval(Add, 3600 * 1000)

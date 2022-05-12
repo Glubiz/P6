@@ -8,7 +8,6 @@ const Reciever = () => {
         if(Block.Type === 'Transaction'){
             CreateBlock('Create Transaction', Block.NodeID, Block.ProviderID, Block.Area, Block.AmountBought)
         }
-        console.log(Block);
     });
 
 }
