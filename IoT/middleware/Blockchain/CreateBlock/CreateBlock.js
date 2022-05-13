@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 // const paths = require('./../../../util/blockchainPath')
-const Hash = require('./..//Utilities/Hash')
+const Hash = require('./../Utilities/Hash')
 const PreviousBlock = require('./../Utilities/PreviousBlock')
 
 const getPreviousEvent = PreviousBlock.getPreviousEvent

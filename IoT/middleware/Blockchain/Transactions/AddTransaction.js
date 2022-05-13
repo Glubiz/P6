@@ -14,10 +14,10 @@ const Add = () => {
     time = parseFloat(time.getHours() + '.' + parseInt((time.getMinutes() / 60) * 100))
 
     //Loading the device keys
-    var Self = fs.readFileSync('./middleware/IoT/Keys.json')
+    var Self = fs.readFileSync('./middleware/Storage/Keys.json')
 
     //Loading the household usage
-    var Usage = fs.readFileSync('./middleware/IoT/Usage.json')
+    var Usage = fs.readFileSync('./middleware/Storage/Usage.json')
     Usage.length > 96 ? Usage = Usage.filter(Usage => Usage.Date >= parseInt((new Date().getTime().toString() / 1000) - 86400)) : Usage
     Usage = Usage[Usage.length - 1]
 
