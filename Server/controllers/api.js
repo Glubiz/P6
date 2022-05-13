@@ -17,7 +17,7 @@ exports.addNode = (req, res, next) => {
   var IP = req.query.IP
   var AreaCode = req.query.AreaCode
   var Now = new Date().getTime().toString()
-  var chainID = SHA256(IP, AreaCode, Now).toString()
+  var chainID = SHA256(IP + AreaCode + Now).toString()
 
   var Key = SHA256(chainID, "none", "hashthis").toString()
   ApiKeys.create({
