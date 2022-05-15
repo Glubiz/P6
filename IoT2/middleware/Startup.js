@@ -27,7 +27,7 @@ const Startup = () => {
                 }
                 fs.writeFileSync('./middleware/Storage/Keys.json', JSON.stringify(KeyStorage, null, 4))
 
-                await new Promise((resolve => setTimeout(resolve,5000)))
+                await new Promise((resolve => setTimeout(resolve,30000)))
                 axios({
                     method: 'post',
                     url: Server + 'fetchTruncatedChain',

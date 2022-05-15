@@ -47,8 +47,10 @@ const CreateGenesis = () => {
 }
 
 const CreateEvent = async (Type, ID, ...args) => {
+    console.log("Length = " + fs.readFileSync('./middleware/Blockchain/Storage/Master.json').length)
+    console.log("Exists = " + fs.existsSync('./middleware/Blockchain/Storage/Master.json'))
     try {
-        if (fs.existsSync('./middleware/Blockchain/Storage/Master.json')) {
+        if (fs.existsSync('./middleware/Blockchain/Storage/Master.json') && fs.readFileSync('./middleware/Blockchain/Storage/Master.json').length > 0) {
             var CreatedBlock
 
             // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
@@ -148,7 +150,7 @@ const CreateNode = async (EventHash, ID, Area) => {
     fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
 
     return new Promise((resolve) => {
-        resolve()
+        resolve(Block)
     });
 }
 
@@ -202,7 +204,7 @@ const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
     fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
 
     return new Promise((resolve) => {
-        resolve()
+        resolve(Block)
     });
 }
 
@@ -240,7 +242,7 @@ const CreateProvider = (EventHash, ID, Private = false, Areas = '*') => {
 
     fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
     return new Promise((resolve) => {
-        resolve()
+        resolve(Block)
     });
 }
 
@@ -283,7 +285,7 @@ const CreatePriceFunction = (EventHash, ID, Top, Bottom, Areas) => {
 
     fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
     return new Promise((resolve) => {
-        resolve()
+        resolve(Block)
     });
 }
 
@@ -321,7 +323,7 @@ const CreateArea = (EventHash, ID) => {
     fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4), {flag: 'w'})
 
     return new Promise((resolve) => {
-        resolve()
+        resolve(Block)
     });
 }
 

@@ -37,4 +37,4 @@ const LogUsage = () => {
 
 setInterval(LogUsage, 3600 * 1000)
 
-module.exports = LogUsage()
+module.exports = LogUsage

@@ -161,11 +161,11 @@ const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
     var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
 
-    for(let i = 0; i < Chain.Areas.length; i++) {
-        if(Chain.Areas[i].AreaID === Area){
-            if(Chain.Areas[i].Transactions.length > 0){
+    for(let i = 0; i < Chain.Area.length; i++) {
+        if(Chain.Area[i].AreaID === Area){
+            if(Chain.Area[i].Transactions.length > 0){
                 // Calls the getPreviousBlock function to collect the hash of the previous block
-                var PreviousHash = Chain.Areas[i].Transactions[Chain.Areas[i].Transactions.length - 1].Hash
+                var PreviousHash = Chain.Area[i].Transactions[Chain.Area[i].Transactions.length - 1].Hash
             } else {
                 var PreviousHash = EventHash
             }
@@ -199,7 +199,7 @@ const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
         'AmountBought' : Usage,
     }
 
-    Chain.Areas[AreaIndex].Transactions.push(Block)
+    Chain.Area[AreaIndex].Transactions.push(Block)
     fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
 
     return new Promise((resolve) => {

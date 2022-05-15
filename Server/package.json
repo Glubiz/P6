@@ -3,15 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon app.js --ignore 'middleware/Blockchain/Storage/*.json'  --ignore 'middleware/Blockchain/Storage/Snaps/*.json'",
     "compile:sass": "node-sass public/sass/main.scss public/css/main.css -w",
     "test": "jest"
   },
-  "nodemonConfig": {
-    "ignore": [
-      "middleware/Blockchain/Storage/*.json"
-    ]
-  },
+  
   "author": "solskov",
   "license": "ISC",
   "dependencies": {

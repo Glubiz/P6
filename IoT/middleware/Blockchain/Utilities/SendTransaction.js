@@ -1,16 +1,17 @@
 const cote = require('cote');
-const BroadcastBlock = new cote.Responder({ name: 'Block' });
+// const responder = new cote.Responder({ name: 'API', key:'block' });
+// const publisher = new cote.Publisher({ name: 'publisher' });
 
 const Broadcast = (Block, Type, Area) => {
+    const blockTransmition = new cote.Responder({ name: 'Block Transmition' });
     Block = JSON.parse(Block)
 
     Block.Type = Type
     Block.Area = Area
 
-    BroadcastBlock.on('Block', (req, cb) => {
+    blockTransmition.on('Block', (req, cb) => {
         cb(Block);
     });
-
 }
 
 module.exports = Broadcast

@@ -8,7 +8,7 @@ const PendingDB = require('../models/Pending')
 const UserDB = require('../models/user')
 
 //Middleware
-const CreateEvent = require('../middleware/Blockchain/CreateBlock/CreateBlock');
+const CreateBlock = require('../middleware/Blockchain/CreateBlock/CreateBlock')
 const Snap = require('../middleware/Blockchain/Utilities/Snap')
 const TruncateChain = require('../middleware/Blockchain/Utilities/TruncateChain')
 
@@ -32,7 +32,10 @@ exports.addNode = (req, res, next) => {
   .catch(err => {
       console.log(err)
   })
-  res.status(200).send({ChainID : chainID, APIKey : Key})
+  CreateBlock('Create Node', chainID, AreaCode)
+  .then(() => {
+    res.status(200).send({ChainID : chainID, APIKey : Key})
+  })
 }
 
 exports.Ping = (req, res, next) => {
@@ -63,23 +66,26 @@ exports.Ping = (req, res, next) => {
 }
 
 exports.fetchEventHash = (req, res, next) => {
-  var ID = req.body.ID
-  var APIKey = req.body.APIKey
-  var Provider = req.body.Provider
-  var Area = req.body.Area
-  var Usage = req.body.Usage
+  var ID = req.query.ID
+  var APIKey = req.query.APIKey
+  var Provider = req.query.Provider
+  var Area = req.query.Area
+  var Usage = req.query.Usage
 
   ApiKeys.findOne({where : {Key : APIKey}})
   .then(async result => {
     if (result){
-      var Create = CreateEvent('Create Transaction', ID, Provider, Area, Usage)
-      res.status(200).send(Create)
+      CreateBlock('Create Transaction', ID, Provider, Area, Usage)
+      .then(Create => {
+        console.log(Create)
+        res.status(200).send(Create)
+      })
     } else {
       res.status(401).send("Not allowed")
     }
   })
   .catch(err => {
-      console.log(err)
+    res.status(500).send(err)
   })
 }
 
