@@ -21,6 +21,5 @@ const Reciever = () => {
     })
 }
 
-setInterval(Reciever, 15000)
 
 module.exports = Reciever()

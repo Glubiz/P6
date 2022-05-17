@@ -8,7 +8,7 @@ const Broadcast = (Block, Type, Area) => {
 
     Block.Type = Type
     Block.Area = Area
-
+    console.log(Block)
     blockTransmition.on('Block', (req, cb) => {
         cb(Block);
     });

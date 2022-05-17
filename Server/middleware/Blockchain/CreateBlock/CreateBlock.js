@@ -43,7 +43,7 @@ const CreateGenesis = () => {
     fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
     return new Promise((resolve) => {
         resolve()
-    });
+    })
 }
 
 const CreateEvent = async (Type, ID, ...args) => {
@@ -179,33 +179,35 @@ const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
     time = parseFloat(time.getHours() + '.' + parseInt((time.getMinutes() / 60) * 100))
 
     var PriceFunctions = Chain.PriceFunctions.filter(price => price.Areas === '*' || price.Areas === Area && price.ProviderID === Provider)
-    Price = (((parseInt(PriceFunctions[0].Top - PriceFunctions[0].Bottom)) / 2) * Math.sin(0.5 * (time - 6.5)) + 50) * Usage
-
-    Price *= 7.5
-    // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-    var DateTime = new Date().getTime().toString()
-
-    //Event Hash
-    var NodeHash = Hash(EventHash + ID + Provider + Price, PreviousHash, DateTime)
-
-    // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
-    var Block = { 
-        'EventHash' : EventHash,
-        'NodeID' : ID,
-        'ProviderID' : Provider,
-        'Price' : Price,
-        'Hash' : NodeHash,
-        'PreviousHash' : PreviousHash,
-        'TimeStamp' : DateTime,
-        'AmountBought' : Usage,
+    if (PriceFunctions.length > 0){
+        Price = (((parseInt(PriceFunctions[0].Top - PriceFunctions[0].Bottom)) / 2) * Math.sin(0.5 * (time - 6.5)) + 50) * Usage
+    
+        Price *= 7.5
+        // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
+        var DateTime = new Date().getTime().toString()
+    
+        //Event Hash
+        var NodeHash = Hash(EventHash + ID + Provider + Price, PreviousHash, DateTime)
+    
+        // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
+        var Block = { 
+            'EventHash' : EventHash,
+            'NodeID' : ID,
+            'ProviderID' : Provider,
+            'Price' : Price,
+            'Hash' : NodeHash,
+            'PreviousHash' : PreviousHash,
+            'TimeStamp' : DateTime,
+            'AmountBought' : Usage,
+        }
+    
+        Chain.Areas[AreaIndex].Transactions.push(Block)
+        fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
+    
+        return new Promise((resolve) => {
+            resolve(Block)
+        });
     }
-
-    Chain.Areas[AreaIndex].Transactions.push(Block)
-    fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
-
-    return new Promise((resolve) => {
-        resolve(Block)
-    });
 }
 
 const CreateProvider = (EventHash, ID, Private = false, Areas = '*') => {

@@ -10,6 +10,7 @@ const UserDB = require('../models/user')
 //Middleware
 const CreateBlock = require('../middleware/Blockchain/CreateBlock/CreateBlock')
 const Snap = require('../middleware/Blockchain/Utilities/Snap')
+const Pings = require('../middleware/Blockchain/Utilities/Pings')
 const TruncateChain = require('../middleware/Blockchain/Utilities/TruncateChain')
 
 
@@ -39,30 +40,16 @@ exports.addNode = (req, res, next) => {
 }
 
 exports.Ping = (req, res, next) => {
-  var Pings
   var ID = req.query.ID
   var AreaCode = req.query.AreaCode
-  var now = new Date().getTime().toString()
+  Pings(ID, AreaCode)
+  .then(Block => {
+    res.status(200).send(Block)
+  })
+  .catch(err => {
+    res.status(500).send(err)
 
-  var Blockchain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
-  for(let i = 0; i < Blockchain.Areas.length; i++){
-    if(Blockchain.Areas[i].AreaID !== AreaCode){
-      continue
-    }
-
-    for (let x = 0; x < Blockchain.Areas[i].length; x++){
-      if(Blockchain.Areas[i].Nodes[x].NodeID === ID){
-        if(!Blockchain.Areas[i].Nodes[x].UpdatedAt || parseInt(Blockchain.Areas[i].Nodes[x].UpdatedAt) < parseInt(now - (3600 * 1000))){
-          Blockchain.Areas[i].Nodes[x].Pings++
-          Blockchain.Areas[i].Nodes[x].UpdatedAt = now
-        }
-        Pings = Blockchain.Areas[i].Nodes[x].Pings
-        now = Blockchain.Areas[i].Nodes[x].UpdatedAt
-        break
-      }
-    }
-  }
-  res.status(200).send({Pings : Pings, Now : now})
+  })
 }
 
 exports.fetchEventHash = (req, res, next) => {

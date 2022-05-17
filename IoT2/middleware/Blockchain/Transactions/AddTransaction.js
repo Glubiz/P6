@@ -30,43 +30,45 @@ const Add = () => {
         //Loading the Providers
         var Prices = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
         Prices = Prices.PriceFunctions.filter(Price => Price.Areas === '*' || Price.Areas === Self.AreaCode)
-    
-        var ChosenProvider = {}
-    
-        for(let Price of Prices){
-            var temp = (((parseInt(Price.Top - Price.Bottom)) / 2) * Math.sin(0.5 * (time - 6.5)) + 50) * Usage.Usage
-    
-            temp *= 7.5
-    
-            if(!ChosenProvider.Provider || ChosenProvider.Price > temp){
-                ChosenProvider = {Provider: Price.ProviderID, Price: temp}
+        
+        if (Prices.length > 0){
+            var ChosenProvider = {}
+        
+            for(let Price of Prices){
+                var temp = (((parseInt(Price.Top - Price.Bottom)) / 2) * Math.sin(0.5 * (time - 6.5)) + 50) * Usage.Usage
+        
+                temp *= 7.5
+        
+                if(!ChosenProvider.Provider || ChosenProvider.Price > temp){
+                    ChosenProvider = {Provider: Price.ProviderID, Price: temp}
+                }
             }
+        
+            axios({
+                method: 'post',
+                url: URL,
+                params: {
+                    ID : Self.ChainID,
+                    APIKey : Self.APIKey,
+                    Provider : ChosenProvider.Provider,
+                    Area : '9000', 
+                    Usage : Usage.Usage
+                },
+            })
+            .then(async response => {
+                console.log(response.data)
+                await new Promise((resolve => setTimeout(resolve,5000)))
+        
+                Broadcast(JSON.stringify(response.data), 'Transaction', Self.AreaCode)
+            })
+            .catch(err => {
+                console.error(err)
+            })
         }
-    
-        axios({
-            method: 'post',
-            url: URL,
-            params: {
-                ID : Self.ChainID,
-                APIKey : Self.APIKey,
-                Provider : ChosenProvider.Provider,
-                Area : '9000', 
-                Usage : Usage.Usage
-            },
-        })
-        .then(async response => {
-            console.log(response.data)
-            await new Promise((resolve => setTimeout(resolve,5000)))
-    
-            Broadcast(JSON.stringify(response.data), 'Transaction', Self.AreaCode)
-        })
-        .catch(err => {
-            console.error(err)
-        })
     }
 }
 
-setTimeout(Add, 10000)
+setTimeout(Add, 30000)
 setInterval(Add, 3600 * 1000)
 
 module.exports = Add

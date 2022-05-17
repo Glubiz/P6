@@ -11,30 +11,32 @@ const ApiKeys = require('../models/Keys')
 const CreateEvent = require('../middleware/Blockchain/CreateBlock/CreateBlock');
 
 
-app.get("/", (req, res) => {
-  var IP = '127.0.0.1'
-  const AreaCode = "9000"
-  var Now = new Date().getTime().toString()
-  var chainID = SHA256(IP, AreaCode, Now).toString()
+// app.get("/", (req, res) => {
+//   var IP = '127.0.0.1'
+//   const AreaCode = "9000"
+//   var Now = new Date().getTime().toString()
+//   var chainID = SHA256(IP, AreaCode, Now).toString()
 
-  PendingDB.create({
-    UserID : chainID,
-    Date : Now,
-    Type : 'Node'
-  })
-  .catch(err => {
-      console.log(err)
-  })
+//   PendingDB.create({
+//     UserID : chainID,
+//     Date : Now,
+//     Type : 'Node'
+//   })
+//   .catch(err => {
+//       console.log(err)
+//   })
 
-  res.status(200).send("Pending")
-})
+//   res.status(200).send("Pending")
+// })
 
-app.post("/Ping", (req, res, next) => {
-  var ID = req.body.ID
-  var AreaCode = "9000"
+app.Ping = (req, res, next) => {
+  console.log(req.query)
+  var Pings
+  var ID = req.query.ID
+  var AreaCode = req.query.AreaCode
   var now = new Date().getTime().toString()
 
-  var Blockchain = JSON.parse(fs.readFileSync('./../middleware/Blockchain/Storage/Master.json'))
+  var Blockchain = fs.readFileSync('./middleware/Blockchain/Storage/Master.json')
   console.log(Blockchain)
   for(let i = 0; i < Blockchain.Areas.length; i++){
     if(Blockchain.Areas[i].AreaID !== AreaCode){
@@ -47,12 +49,14 @@ app.post("/Ping", (req, res, next) => {
           Blockchain.Areas[i].Nodes[x].Pings++
           Blockchain.Areas[i].Nodes[x].UpdatedAt = now
         }
+        Pings = Blockchain.Areas[i].Nodes[x].Pings
+        now = Blockchain.Areas[i].Nodes[x].UpdatedAt
         break
       }
     }
   }
-  res.status(200).send("ok")
-})
+  res.status(200).send({Pings : Pings, Now : now})
+}
 
 app.post("/EventHash", (req, res, next) => {
   var ID = req.body.ID
