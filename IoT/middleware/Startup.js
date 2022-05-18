@@ -1,6 +1,8 @@
 const fs = require('fs')
 const axios = require('axios')
 const Server = require('./../util/server.js')
+const Publish = require('./Blockchain/Utilities/SendTransaction')
+
 
 const Startup = () => {
     console.log("Start")
@@ -27,7 +29,7 @@ const Startup = () => {
                 }
                 fs.writeFileSync('./middleware/Storage/Keys.json', JSON.stringify(KeyStorage, null, 4))
 
-                await new Promise((resolve => setTimeout(resolve,5000)))
+                await new Promise((resolve => setTimeout(resolve,10000)))
                 axios({
                     method: 'post',
                     url: Server + 'fetchTruncatedChain',
@@ -39,6 +41,7 @@ const Startup = () => {
                 .then(result => {
                     result = result.data
                     fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(result, null, 4))
+                    Publish(JSON.stringify(result), 'Full')
                 })
             })
         })

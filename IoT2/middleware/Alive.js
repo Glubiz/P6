@@ -17,7 +17,6 @@ const Alive = () => {
         },
     })
     .then(response => {
-        console.log(response.data)
         for (let Node of Chain.Area[0].Nodes){
             if(Node.NodeID === Self.ChainID){
                 Node.Pings = response.data.Pings
@@ -30,7 +29,6 @@ const Alive = () => {
     .catch(err => console.log(err))
 }
 
-setTimeout(Alive, 60000)
 setInterval(Alive, 900 * 1000)
 
 module.exports = Alive

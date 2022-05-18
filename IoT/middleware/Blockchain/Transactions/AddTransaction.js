@@ -59,7 +59,7 @@ const Add = () => {
                 console.log(response.data)
                 await new Promise((resolve => setTimeout(resolve,5000)))
         
-                Broadcast(JSON.stringify(response.data), 'Transaction', Self.AreaCode)
+                Broadcast(JSON.stringify(response.data), 'Transaction')
             })
             .catch(err => {
                 console.error(err)
@@ -68,7 +68,7 @@ const Add = () => {
     }
 }
 
-setTimeout(Add, 10000)
+setTimeout(Add, 30000)
 setInterval(Add, 3600 * 1000)
 
 module.exports = Add

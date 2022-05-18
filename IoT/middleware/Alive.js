@@ -20,14 +20,14 @@ const Alive = () => {
         for (let Node of Chain.Area[0].Nodes){
             if(Node.NodeID === Self.ChainID){
                 Node.Pings = response.data.Pings
-                Node.UpdatedAt = response.data.Now
+                Node.PingUpdated = response.data.Now
 
                 fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
             }
         }
     })
+    .catch(err => console.log(err))
 }
-
 
 setInterval(Alive, 900 * 1000)
 

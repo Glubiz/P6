@@ -1,17 +1,21 @@
 const cote = require('cote');
-// const responder = new cote.Responder({ name: 'API', key:'block' });
-// const publisher = new cote.Publisher({ name: 'publisher' });
+const fs = require('fs');
 
-const Broadcast = (Block, Type, Area) => {
-    const blockTransmition = new cote.Responder({ name: 'Block Transmition' });
+// const Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
+
+const Publisher = new cote.Publisher({ name: 'Pub', broadcasts: ['Block'] })
+
+const Publish = (Block, Type) => {
+    // const blockTransmition = new cote.Responder({ name: 'Block Transmition'});
     Block = JSON.parse(Block)
 
     Block.Type = Type
-    Block.Area = Area
-
-    blockTransmition.on('Block', (req, cb) => {
-        cb(Block);
-    });
+    Publisher.publish('Block', JSON.stringify(Block))
+    // blockTransmition.on('Block', (req, cb) => {
+    //     cb(Block);
+    // });
 }
 
-module.exports = Broadcast
+// setTimeout(Publish(JSON.stringify({Hi: 'Hi'}), 'Test', '9000'), 10000)
+
+module.exports = Publish
