@@ -13,6 +13,8 @@ router.post('/addNode', Controller.addNode);
 router.post('/fetchEventHash', Controller.fetchEventHash);
 router.post('/fetchTruncatedChain', Controller.fetchTruncatedChain);
 router.post('/Ping', Controller.Ping);
+router.post('/Validators', Controller.fetchValidatorList);
+
 
 
 //GET

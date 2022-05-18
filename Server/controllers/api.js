@@ -8,6 +8,8 @@ const PendingDB = require('../models/Pending')
 const UserDB = require('../models/user')
 
 //Middleware
+const Validators = require('../middleware/Blockchain/Consensus/SelectValidator')
+
 const CreateBlock = require('../middleware/Blockchain/CreateBlock/CreateBlock')
 const Snap = require('../middleware/Blockchain/Utilities/Snap')
 const Pings = require('../middleware/Blockchain/Utilities/Pings')
@@ -88,5 +90,23 @@ exports.fetchTruncatedChain = (req, res, next) => {
 
     var Chain = await TruncateChain(AreaCode.toString())
     res.status(200).send(JSON.stringify(Chain, null, 4))
+  })
+}
+
+exports.fetchValidatorList = (req, res, next) => {
+  var AreaCode = req.query.AreaCode
+  var APIKey = req.query.APIKey
+  
+  ApiKeys.findOne({where : {Key : APIKey}})
+  .then(async result => {
+    if (result.length == 0){
+      res.status(401).send('Not allowed')
+    }
+
+    for(let i = 0; i < Validators.length; i++){
+      if(Validators[i].Area == AreaCode){
+        res.status(200).send(Validators[i])
+      }
+    }
   })
 }
