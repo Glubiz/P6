@@ -85,3 +85,8 @@ module.exports = function validateChain(Chain = 0){
         resolve()
     });
 }
+
+// Skal bruges et andet sted
+// if (now - parseInt(data.timeStamp) >= 10080 && data.Pings > 100){
+//     fs.writeFileSync('./../Storage/Master.json', JSON.stringify(Chain, null, 4))
+// }
