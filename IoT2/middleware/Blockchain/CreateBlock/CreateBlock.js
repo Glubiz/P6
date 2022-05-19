@@ -46,7 +46,7 @@ const CreateGenesis = () => {
     });
 }
 
-const CreateEvent = async (Type, ID, ...args) => {
+const CreateEvent = async (Type, ID, TimeStamp, ...args) => {
     try {
         if (fs.existsSync('./middleware/Blockchain/Storage/Master.json')) {
             var CreatedBlock
@@ -59,7 +59,7 @@ const CreateEvent = async (Type, ID, ...args) => {
             var PreviousHash = PreviousBlock.Hash
 
             // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-            var DateTime = new Date().getTime().toString()
+            var DateTime = TimeStamp
 
             //Event Hash
             var EventHash = Hash(Type + ID, PreviousHash, DateTime)
@@ -78,13 +78,13 @@ const CreateEvent = async (Type, ID, ...args) => {
             fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4)) 
 
             if (Type === 'Create Node'){
-                CreatedBlock = await CreateNode(EventHash, ID, args[0])
+                CreatedBlock = await CreateNode(EventHash, ID, TimeStamp, args[0])
             } else if (Type === 'Create Provider'){
-                CreatedBlock = await CreateProvider(EventHash, ID, args[0], args[1])
+                CreatedBlock = await CreateProvider(EventHash, ID, TimeStamp, args[0], args[1])
             } else if (Type === 'Create Price Function'){
-                CreatedBlock = await CreatePriceFunction(EventHash, ID, args[0], args[1], args[2])
+                CreatedBlock = await CreatePriceFunction(EventHash, ID, TimeStamp, args[0], args[1], args[2])
             } else if (Type === 'Create Transaction'){
-                CreatedBlock = await CreateTransaction(EventHash, ID, args[0], args[1], args[2])
+                CreatedBlock = await CreateTransaction(EventHash, ID, TimeStamp, args[0], args[1], args[2])
             }
 
             return new Promise((resolve) => {
@@ -102,7 +102,7 @@ const CreateEvent = async (Type, ID, ...args) => {
     }
 }
 
-const CreateNode = async (EventHash, ID, Area) => {
+const CreateNode = async (EventHash, ID, TimeStamp, Area) => {
     var AreaIndex
     
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
@@ -127,7 +127,7 @@ const CreateNode = async (EventHash, ID, Area) => {
     }
 
     // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-    var DateTime = new Date().getTime().toString()
+    var DateTime = TimeStamp
 
     //Event Hash
     var NodeHash = Hash(EventHash + ID, PreviousHash, DateTime)
@@ -153,7 +153,7 @@ const CreateNode = async (EventHash, ID, Area) => {
     });
 }
 
-const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
+const CreateTransaction = async (EventHash, ID, TimeStamp, Provider, Area, Usage) => {
     var AreaIndex
     var Price
     Usage /= 1000 
@@ -174,7 +174,7 @@ const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
     }
 
 
-    var time = new Date()
+    var time = new Date(TimeStamp)
     time = parseFloat(time.getHours() + '.' + parseInt((time.getMinutes() / 60) * 100))
 
     var PriceFunctions = Chain.PriceFunctions.filter(price => price.Areas === '*' || price.Areas === Area && price.ProviderID === Provider)
@@ -182,7 +182,7 @@ const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
 
     Price *= 7.5
     // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-    var DateTime = new Date().getTime().toString()
+    var DateTime = TimeStamp
 
     //Event Hash
     var NodeHash = Hash(EventHash + ID + Provider + Price, PreviousHash, DateTime)
@@ -207,7 +207,7 @@ const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
     });
 }
 
-const CreateProvider = (EventHash, ID, Private = false, Areas = '*') => {
+const CreateProvider = (EventHash, ID, TimeStamp, Private = false, Areas = '*') => {
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
     var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
 
@@ -220,7 +220,7 @@ const CreateProvider = (EventHash, ID, Private = false, Areas = '*') => {
     }
 
     // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-    var DateTime = new Date().getTime().toString()
+    var DateTime = TimeStamp
 
     //Event Hash
     var ProviderHash = Hash(EventHash + ID, PreviousHash, DateTime)
@@ -245,7 +245,7 @@ const CreateProvider = (EventHash, ID, Private = false, Areas = '*') => {
     });
 }
 
-const CreatePriceFunction = (EventHash, ID, Top, Bottom, Areas) => {
+const CreatePriceFunction = (EventHash, ID, TimeStamp, Top, Bottom, Areas) => {
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
     var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
 
@@ -258,7 +258,7 @@ const CreatePriceFunction = (EventHash, ID, Top, Bottom, Areas) => {
     }
 
     // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-    var DateTime = new Date().getTime().toString()
+    var DateTime = TimeStamp
 
     var Updated = DateTime
 
@@ -288,7 +288,7 @@ const CreatePriceFunction = (EventHash, ID, Top, Bottom, Areas) => {
     });
 }
 
-const CreateArea = (EventHash, ID) => {
+const CreateArea = (EventHash, ID, TimeStamp,) => {
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
     var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
 
@@ -301,7 +301,7 @@ const CreateArea = (EventHash, ID) => {
     }
 
     // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-    var DateTime = new Date().getTime().toString()
+    var DateTime = TimeStamp
 
     //Event Hash
     var AreaHash = Hash(EventHash + ID, PreviousHash, DateTime)

@@ -11,3 +11,6 @@ const Transactions = require('../middleware/Blockchain/Transactions/AddTransacti
 const CreateEvent = require('../middleware/Blockchain/CreateBlock/CreateBlock');
 const Broadcast = require('../middleware/Blockchain/Utilities/SendTransaction')
 const Reciever = require('../middleware/Blockchain/Utilities/RecieveTransaction')
+const Price = require('../middleware/Blockchain/Utilities/PriceFunctions')
+const Providers = require('../middleware/Blockchain/Utilities/Providers')
+

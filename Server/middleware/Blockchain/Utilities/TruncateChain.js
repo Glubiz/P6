@@ -8,8 +8,9 @@ const TruncateChain = (Area) => {
 
     Data.Events = Chain.Events
 
-    var Prices = Chain.PriceFunctions.filter(e => e.Areas === '*' || e.Areas === Area)
-    Data.PriceFunctions = Prices
+    Data.Providers = Chain.Providers
+    
+    Data.PriceFunctions = Chain.PriceFunctions
 
     var AreaData
     for(var i = 0; i < Chain.Areas.length; i++){

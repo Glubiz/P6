@@ -14,6 +14,8 @@ const CreateBlock = require('../middleware/Blockchain/CreateBlock/CreateBlock')
 const Snap = require('../middleware/Blockchain/Utilities/Snap')
 const Pings = require('../middleware/Blockchain/Utilities/Pings')
 const TruncateChain = require('../middleware/Blockchain/Utilities/TruncateChain')
+const TruncatePriceFunctions = require('../middleware/Blockchain/Utilities/TruncatePriceFunctions')
+const TruncateProviders = require('../middleware/Blockchain/Utilities/TruncateProviders')
 
 
 exports.addNode = (req, res, next) => {
@@ -108,5 +110,33 @@ exports.fetchValidatorList = (req, res, next) => {
         res.status(200).send(Validators[i])
       }
     }
+  })
+}
+
+exports.fetchPriceFunctions = (req, res, next) => {
+  var APIKey = req.query.APIKey
+  
+  ApiKeys.findOne({where : {Key : APIKey}})
+  .then(async result => {
+    if (result.length == 0){
+      res.status(401).send('Not allowed')
+    }
+
+    var PriceFunctions = await TruncatePriceFunctions()
+    res.status(200).send(JSON.stringify(PriceFunctions, null, 4))
+  })
+}
+
+exports.fetchProviders = (req, res, next) => {
+  var APIKey = req.query.APIKey
+  
+  ApiKeys.findOne({where : {Key : APIKey}})
+  .then(async result => {
+    if (result.length == 0){
+      res.status(401).send('Not allowed')
+    }
+
+    var Providers = await TruncateProviders()
+    res.status(200).send(JSON.stringify(Providers, null, 4))
   })
 }

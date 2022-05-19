@@ -11,6 +11,7 @@ Subscriber.on('Block', (Block) => {
     var BlockCheck
     Block = JSON.parse(Block)
     
+    //Find out which type of block was sent, and runs the associated code for it
     if(Block.Type === 'Transaction') {
         console.log(Block.Type);
 
@@ -19,15 +20,14 @@ Subscriber.on('Block', (Block) => {
 
         BlockCheck = Chain.Area[0].Transactions.filter(e => e.Hash === Block.Hash)
 
-        BlockCheck.length == 0 && CreateBlock('Create Transaction', Block.NodeID, Block.ProviderID, Self.AreaCode, Block.AmountBought)
+        BlockCheck.length == 0 && CreateBlock('Create Transaction', Block.NodeID, Block.TimeStamp, Block.ProviderID, Self.AreaCode, Block.AmountBought)
 
     } else if (Block.Type === 'Full') {
         console.log(Block.Type);
 
         if(fs.existsSync('./middleware/Blockchain/Storage/Master.json')){
             var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
-            console.log(Block.Events.length > Chain.Events.length);
-            console.log(Block.Events.length, Chain.Events.length);
+
             if (Block.Events.length > Chain.Events.length){
                 for(let i = 0; i < Chain.Events.length; i++){
                     console.log(i, JSON.stringify(Chain.Events[i]) !== JSON.stringify(Block.Events[i]))
@@ -43,6 +43,10 @@ Subscriber.on('Block', (Block) => {
                 }
             }
         }
+    } else if (Block.Type === 'Price Function'){
+
+    } else if (Block.Type === 'Provider'){
+        
     }
 })
 

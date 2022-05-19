@@ -1,0 +1,42 @@
+{
+    "Events": [
+        {
+            "Type": "Create Genesis",
+            "Caller": "System",
+            "Hash": "c371ebb9e45fb7854c53f0a8dc66a205f32dea125ebf3e47d1dd0f8949e2a6b8",
+            "PreviousHash": "None",
+            "TimeStamp": "1652959537594"
+        },
+        {
+            "Type": "Create Node",
+            "Caller": "bf20f067b5eed5f505c26e143b58a516aab477deec579e94b119591de5e09e58",
+            "Hash": "0789095bf5c30e15dba07f3470e32ee38cfb5de261b3c8169a3a696bb16e903e",
+            "PreviousHash": "c371ebb9e45fb7854c53f0a8dc66a205f32dea125ebf3e47d1dd0f8949e2a6b8",
+            "TimeStamp": "1652959537596"
+        }
+    ],
+    "Providers": [],
+    "PriceFunctions": [],
+    "Area": [
+        {
+            "EventHash": "0789095bf5c30e15dba07f3470e32ee38cfb5de261b3c8169a3a696bb16e903e",
+            "AreaID": "9000",
+            "Hash": "5587238bee36d8d879a1ccf59d1e3147f0606561f15b5fa8374becfd76a22cc9",
+            "PreviousHash": "0789095bf5c30e15dba07f3470e32ee38cfb5de261b3c8169a3a696bb16e903e",
+            "TimeStamp": "1652959537597",
+            "Nodes": [
+                {
+                    "EventHash": "0789095bf5c30e15dba07f3470e32ee38cfb5de261b3c8169a3a696bb16e903e",
+                    "NodeID": "bf20f067b5eed5f505c26e143b58a516aab477deec579e94b119591de5e09e58",
+                    "Hash": "28e6306bf750280e9807b68ac86c48143a3fb4de81b0ccaaaad8a1f6c22a0dc3",
+                    "PreviousHash": "0789095bf5c30e15dba07f3470e32ee38cfb5de261b3c8169a3a696bb16e903e",
+                    "TimeStamp": "1652959537598",
+                    "Blocked": false,
+                    "Pings": 0,
+                    "PingUpdated": "1652959537598"
+                }
+            ],
+            "Transactions": []
+        }
+    ]
+}
