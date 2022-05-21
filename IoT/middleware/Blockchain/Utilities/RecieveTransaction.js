@@ -3,6 +3,8 @@ const fs = require('fs')
 
 const CreateBlock = require('../CreateBlock/CreateBlock')
 const Validate = require('../Consensus/Validate')
+const CollectedValidators = require('../Consensus/CollectedValidators')
+
 
 
 const Subscriber = new cote.Subscriber({ name: 'Sub', subscribesTo: ['Block']})
@@ -20,7 +22,7 @@ Subscriber.on('Block', (Block) => {
 
         BlockCheck = Chain.Area[0].Transactions.filter(e => e.Hash === Block.Hash)
 
-        BlockCheck.length == 0 && CreateBlock('Create Transaction', Block.NodeID, Block.TimeStamp, Block.ProviderID, Self.AreaCode, Block.AmountBought)
+        BlockCheck.length == 0 && Block.PreviousHash == Chain.Area[0].Transactions[Chain.Area[0].Transactions.length - 1] && CreateBlock('Create Transaction', Block.NodeID, Block.TimeStamp, Block.ProviderID, Self.AreaCode, Block.AmountBought)
 
     } else if (Block.Type === 'Full') {
         console.log(Block.Type);
@@ -47,6 +49,12 @@ Subscriber.on('Block', (Block) => {
 
     } else if (Block.Type === 'Provider'){
         
+    } else if (Block.Type === 'Validators'){
+        var Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
+
+        if (Block.Sender != Self.ChainID){
+            CollectedValidators(Block)
+        }
     }
 })
 

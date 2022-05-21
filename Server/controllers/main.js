@@ -1,7 +1,7 @@
 const fs = require('fs')
 const UserDB = require('../models/user')
 const PendingDB = require('../models/Pending')
-
+const setPriceFunction = require('../middleware/Blockchain/Utilities/setPriceFunction')
 
 //This file contains all the pages that can be loaded on the website
 exports.getIndex = (req, res, next) => {
@@ -81,3 +81,12 @@ exports.getAdmin = (req, res, next) => {
   }
 };
 
+exports.setPriceFunction = (req, res, next) => {
+  if(res.locals.Type === 'Provider'){
+    var lower = req.body.lower
+    var upper = req.body.upper
+    var user = req.body.user
+
+    var area = req.body.area
+  }
+};

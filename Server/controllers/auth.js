@@ -22,12 +22,10 @@ exports.getLogin = (req, res, next) => {
     });
 };
 
-// NOT OK (Skal måske fjernes)
 exports.getUser = async (req, res, next) => {
     const Email = req.session.Email
     const Data = []
     var now = new Date().getTime().toString()
-    var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
     if(req.session.Type === 'Provider'){
         UserDB.findOne(
             {
@@ -37,6 +35,7 @@ exports.getUser = async (req, res, next) => {
             }
             )
             .then(result => {
+            var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
             var Areas = Chain.Providers.filter(e => e.ProviderID === result.HashID)
             Areas = Areas[0].Areas
             Data.push(Areas)
@@ -81,8 +80,8 @@ exports.getReset = (req, res, next) => {
 
 // OK
 exports.postLogin = (req, res, next) => {
-    const Email = req.body.Email;
-    const Password = req.body.Password;
+    var Email = req.body.Email;
+    var Password = req.body.Password;
     var ApiKey = ""
 
     UserDB.findOne({where: {Email : Email}})
@@ -94,6 +93,9 @@ exports.postLogin = (req, res, next) => {
 
         bcrypt.compare(Password, user.Password)
         .then(doMatch => {
+            if(!doMatch){
+                return res.redirect('/Login');
+            }
             if (doMatch){
                 user.Type === 'Provider' && ApiKeys.findOne({where : {HashID : user.HashID}}).then(result => {if(result){ApiKey = result.Key}})
                 req.session.isLoggedIn = true;
@@ -118,10 +120,10 @@ exports.postLogin = (req, res, next) => {
 
 // OK
 exports.postSignup = (req, res, next) => {
-    const Email = req.body.Email;
-    const Password = req.body.Password;
-    const RepeatPassword = req.body.RPassword;
-    const Type = req.body.Type;
+    var Email = req.body.Email;
+    var Password = req.body.Password;
+    var RepeatPassword = req.body.RPassword;
+    var Type = req.body.Type;
 
     if(Password != RepeatPassword){
         req.flash('error', 'Passwords does not match');
@@ -165,43 +167,6 @@ exports.postSignup = (req, res, next) => {
     });
 };
 
-// NOT OK (Skal ændres til request reset)
-exports.postReset = (req, res, next) => {
-    const Email = req.body.Email;
-    const Password = req.body.Password;
-    const RepeatPassword = req.body.RPassword;
-
-    if(Password != RepeatPassword){
-        req.flash('error', 'Passwords does not match');
-        return res.redirect('/Signup'); 
-    }
-    UserDB.findOne({where: {Email: Email}})
-    .then(userDoc => {
-        if (!userDoc){
-            req.flash('error', 'User does not exist');
-            res.redirect('/Reset');
-        } else {
-            bcrypt.hash(Password, 12)
-            .then(hashedPassword => {
-                UserDB.update({
-                    Password : hashedPassword
-                    }, {
-                        where: {
-                        Email: Email
-                    }
-                });
-            })
-            .then(() => {
-                req.flash('success', 'Success');
-                res.redirect('/Login');
-            })
-        }
-    })
-    .catch(err => {
-        console.log(err)
-    });
-};
-
 // OK
 exports.postDeleteUser = (req, res, next) => {
     const Email = res.locals.Email
@@ -224,9 +189,10 @@ exports.getLogout = (req, res, next) => {
 
 // OK
 exports.postChangePassword = (req, res, next) => {
-    const RepeatPassword = req.body.RPassword
-    const Password = req.body.Password
-    const Email = res.locals.Email
+    console.log(req.body)
+    var RepeatPassword = req.body.RPassword
+    var Password = req.body.Password
+    var Email = req.body.Email
     if(Password != RepeatPassword){
         req.flash('error', 'Passwords does not match')
         return res.redirect('/Signup')

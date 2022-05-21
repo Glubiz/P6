@@ -14,3 +14,9 @@ const Reciever = require('../middleware/Blockchain/Utilities/RecieveTransaction'
 const Price = require('../middleware/Blockchain/Utilities/PriceFunctions')
 const Providers = require('../middleware/Blockchain/Utilities/Providers')
 
+const GenerateValidators = require('../middleware/Blockchain/Consensus/GenerateValidators')
+const Validators = require('../middleware/Blockchain/Consensus/SelectedValidator')
+const Validate = require('../middleware/Blockchain/Consensus/Validate')
+
+
+

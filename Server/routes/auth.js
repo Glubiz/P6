@@ -11,7 +11,6 @@ router.get('/Login', Controller.getLogin);
 router.post('/Login', Controller.postLogin);
 
 router.get('/Reset', Controller.getReset);
-router.post('/Reset', Controller.postReset);
 
 router.get('/User', Controller.getUser);
 

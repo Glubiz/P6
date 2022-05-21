@@ -25,7 +25,8 @@ const PriceFunctions = () => {
                 }
 
                 if (data.Hash == result.data[result.data.length - 1]){
-                    Chain.PriceFunctions = result.data
+                    Chain.PriceFunctions = result.data.PriceFunctions
+                    Chain.Events = result.data.Events
                     fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
                 }
             }

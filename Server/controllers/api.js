@@ -9,7 +9,6 @@ const UserDB = require('../models/user')
 
 //Middleware
 const Validators = require('../middleware/Blockchain/Consensus/SelectValidator')
-
 const CreateBlock = require('../middleware/Blockchain/CreateBlock/CreateBlock')
 const Snap = require('../middleware/Blockchain/Utilities/Snap')
 const Pings = require('../middleware/Blockchain/Utilities/Pings')

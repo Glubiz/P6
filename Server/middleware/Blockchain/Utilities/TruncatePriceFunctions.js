@@ -5,8 +5,8 @@ const TruncatePriceFunctions = () => {
     var Data = {}
 
     var Chain = JSON.parse(fs.readFileSync(Path))
-
-    Data = Chain.PriceFunctions
+    Data.Events = Chain.Events
+    Data.PriceFunctions = Chain.PriceFunctions
 
     return new Promise((resolve) => {
         resolve(Data)
