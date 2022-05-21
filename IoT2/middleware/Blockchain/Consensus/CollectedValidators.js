@@ -1,32 +1,71 @@
+const fs = require('fs')
 
 var arr = []
-var countedArr = []
+var pending = []
+var countedArr
+
+const PrepareArrays = () => {
+    var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
+    arr = []
+    for(let i = 0; i < Chain.Area.Nodes.length; i++) {
+        arr.push({Node: Chain.Area.Nodes[i].NodeID, Count: 0})
+    }
+    return new Promise((resolve) => {
+        resolve()
+    });
+}
 
 const CollectedValidators = (Block) => {
     let index = false
-    for(let i = 0; i < arr.length; i++) {
-        if(arr[i] === Block.Sender){
+    for(let i = 0; i < pending.length; i++) {
+        if(pending[i] === Block.Sender){
             index = i
         }
     }
     if(index === false){
-        arr.push(Block)
+        pending.push(Block)
     } else {
-        arr[index] = Block
+        pending[index] = Block
     }
 }
 
 const CountedValidators = () => {
-    if(arr.length > 0){
-        countedArr = []
-        for(let i = 0; i < arr.length; i++) {
-            for(let j = 0; j < arr[i].Validators.length; j++) {
-                if(j < arr[i].Validators.length - 1){
-                    countedArr.push({})
+    if(pending.length > 0){
+        countedArr = arr
+        //Loops all the nodes to further loop all the selected validators
+        for(let i = 0; i < pending.length; i++) {
+            //Loops all selected validators and adds them up
+            for(let j = 0; j < pending[i].Validators.length; j++) {
+                //Finds the correct node to increment
+                for(let k = 0; k < arr.length; k++) {
+                    if(arr[k].Node == pending[i].Validators){
+                        countedArr[k].Count += 1
+                    }
                 }
             }
         }
+        countedArr = countedArr.slice().sort((a, b) => b.Count - a.Count)
+
     }
+    return new Promise((resolve) => {
+        resolve()
+    });
 }
 
-module.exports = CollectedValidators
+const ClearPending = () => {
+    pending = []
+    return new Promise((resolve) => {
+        resolve()
+    });
+}
+
+const DataHandler = async() => {
+    await PrepareArrays()
+    await ClearPending()
+    CountedValidators()
+}
+
+setInterval(DataHandler, 900000)
+
+
+module.exports = {CollectedValidators, countedArr}

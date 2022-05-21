@@ -2,6 +2,8 @@ const fs = require('fs')
 const axios = require('axios')
 
 const Server = require('./../util/server.js')
+const Publish = require('./Blockchain/Utilities/SendTransaction')
+
 
 
 const Alive = () => {
@@ -20,9 +22,11 @@ const Alive = () => {
         for (let Node of Chain.Area[0].Nodes){
             if(Node.NodeID === Self.ChainID){
                 Node.Pings = response.data.Pings
-                Node.PingUpdated = response.data.Now
+                Node.PingUpdated = response.data.PingUpdated
 
                 fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
+                Publish(JSON.stringify(response.data), 'Ping')
+
             }
         }
     })

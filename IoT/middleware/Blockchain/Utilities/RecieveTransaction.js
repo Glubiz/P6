@@ -53,7 +53,22 @@ Subscriber.on('Block', (Block) => {
         var Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
 
         if (Block.Sender != Self.ChainID){
-            CollectedValidators(Block)
+            CollectedValidators.CollectedValidators(Block)
+        }
+    } else if (Block.Type === 'Ping'){
+        var Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
+
+        if (Block.NodeID != Self.ChainID){
+            var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
+
+            for (var i = 0; i < Chain.Area.Nodes.length; i++){
+                if(Block.NodeID == Chain.Area.Nodes[i].NodeID){
+                    Chain.Area.Nodes[i].Pings = Block.Pings
+                    Chain.Area.Nodes[i].PingUpdated = Block.Now
+
+                    fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
+                }
+            }
         }
     }
 })

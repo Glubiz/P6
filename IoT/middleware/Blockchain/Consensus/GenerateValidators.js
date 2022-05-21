@@ -57,6 +57,6 @@ const SendValidators = async () => {
     })
 }
 
-setInterval(SendValidators, 9000)
+setInterval(SendValidators, 900000)
 
 module.exports = SendValidators
