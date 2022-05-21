@@ -4,21 +4,12 @@ var arr = []
 var pending = []
 var countedArr
 
-const PrepareArrays = () => {
-    var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
-    arr = []
-    for(let i = 0; i < Chain.Area.Nodes.length; i++) {
-        arr.push({Node: Chain.Area.Nodes[i].NodeID, Count: 0})
-    }
-    return new Promise((resolve) => {
-        resolve()
-    });
-}
-
 const CollectedValidators = (Block) => {
+    Block = JSON.parse(Block)
+    Block = {Validators : Block.Validators, Sender : Block.Sender}
     let index = false
     for(let i = 0; i < pending.length; i++) {
-        if(pending[i] === Block.Sender){
+        if(pending[i].Sender === Block.Sender){
             index = i
         }
     }
@@ -27,7 +18,20 @@ const CollectedValidators = (Block) => {
     } else {
         pending[index] = Block
     }
+    console.log(pending)
 }
+
+const PrepareArrays = () => {
+    var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
+    arr = []
+    for(let i = 0; i < Chain.Area[0].Nodes.length; i++) {
+        arr.push({Node: Chain.Area[0].Nodes[i].NodeID, Count: 0})
+    }
+    return new Promise((resolve) => {
+        resolve()
+    });
+}
+
 
 const CountedValidators = () => {
     if(pending.length > 0){

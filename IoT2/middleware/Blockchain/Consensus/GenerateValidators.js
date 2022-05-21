@@ -2,7 +2,7 @@ const fs = require('fs')
 const Publish = require('../Utilities/SendTransaction')
 
 
-var Validators = []
+var Validators = {}
 
 const SelectValidators = () => {
     var Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
@@ -13,7 +13,7 @@ const SelectValidators = () => {
         var Areas = Chain.Area
         for (var Area of Areas){
             var Block = []
-            Validators = []
+            Validators = {}
 
             // Needs to be changed to a percentage of the max available nodes
             for (var i = 0; i < Area.Nodes.length / 2; i++){
@@ -23,13 +23,14 @@ const SelectValidators = () => {
                     //Get the node id
                     var NodeID = Area.Nodes[index].NodeID
                     // If the node already exists in the array, then redo
-                    if (Validators.includes(NodeID)){
+                    if (Block.includes(NodeID)){
                         i--
                     } else {
                         Block.push(NodeID)
                     }
     
                     if (i == (Area.Nodes.length / 2) - 1){
+                        Validators = {}
                         Validators.Validators = Block
                         Validators.Sender = Self.ChainID
 
@@ -49,14 +50,13 @@ const SelectValidators = () => {
 const SendValidators = async () => {
     SelectValidators()
     .then(() => {
-        if(Validators.length > 0) {
+        if(Validators) {
             Validators = JSON.stringify(Validators)
-    
             Publish(Validators, 'Validators')
         }
     })
 }
 
-setInterval(SendValidators, 900000)
+setInterval(SendValidators, 15000)
 
 module.exports = SendValidators
