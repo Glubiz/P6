@@ -56,6 +56,9 @@ const SendValidators = async () => {
             Publish(Validators, 'Validators')
         }
     })
+    .catch(() => {
+        SendValidators()
+    })
 }
 
 setInterval(SendValidators, 60000)
