@@ -35,7 +35,7 @@ const SelectValidators = () => {
                         Validators.Sender = Self.ChainID
 
                         return new Promise((resolve) => {
-                            resolve()
+                            resolve(Validators)
                         });
                     }
                 } else {
@@ -50,7 +50,7 @@ const SelectValidators = () => {
 //Sends the chosen nodes to the other nodes in the area (runs every minute)
 const SendValidators = async () => {
     SelectValidators()
-    .then(() => {
+    .then(Validators => {
         if(Validators) {
             Validators = JSON.stringify(Validators)
             Publish(Validators, 'Validators')
