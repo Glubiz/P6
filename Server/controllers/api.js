@@ -45,6 +45,7 @@ exports.addNode = (req, res, next) => {
 exports.Ping = (req, res, next) => {
   var ID = req.query.ID
   var AreaCode = req.query.AreaCode
+  console.log(ID, AreaCode)
   Pings(ID, AreaCode)
   .then(Block => {
     res.status(200).send(Block)

@@ -27,6 +27,20 @@
             "Hash": "930e3467722d0d70cebf27b15caf0ebf4c317904a952b540edb446d13395688a",
             "PreviousHash": "434b95268b7fe5567e4e33cece41d027362c9bf62e35bab7aa67e2ef88f45ed6",
             "TimeStamp": "1653119716893"
+        },
+        {
+            "Type": "Create Node",
+            "Caller": "1433137193f4b95a15c5b7ee1c400c2fabbb3908d71092928e2b8a172d8b1218",
+            "Hash": "6209dba79f47ca7279300a1124bf3f4d0b5a906d537fff6b5648512241a2a35a",
+            "PreviousHash": "930e3467722d0d70cebf27b15caf0ebf4c317904a952b540edb446d13395688a",
+            "TimeStamp": "1653235258122"
+        },
+        {
+            "Type": "Create Node",
+            "Caller": "4f3e010b9624107efcc4f7fbd2154abe447f077033acbab976fc261763e7df6f",
+            "Hash": "1cb21e4aba25b87fb3a54f67c89248aa47ce7c6d1cc744f16aa9a9e0f6a3f232",
+            "PreviousHash": "6209dba79f47ca7279300a1124bf3f4d0b5a906d537fff6b5648512241a2a35a",
+            "TimeStamp": "1653235316675"
         }
     ],
     "Providers": [
@@ -68,9 +82,30 @@
                     "TimeStamp": "1653119678181",
                     "Blocked": false,
                     "Pings": 1
+                },
+                {
+                    "EventHash": "6209dba79f47ca7279300a1124bf3f4d0b5a906d537fff6b5648512241a2a35a",
+                    "NodeID": "1433137193f4b95a15c5b7ee1c400c2fabbb3908d71092928e2b8a172d8b1218",
+                    "Hash": "89e198243f8b759da0cd247a828c9034258e131df216f06677c9799ee8c8aa89",
+                    "PreviousHash": "6edbc59d1fe1a8bf71a28c072fc745c23eebe9c245a022ad9fb1ef9d0a9203e8",
+                    "TimeStamp": "1653235258123",
+                    "Blocked": false,
+                    "Pings": 0,
+                    "PingUpdated": "1653235258123"
+                },
+                {
+                    "EventHash": "1cb21e4aba25b87fb3a54f67c89248aa47ce7c6d1cc744f16aa9a9e0f6a3f232",
+                    "NodeID": "4f3e010b9624107efcc4f7fbd2154abe447f077033acbab976fc261763e7df6f",
+                    "Hash": "52fe027517ba1df6f0c57018457b5f1a9bcffdaf6c7bdb94f3c856e59aab2e5e",
+                    "PreviousHash": "89e198243f8b759da0cd247a828c9034258e131df216f06677c9799ee8c8aa89",
+                    "TimeStamp": "1653235316675",
+                    "Blocked": false,
+                    "Pings": 0,
+                    "PingUpdated": "1653235316675"
                 }
             ],
             "Transactions": []
         }
-    ]
+    ],
+    "Type": "Full"
 }
