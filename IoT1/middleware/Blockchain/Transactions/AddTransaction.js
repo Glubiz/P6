@@ -42,7 +42,7 @@ const Add = () => {
                 temp *= 7.5
         
                 if(!ChosenProvider.Provider || ChosenProvider.Price > temp){
-                    ChosenProvider = {Provider: Price.ProviderID, Price: temp}
+                    ChosenProvider = {Provider: Price.ProviderID, Price: parseFloat(temp).toFixed(2)}
                 }
             }
         
@@ -61,7 +61,7 @@ const Add = () => {
             .then(async response => {
                 console.log(response.data)
                 await new Promise((resolve => setTimeout(resolve,5000)))
-        
+                
                 //Send the block to the other nodes in the area
                 Broadcast(JSON.stringify(response.data), 'Transaction')
             })

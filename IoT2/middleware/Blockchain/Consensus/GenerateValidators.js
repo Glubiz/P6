@@ -2,9 +2,9 @@ const fs = require('fs')
 const Publish = require('../Utilities/SendTransaction')
 
 
-var Validators = {}
 
 const SelectValidators = () => {
+    
     var Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
 
     if(fs.existsSync('./middleware/Blockchain/Storage/Master.json')){
@@ -13,12 +13,12 @@ const SelectValidators = () => {
         var Areas = Chain.Area
         for (var Area of Areas){
             var Block = []
-            Validators = {}
 
             //Finds half of the nodes for validating
             for (var i = 0; i < Area.Nodes.length / 2; i++){
                 // Finds a random validator node
                 var index = Math.floor(Math.random() * parseInt(Area.Nodes.length - 1))
+
                 if (!Area.Nodes[index].Blocked){
                     //Get the node id
                     var NodeID = Area.Nodes[index].NodeID
@@ -29,11 +29,10 @@ const SelectValidators = () => {
                         Block.push(NodeID)
                     }
                     //If this is the last iteration create a JSON object that contains the chosen nodes and the ChainID
-                    if (i == (Area.Nodes.length / 2) - 1){
-                        Validators = {}
+                    if (i == parseInt((Area.Nodes.length / 2) - 1)){
+                        var Validators = {}
                         Validators.Validators = Block
                         Validators.Sender = Self.ChainID
-
                         return new Promise((resolve) => {
                             resolve(Validators)
                         });

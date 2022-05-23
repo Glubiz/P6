@@ -30,17 +30,52 @@
         },
         {
             "Type": "Create Node",
-            "Caller": "d5a15f850bdd92dab2c70f81ba6fdb0524064e452e7de7b230e8acda454f541b",
-            "Hash": "6894215baa0c1876f8b38777058a7d1c261c6eb45504e8ac58753b213c52e28b",
+            "Caller": "1433137193f4b95a15c5b7ee1c400c2fabbb3908d71092928e2b8a172d8b1218",
+            "Hash": "6209dba79f47ca7279300a1124bf3f4d0b5a906d537fff6b5648512241a2a35a",
             "PreviousHash": "930e3467722d0d70cebf27b15caf0ebf4c317904a952b540edb446d13395688a",
-            "TimeStamp": "1653245953506"
+            "TimeStamp": "1653235258122"
         },
         {
             "Type": "Create Node",
-            "Caller": "cc2567b2daf26bcc5f9020185d2169038a04d433b90f470ff3919e994ef75897",
-            "Hash": "c9942438ca80e2de4c8d188446e8cfc51cc3f04c1795ed54ea6583b5a88e36b5",
-            "PreviousHash": "6894215baa0c1876f8b38777058a7d1c261c6eb45504e8ac58753b213c52e28b",
-            "TimeStamp": "1653245955002"
+            "Caller": "4f3e010b9624107efcc4f7fbd2154abe447f077033acbab976fc261763e7df6f",
+            "Hash": "1cb21e4aba25b87fb3a54f67c89248aa47ce7c6d1cc744f16aa9a9e0f6a3f232",
+            "PreviousHash": "6209dba79f47ca7279300a1124bf3f4d0b5a906d537fff6b5648512241a2a35a",
+            "TimeStamp": "1653235316675"
+        },
+        {
+            "Type": "Create Price Function",
+            "Caller": "35222e0140c101b8754ec0c26981961abfa2a91d1cc4f9ca3651a9b32ce7d98b",
+            "Hash": "7bd7f3be63602d9ab00c84be44da828bfe6679db8fb033f65789c2d936e6d380",
+            "PreviousHash": "1cb21e4aba25b87fb3a54f67c89248aa47ce7c6d1cc744f16aa9a9e0f6a3f232",
+            "TimeStamp": "1653320379551"
+        },
+        {
+            "Type": "Create Node",
+            "Caller": "639c1e755d2c9e807806b9a88719add8b544507e76e9798257740dc6e35366a1",
+            "Hash": "49bf85a4169d325d2017632a886d32f2e58409083543d5fcd57628bdc05ac2d4",
+            "PreviousHash": "7bd7f3be63602d9ab00c84be44da828bfe6679db8fb033f65789c2d936e6d380",
+            "TimeStamp": "1653333729082"
+        },
+        {
+            "Type": "Create Node",
+            "Caller": "ee8b9745fa427a612b5b9787581e9ef51efeb54f4a351a3c1290115951afcab1",
+            "Hash": "c5560625359537bc270c5448e420dd8fa920c3b58788c3826d22562ccae66188",
+            "PreviousHash": "49bf85a4169d325d2017632a886d32f2e58409083543d5fcd57628bdc05ac2d4",
+            "TimeStamp": "1653333749988"
+        },
+        {
+            "Type": "Create Transaction",
+            "Caller": "639c1e755d2c9e807806b9a88719add8b544507e76e9798257740dc6e35366a1",
+            "Hash": "2deb17186cce110b7e7f672b2a57f103573326e0378ffe9235ff009202b06106",
+            "PreviousHash": "c5560625359537bc270c5448e420dd8fa920c3b58788c3826d22562ccae66188",
+            "TimeStamp": "1653333753430"
+        },
+        {
+            "Type": "Create Transaction",
+            "Caller": "ee8b9745fa427a612b5b9787581e9ef51efeb54f4a351a3c1290115951afcab1",
+            "Hash": "43562daf2f585639fc6e307a09ef52dc9e0f60f224dac991b848043450df65a5",
+            "PreviousHash": "2deb17186cce110b7e7f672b2a57f103573326e0378ffe9235ff009202b06106",
+            "TimeStamp": "1653333774728"
         }
     ],
     "Providers": [
@@ -55,7 +90,19 @@
             "Areas": "*"
         }
     ],
-    "PriceFunctions": [],
+    "PriceFunctions": [
+        {
+            "EventHash": "7bd7f3be63602d9ab00c84be44da828bfe6679db8fb033f65789c2d936e6d380",
+            "ProviderID": "35222e0140c101b8754ec0c26981961abfa2a91d1cc4f9ca3651a9b32ce7d98b",
+            "Hash": "506b7e76f4b256a422fc58b312e194cbf5d5c74334aeb018a0496e323a1b86fb",
+            "PreviousHash": "7bd7f3be63602d9ab00c84be44da828bfe6679db8fb033f65789c2d936e6d380",
+            "TimeStamp": "1653320379554",
+            "Areas": "9000",
+            "Top": "80",
+            "Bottom": "30",
+            "Updated": "1653320379554"
+        }
+    ],
     "Area": [
         {
             "EventHash": "0ad5879960bd9123ca2a3ff207e39a4bea72a1628118c61f14e81f5bcac17c7d",
@@ -84,27 +131,69 @@
                     "Pings": 1
                 },
                 {
-                    "EventHash": "6894215baa0c1876f8b38777058a7d1c261c6eb45504e8ac58753b213c52e28b",
-                    "NodeID": "d5a15f850bdd92dab2c70f81ba6fdb0524064e452e7de7b230e8acda454f541b",
-                    "Hash": "8916b736e561bbcac2c5a4653ff772ce9e7f2f0f62c525c4638062a77e414dc7",
+                    "EventHash": "6209dba79f47ca7279300a1124bf3f4d0b5a906d537fff6b5648512241a2a35a",
+                    "NodeID": "1433137193f4b95a15c5b7ee1c400c2fabbb3908d71092928e2b8a172d8b1218",
+                    "Hash": "89e198243f8b759da0cd247a828c9034258e131df216f06677c9799ee8c8aa89",
                     "PreviousHash": "6edbc59d1fe1a8bf71a28c072fc745c23eebe9c245a022ad9fb1ef9d0a9203e8",
-                    "TimeStamp": "1653245953507",
+                    "TimeStamp": "1653235258123",
                     "Blocked": false,
                     "Pings": 0,
-                    "PingUpdated": "1653245953507"
+                    "PingUpdated": "1653235258123"
                 },
                 {
-                    "EventHash": "c9942438ca80e2de4c8d188446e8cfc51cc3f04c1795ed54ea6583b5a88e36b5",
-                    "NodeID": "cc2567b2daf26bcc5f9020185d2169038a04d433b90f470ff3919e994ef75897",
-                    "Hash": "cb8addde4c60b049d77e110cfdd017277f3e7704cf62634a928d27ff8c6fbc14",
-                    "PreviousHash": "8916b736e561bbcac2c5a4653ff772ce9e7f2f0f62c525c4638062a77e414dc7",
-                    "TimeStamp": "1653245955003",
+                    "EventHash": "1cb21e4aba25b87fb3a54f67c89248aa47ce7c6d1cc744f16aa9a9e0f6a3f232",
+                    "NodeID": "4f3e010b9624107efcc4f7fbd2154abe447f077033acbab976fc261763e7df6f",
+                    "Hash": "52fe027517ba1df6f0c57018457b5f1a9bcffdaf6c7bdb94f3c856e59aab2e5e",
+                    "PreviousHash": "89e198243f8b759da0cd247a828c9034258e131df216f06677c9799ee8c8aa89",
+                    "TimeStamp": "1653235316675",
                     "Blocked": false,
                     "Pings": 0,
-                    "PingUpdated": "1653245955003"
+                    "PingUpdated": "1653235316675"
+                },
+                {
+                    "EventHash": "49bf85a4169d325d2017632a886d32f2e58409083543d5fcd57628bdc05ac2d4",
+                    "NodeID": "639c1e755d2c9e807806b9a88719add8b544507e76e9798257740dc6e35366a1",
+                    "Hash": "b46cca5704768ad220974a384efa3fa92b07906aba1edc291aa5d7302984044f",
+                    "PreviousHash": "52fe027517ba1df6f0c57018457b5f1a9bcffdaf6c7bdb94f3c856e59aab2e5e",
+                    "TimeStamp": "1653333729084",
+                    "Blocked": false,
+                    "Pings": 0,
+                    "PingUpdated": "1653333729084"
+                },
+                {
+                    "EventHash": "c5560625359537bc270c5448e420dd8fa920c3b58788c3826d22562ccae66188",
+                    "NodeID": "ee8b9745fa427a612b5b9787581e9ef51efeb54f4a351a3c1290115951afcab1",
+                    "Hash": "17747e8205aa93ce30b08acffdde1d26edc68c170908d1acc69c83b7262e033d",
+                    "PreviousHash": "b46cca5704768ad220974a384efa3fa92b07906aba1edc291aa5d7302984044f",
+                    "TimeStamp": "1653333749993",
+                    "Blocked": false,
+                    "Pings": 0,
+                    "PingUpdated": "1653333749993"
                 }
             ],
-            "Transactions": []
+            "Transactions": [
+                {
+                    "EventHash": "2deb17186cce110b7e7f672b2a57f103573326e0378ffe9235ff009202b06106",
+                    "NodeID": "639c1e755d2c9e807806b9a88719add8b544507e76e9798257740dc6e35366a1",
+                    "ProviderID": "35222e0140c101b8754ec0c26981961abfa2a91d1cc4f9ca3651a9b32ce7d98b",
+                    "Price": 0.7067175871102869,
+                    "Hash": "a16991c5fca178cb264c560954a47d894019a873ae44a5aab7732afff55b35c2",
+                    "PreviousHash": "2deb17186cce110b7e7f672b2a57f103573326e0378ffe9235ff009202b06106",
+                    "TimeStamp": "1653333753431",
+                    "AmountBought": 0.00175613
+                },
+                {
+                    "EventHash": "43562daf2f585639fc6e307a09ef52dc9e0f60f224dac991b848043450df65a5",
+                    "NodeID": "ee8b9745fa427a612b5b9787581e9ef51efeb54f4a351a3c1290115951afcab1",
+                    "ProviderID": "35222e0140c101b8754ec0c26981961abfa2a91d1cc4f9ca3651a9b32ce7d98b",
+                    "Price": 2.007770447164815,
+                    "Hash": "e54d2b2606f2f0d216f152053386d7be88d9cfcf834bb490393406c496b0147d",
+                    "PreviousHash": "a16991c5fca178cb264c560954a47d894019a873ae44a5aab7732afff55b35c2",
+                    "TimeStamp": "1653333774728",
+                    "AmountBought": 0.0049891300000000005
+                }
+            ]
         }
-    ]
+    ],
+    "Type": "Full"
 }

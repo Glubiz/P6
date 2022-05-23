@@ -2,6 +2,8 @@ const fs = require('fs')
 const UserDB = require('../models/user')
 const PendingDB = require('../models/Pending')
 const setPriceFunction = require('../middleware/Blockchain/Utilities/setPriceFunction')
+const CreateBlock = require('../middleware/Blockchain/CreateBlock/CreateBlock')
+
 
 //This file contains all the pages that can be loaded on the website
 exports.getIndex = (req, res, next) => {
@@ -12,20 +14,35 @@ exports.getIndex = (req, res, next) => {
   });
 };
 
+exports.getCreateArea = (req, res, next) => {
+  // console.log("test")
+  res.render('main/createarea', {
+    pageTitle: 'Create Area',
+    path: '/CreateArea'
+  });
+};
+
+exports.postCreateArea = (req, res, next) => {
+  console.log(req)
+  var Area = req.body.Area
+  var Lower = req.body.Lower
+  var Upper = req.body.Upper
+  var ID = req.body.ID
+
+
+  CreateBlock('Create Price Function', ID, Upper, Lower, Area)
+  .then(() => {
+    res.locals.Type && res.redirect('/User');  
+    res.status(200)
+  })
+};
+
 exports.getDashboard = (req, res, next) => {
   // console.log("test")
   if (!res.locals.isAuthenticated){
     res.redirect('/Login')
   } else {
-    // var chain = JSON.parse(fs.readFileSync('../middleware/Blockchain/Storage/Master.json'))
-    // console.log(chain.nodes)
-    res.render('main/dashboard', {
-      // nodes: chain.nodes,
-      // providers: chain.providers,
-      // prices: chain.prices,
-      pageTitle: 'Dashboard',
-      path: '/Dashboard/' +  req.session.userID
-    });
+    res.redirect('/User')
   }
 };
 

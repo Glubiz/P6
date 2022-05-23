@@ -1,6 +1,7 @@
-<% if(data[0] === '*'){
-    data[0] = 'All'
-} %>
+<% if (data.Areas) {if(data.Areas === '*'){
+    data.Areas = 'All'
+    console.log(data.Prices[0])
+}} %>
 <div class="loading-container">
     <div class="loading">
         <div class="loading_spinner">
@@ -26,7 +27,7 @@
                 Blockchain ID
             </div>
             <div class="dashboard-container__data-text">
-                472590ae974d4c1f44b3780df0b152d9119f076c61bfb
+                <%= BlockchainID %>
             </div>
         </div>
         <div class="dashboard-container__data">
@@ -42,7 +43,7 @@
                 Customers
             </div>
             <div class="dashboard-container__data-text">
-                <%= data[1].length %>
+                <%= data.Customer ? data.Customer.length : 0 %>
             </div>
         </div>
         <div class="dashboard-container__data">
@@ -90,10 +91,75 @@
                 Distribution area
             </div>
             <div class="dashboard-container__data-text">
-                <%= data[0] %>
+                <%= data.Areas ? data.Areas : "None" %>
             </div>
-        </div>
-        
+        </div> 
+        <% if (data.Prices.length > 1){ %>
+            <form action="setPriceFunction">
+                <div class="dashboard-container__data">
+                    <div class="dashboard-container__data-header">
+                        Area
+                    </div>
+                    <div class="dashboard-container__data-text">
+                        <select>
+                            
+                        </select>
+                    </div>
+                </div>
+                <div class="dashboard-container__data">
+                    <div class="dashboard-container__data-header">
+                        Lower bound price
+                    </div>
+                    <div class="dashboard-container__data-text">
+                        <input type="number">
+                    </div>
+                </div>
+                <div class="dashboard-container__data">
+                    <div class="dashboard-container__data-header">
+                        Upper bound price
+                    </div>
+                    <div class="dashboard-container__data-text">
+                        <input type="number">
+                    </div>
+                </div>
+            </form>
+        <% } else { %> 
+            <form action="setPriceFunction">
+                <div class="dashboard-container__data">
+                    <div class="dashboard-container__data-header">
+                        Area
+                    </div>
+                    <div class="dashboard-container__data-text">
+                        <%= data.Prices[0].Areas %>
+                        <input type="hidden" name="ID" value="<%= BlockchainID %>">
+                    </div>
+                </div>
+                <div class="dashboard-container__data">
+                    <div class="dashboard-container__data-header">
+                        Lower bound price
+                    </div>
+                    <div class="dashboard-container__data-text">
+                        <input type="text" name="Lower" value="<%= data.Prices[0].Bottom %>">
+                    </div>
+                </div>
+                <div class="dashboard-container__data">
+                    <div class="dashboard-container__data-header">
+                        Upper bound price
+                    </div>
+                    <div class="dashboard-container__data-text">
+                        <input type="text" name="Lower" value="<%= data.Prices[0].Top %>">
+                    </div>
+                </div>
+                <div class="dashboard-container__data">
+                    <div class="dashboard-container__data-header">
+                        Save
+                    </div>
+                    <div class="dashboard-container__data-text">
+                        <input class="login__submit" type="submit" name="submit" value="Save">
+                    </div>
+                </div>
+            </form>
+        <% } %>
     </div>
 
     <div class="dashboard-container-big module-outer">
@@ -134,8 +200,9 @@
         </div>
     </div>
     <div class="dashboard-container module-outer Button">
-        Button
-        
+        <a href="/CreateArea">
+            Add Area
+        </a>        
     </div>
     <div class="dashboard-container module-outer Button">
         Button

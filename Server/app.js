@@ -52,7 +52,7 @@ app.use(csrfProtection)
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn
   res.locals.Email = req.session.Email
-  res.locals.UserID = req.session.userID
+  res.locals.BlockchainID = req.session.BlockchainID
   res.locals.Type = req.session.Type
   res.locals.csrfToken = req.csrfToken();
   next();

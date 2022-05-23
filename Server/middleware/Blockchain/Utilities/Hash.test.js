@@ -10,3 +10,4 @@ describe("Test should return a hash value", () => {
         done()
     });
 });
+

@@ -16,16 +16,25 @@ Subscriber.on('Block', (Block) => {
     //Find out which type of block was sent, and runs the associated code for it
     if(Block.Type === 'Transaction') {
         console.log(Block.Type);
+        console.log(Block);
 
         var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
         var Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
 
         //Checks if the transaction exist
         BlockCheck = Chain.Area[0].Transactions.filter(e => e.Hash === Block.Hash)
-
+        console.log(BlockCheck.length, Chain.Area[0].Transactions[Chain.Area[0].Transactions.length - 1])
         //If the transaction does not exist created the block.
-        BlockCheck.length == 0 && Block.PreviousHash == Chain.Area[0].Transactions[Chain.Area[0].Transactions.length - 1] && CreateBlock('Create Transaction', Block.NodeID, Block.TimeStamp, Block.ProviderID, Self.AreaCode, Block.AmountBought)
+        if(BlockCheck.length == 0){
+            if (Chain.Area[0].Transactions.length == 0){
+                CreateBlock('Create Transaction', Block.NodeID, Block.TimeStamp, Block.ProviderID, Block.AmountBought, Block.Price).then(block => console.log('Block', block))
 
+            } else {
+                if(Block.PreviousHash == Chain.Area[0].Transactions[Chain.Area[0].Transactions.length - 1].Hash){
+                    CreateBlock('Create Transaction', Block.NodeID, Block.TimeStamp, Block.ProviderID, Block.AmountBought, Block.Price).then(block => console.log('Block', block))
+                }
+            }
+        }
     } else if (Block.Type === 'Full') {
         console.log(Block.Type);
 
@@ -55,11 +64,13 @@ Subscriber.on('Block', (Block) => {
     } else if (Block.Type === 'Provider'){
         
     } else if (Block.Type === 'Validators'){
-        console.log(Block)
+        console.log(Block.Type);
+
         //Used to find out how many votes each node has received
         CollectedValidators.CollectedValidators(JSON.stringify(Block))
     } else if (Block.Type === 'Ping'){
-        console.log(Block)
+        console.log(Block.Type);
+
         var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
 
         //Finds the pinged node and updates the "Pings" and "PingUpdated"
@@ -72,7 +83,8 @@ Subscriber.on('Block', (Block) => {
             }
         }
     } else if (Block.Type === 'Validation OK'){
-        console.log(Block)
+        console.log(Block.Type);
+
         var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
         //If the validated chain is long or equal length to the one in storage, overwrite
         if (Block.Events.length >= Chain.Events.length){

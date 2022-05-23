@@ -24,7 +24,7 @@ exports.getLogin = (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
     const Email = req.session.Email
-    const Data = []
+    const Data = {Areas: 0, Customer: 0, Prices: 0}
     var now = new Date().getTime().toString()
     if(req.session.Type === 'Provider'){
         UserDB.findOne(
@@ -37,20 +37,32 @@ exports.getUser = async (req, res, next) => {
             .then(result => {
             var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
             var Areas = Chain.Providers.filter(e => e.ProviderID === result.HashID)
-            Areas = Areas[0].Areas
-            Data.push(Areas)
+            console.log(result.HashID)
+            if(Areas.length > 0){
+                Areas = Areas[0].Areas
+                Data.Areas = Areas
+            } 
 
             var Customers = []
             for (let i = 0; i < Chain.Areas.length; i++){
                 var temp = Chain.Areas[i].Transactions.filter(e => e.ProviderID === result.HashID && parseInt(e.DateTime) >= parseInt(now - (3600 * 1000)))
-                Customers.push(temp)
+                if(temp.length > 0){
+                    Customers.push(temp)
+                }
             }
-            // Customers = Customers.length
-            Data.push(Customers)
+            Data.Customer = Customers
+
+            var Prices = []
+            var Areas = Chain.PriceFunctions.filter(e => e.ProviderID === result.HashID)
+            Prices = Areas
+            console.log(Prices)
+
+            Data.Prices = Prices
         })
     }
-    req.session.Type === 'Provider' && await new Promise((resolve => setTimeout(resolve,5000)))
 
+    await new Promise((resolve => setTimeout(resolve,1000)))
+    console.log(Data)
     res.render('main/dashboard', {
         errorMessage: req.flash('error'),
         pageTitle: 'User',
@@ -83,6 +95,7 @@ exports.postLogin = (req, res, next) => {
     var Email = req.body.Email;
     var Password = req.body.Password;
     var ApiKey = ""
+    var HashID = ""
 
     UserDB.findOne({where: {Email : Email}})
     .then(user => {
@@ -97,10 +110,10 @@ exports.postLogin = (req, res, next) => {
                 return res.redirect('/Login');
             }
             if (doMatch){
-                user.Type === 'Provider' && ApiKeys.findOne({where : {HashID : user.HashID}}).then(result => {if(result){ApiKey = result.Key}})
+                user.Type === 'Provider' && ApiKeys.findOne({where : {HashID : user.HashID}}).then(result => {if(result){ApiKey = result.Key; HashID = result.HashID}})
                 req.session.isLoggedIn = true;
                 req.session.Email = Email
-                req.session.userID = user.id
+                req.session.BlockchainID = user.HashID
                 req.session.Type = user.Type
                 req.session.ApiKey = ApiKey
                 req.flash('success', 'Success');

@@ -116,39 +116,21 @@ const CreateNode = async (EventHash, ID, TimeStamp, Area) => {
     });
 }
 
-const CreateTransaction = async (EventHash, ID, TimeStamp, Provider, Area, Usage) => {
-    var AreaIndex
+const CreateTransaction = async (EventHash, ID, TimeStamp, Provider, Usage, Price) => {
     var Price
-    Usage /= 1000 
 
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
     var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
-
-    for(let i = 0; i < Chain.Area.length; i++) {
-        if(Chain.Area[i].AreaID === Area){
-            if(Chain.Area[i].Transactions.length > 0){
-                // Calls the getPreviousBlock function to collect the hash of the previous block
-                var PreviousHash = Chain.Area[i].Transactions[Chain.Area[i].Transactions.length - 1].Hash
-            } else {
-                var PreviousHash = EventHash
-            }
-            AreaIndex = i
-        }
+    console.log(Chain.Area[0].Transactions.length)
+    if(Chain.Area[0].Transactions.length > 0){
+        // Calls the getPreviousBlock function to collect the hash of the previous block
+        var PreviousHash = Chain.Area[0].Transactions[Chain.Area[0].Transactions.length - 1].Hash
+    } else {
+        var PreviousHash = EventHash
     }
 
-
-    var time = new Date(TimeStamp)
-    time = parseFloat(time.getHours() + '.' + parseInt((time.getMinutes() / 60) * 100))
-
-    var PriceFunctions = Chain.PriceFunctions.filter(price => price.Areas === '*' || price.Areas === Area && price.ProviderID === Provider)
-    Price = (((parseInt(PriceFunctions[0].Top - PriceFunctions[0].Bottom)) / 2) * Math.sin(0.5 * (time - 6.5)) + 50) * Usage
-
-    Price *= 7.5
-    // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-    var DateTime = TimeStamp
-
     //Event Hash
-    var NodeHash = Hash(EventHash + ID + Provider + Price, PreviousHash, DateTime)
+    var NodeHash = Hash(EventHash + ID + Provider + Price, PreviousHash, TimeStamp)
 
     // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
     var Block = { 
@@ -158,15 +140,15 @@ const CreateTransaction = async (EventHash, ID, TimeStamp, Provider, Area, Usage
         'Price' : Price,
         'Hash' : NodeHash,
         'PreviousHash' : PreviousHash,
-        'TimeStamp' : DateTime,
+        'TimeStamp' : TimeStamp,
         'AmountBought' : Usage,
     }
 
-    Chain.Area[AreaIndex].Transactions.push(Block)
+    Chain.Area[0].Transactions.push(Block)
     fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
 
     return new Promise((resolve) => {
-        resolve()
+        resolve(Block)
     });
 }
 

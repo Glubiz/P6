@@ -1,0 +1,42 @@
+<section class="container">
+    <div class="login__container module-outer">
+      <h2 class="module-inner">
+        <%= pageTitle %>
+      </h2>
+      <form action="CreateArea" method="POST" class="module-inner">
+        <div class="login__group">
+          <div>
+            <input type="text" name="Area" class="login__input" placeholder="Area" id="Area" required>
+            <label for="Area" class="login__label">Area code</label>
+  
+          </div>
+        </div>
+        <div class="login__group">
+            <div>
+              <input type="text" name="Lower" class="login__input" placeholder="Lower" id="Lower" required>
+              <label for="Lower" class="login__label">Lowest price</label>
+    
+            </div>
+        </div>
+        <div class="login__group">
+            <div>
+              <input type="text" name="Upper" class="login__input" placeholder="Upper" id="Upper" required>
+              <label for="Upper" class="login__label">Highest price</label>
+    
+            </div>
+        </div>
+        
+        <input type="hidden" name="ID" id="ID" value="<%= BlockchainID %>">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <!-- submit -->
+        <div class="login__group">
+          <input class="login__submit" type="submit" name="submit" value="Save">
+        </div>
+        <a href="/User">
+          <div name="signup-submit" style="color:#fff; text-align:center;">
+            Back
+          </div>
+        </a>
+      </form>
+    </div>
+  </section>
