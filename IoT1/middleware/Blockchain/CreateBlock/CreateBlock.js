@@ -121,7 +121,7 @@ const CreateTransaction = async (EventHash, ID, TimeStamp, Provider, Usage, Pric
 
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
     var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
-    console.log(Chain.Area[0].Transactions.length)
+
     if(Chain.Area[0].Transactions.length > 0){
         // Calls the getPreviousBlock function to collect the hash of the previous block
         var PreviousHash = Chain.Area[0].Transactions[Chain.Area[0].Transactions.length - 1].Hash

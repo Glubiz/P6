@@ -9,8 +9,6 @@ const Broadcast = require('../Utilities/SendTransaction')
 const Server = require('../../../util/server')
 const URL = Server + 'fetchEventHash'
 
-
-
 const Add = () => {
     if(fs.existsSync('./middleware/Blockchain/Storage/Master.json')){
 
@@ -20,9 +18,7 @@ const Add = () => {
     
         //Loading the device keys
         var Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
-    
-        console.log(Self)
-    
+        
         //Loading the household usage and finds the most recent from either 24 hours ago, or the most recent en general
         var Usage = JSON.parse(fs.readFileSync('./middleware/Storage/Usage.json'))
         Usage.length > 96 ? Usage = Usage.filter(Usage => Usage.Date >= parseInt((new Date().getTime().toString() / 1000) - 86400)) : Usage
@@ -60,7 +56,6 @@ const Add = () => {
             })
             .then(async response => {
                 console.log(response.data)
-                await new Promise((resolve => setTimeout(resolve,5000)))
                 
                 //Send the block to the other nodes in the area
                 Broadcast(JSON.stringify(response.data), 'Transaction')
@@ -72,7 +67,6 @@ const Add = () => {
     }
 }
 
-setTimeout(Add, 30000)
-setInterval(Add, 3600 * 1000)
+setInterval(Add, 60 * 1000)
 
 module.exports = Add

@@ -290,9 +290,6 @@ exports.postApprove = (req, res) => {
             }
         })
         .then(result => {
-            if (result){
-                res.redirect('/Admin');
-            }
         
             Key = SHA256(UserID, "none", "hashthis").toString()
             ApiKeys.create({

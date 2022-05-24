@@ -62,6 +62,7 @@ const CreateEvent = async (Type, ID, ...args) => {
 
             // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
             var DateTime = new Date().getTime().toString()
+            console.log(Type, ID, PreviousHash, DateTime)
 
             //Event Hash
             var EventHash = Hash(Type + ID, PreviousHash, DateTime)
@@ -82,11 +83,11 @@ const CreateEvent = async (Type, ID, ...args) => {
             if (Type === 'Create Node'){
                 CreatedBlock = await CreateNode(EventHash, ID, args[0])
             } else if (Type === 'Create Provider'){
-                CreatedBlock = await CreateProvider(EventHash, ID, args[0], args[1])
+                CreatedBlock = await CreateProvider(EventHash, ID, DateTime, args[0], args[1])
             } else if (Type === 'Create Price Function'){
-                CreatedBlock = await CreatePriceFunction(EventHash, ID, args[0], args[1], args[2])
+                CreatedBlock = await CreatePriceFunction(EventHash, ID, DateTime, args[0], args[1], args[2])
             } else if (Type === 'Create Transaction'){
-                CreatedBlock = await CreateTransaction(EventHash, ID, args[0], args[1], args[2])
+                CreatedBlock = await CreateTransaction(EventHash, ID, DateTime, args[0], args[1], args[2])
             }
 
             return new Promise((resolve) => {
@@ -154,7 +155,7 @@ const CreateNode = async (EventHash, ID, Area) => {
     });
 }
 
-const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
+const CreateTransaction = async (EventHash, ID, DateTime, Provider, Area, Usage) => {
     var AreaIndex
     var Price
     Usage /= 1000 
@@ -183,9 +184,9 @@ const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
         Price = (((parseInt(PriceFunctions[0].Top - PriceFunctions[0].Bottom)) / 2) * Math.sin(0.5 * (time - 6.5)) + 50) * Usage
     
         Price *= 7.5
-        // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-        var DateTime = new Date().getTime().toString()
     
+        console.log(EventHash , ID , Provider , Price, PreviousHash, DateTime)
+
         //Event Hash
         var NodeHash = Hash(EventHash + ID + Provider + Price, PreviousHash, DateTime)
     
@@ -210,7 +211,7 @@ const CreateTransaction = async (EventHash, ID, Provider, Area, Usage) => {
     }
 }
 
-const CreateProvider = (EventHash, ID, Private = false, Areas = '*') => {
+const CreateProvider = (EventHash, ID, DateTime, Private = false, Areas = '*') => {
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
     var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
 
@@ -221,9 +222,6 @@ const CreateProvider = (EventHash, ID, Private = false, Areas = '*') => {
     } else {
         var PreviousHash = EventHash
     }
-
-    // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-    var DateTime = new Date().getTime().toString()
 
     //Event Hash
     var ProviderHash = Hash(EventHash + ID, PreviousHash, DateTime)
@@ -248,7 +246,7 @@ const CreateProvider = (EventHash, ID, Private = false, Areas = '*') => {
     });
 }
 
-const CreatePriceFunction = (EventHash, ID, Top, Bottom, Areas) => {
+const CreatePriceFunction = (EventHash, ID, DateTime, Top, Bottom, Areas) => {
     // Loads the previous chain as a json file to find the chain length and to be able to push the new block to the chain
     var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
 
@@ -259,9 +257,6 @@ const CreatePriceFunction = (EventHash, ID, Top, Bottom, Areas) => {
     } else {
         var PreviousHash = EventHash
     }
-
-    // Collects the server time in epoch format, this is done to get a consistant format for the time to add into the new block
-    var DateTime = new Date().getTime().toString()
 
     var Updated = DateTime
 
