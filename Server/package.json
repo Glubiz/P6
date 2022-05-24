@@ -7,7 +7,6 @@
     "compile:sass": "node-sass public/sass/main.scss public/css/main.css -w",
     "test": "jest"
   },
-  
   "author": "solskov",
   "license": "ISC",
   "dependencies": {

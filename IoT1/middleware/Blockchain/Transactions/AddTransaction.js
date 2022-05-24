@@ -67,6 +67,6 @@ const Add = () => {
     }
 }
 
-setInterval(Add, 60 * 1000)
+setInterval(Add, 3600 * 1000)
 
 module.exports = Add
