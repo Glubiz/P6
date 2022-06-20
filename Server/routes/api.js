@@ -14,8 +14,10 @@ router.post('/fetchEventHash', Controller.fetchEventHash);
 router.post('/fetchTruncatedChain', Controller.fetchTruncatedChain);
 router.post('/Ping', Controller.Ping);
 router.post('/Validators', Controller.fetchValidatorList);
-router.post('/Price', Controller.fetchPriceFunctions);
+router.post('/Data', Controller.fetchData);
 router.post('/Providers', Controller.fetchProviders);
+router.post('/LogBlockchain', Controller.LogBlockchain);
+
 
 
 

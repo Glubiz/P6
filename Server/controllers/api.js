@@ -109,7 +109,9 @@ exports.fetchValidatorList = (req, res, next) => {
   })
 }
 
-exports.fetchPriceFunctions = (req, res, next) => {
+exports.fetchData = (req, res, next) => {
+  var Pending = {}
+  var temp = {}
   var APIKey = req.query.APIKey
   
   ApiKeys.findOne({where : {Key : APIKey}})
@@ -117,9 +119,17 @@ exports.fetchPriceFunctions = (req, res, next) => {
     if (result.length == 0){
       res.status(401).send('Not allowed')
     }
-
-    var PriceFunctions = await TruncatePriceFunctions()
-    res.status(200).send(JSON.stringify(PriceFunctions, null, 4))
+    console.log(fs.existsSync('./middleware/Blockchain/Storage/Pending.json'))
+    if(fs.existsSync('./middleware/Blockchain/Storage/Pending.json')){
+      Pending = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Pending.json'))
+      console.log(Pending)
+      temp = Pending[0]
+      Pending = Pending.slice(1)
+      fs.writeFileSync('./middleware/Blockchain/Storage/Pending.json', JSON.stringify(Pending, null, 4))
+      res.status(200).send(JSON.stringify(temp, null, 4))
+    } else {
+      res.status(200).send(JSON.stringify({}, null, 4))
+    }
   })
 }
 
@@ -134,5 +144,72 @@ exports.fetchProviders = (req, res, next) => {
 
     var Providers = await TruncateProviders()
     res.status(200).send(JSON.stringify(Providers, null, 4))
+  })
+}
+
+exports.LogBlockchain = (req, res, next) => {
+  console.log('I have been run-_____________________________________')
+
+  var LoggedChain
+  var APIKey = req.query.APIKey
+  var Chain = JSON.parse(req.query.Blockchain)
+  ApiKeys.findOne({where : {Key : APIKey}})
+  .then(async result => {
+    if (result.length == 0){
+      console.log('Invalid API Key')
+
+      res.status(401).send('Not allowed')
+    }
+    if(fs.existsSync('./middleware/Blockchain/Storage/Master.json')){
+      console.log('File exists')
+      console.log(fs.readFileSync('./middleware/Blockchain/Storage/Master.json').length > 0)
+
+      if(fs.readFileSync('./middleware/Blockchain/Storage/Master.json').length > 0){
+        console.log('File contains data')
+
+        LoggedChain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
+        if(Chain.Events.length > LoggedChain.Events.length){
+          if(JSON.stringify(Chain.Events.slice(0, LoggedChain.Events.length)) !== JSON.stringify(LoggedChain.Events)){
+            console.log('Events issue')
+            res.status(401).send('Corrupt chain')
+          }
+        }
+        if(Chain.Providers.length > LoggedChain.Providers.length){
+          if(JSON.stringify(Chain.Providers.slice(0, LoggedChain.Providers.length)) !== JSON.stringify(LoggedChain.Providers)){
+            console.log('Providers issue')
+            
+            res.status(401).send('Corrupt chain')
+          }
+        }
+        if(Chain.PriceFunctions.length > LoggedChain.PriceFunctions.length){
+          if(JSON.stringify(Chain.PriceFunctions.slice(0, LoggedChain.PriceFunctions.length)) !== JSON.stringify(LoggedChain.PriceFunctions)){
+            console.log('PriceFunctions issue')
+
+            res.status(401).send('Corrupt chain')
+          }
+        }
+        if(Chain.Nodes.length > LoggedChain.Nodes.length){
+          if(JSON.stringify(Chain.Nodes.slice(0, LoggedChain.Nodes.length)) !== JSON.stringify(LoggedChain.Nodes)){
+            console.log('Nodes issue')
+
+            res.status(401).send('Corrupt chain')
+          }
+        }
+        if (Chain.Transactions.length > LoggedChain.Transactions.length){
+          if(JSON.stringify(Chain.Transactions.slice(0, LoggedChain.Transactions.length)) !== JSON.stringify(LoggedChain.Transactions)){
+            console.log('Transaction issue')
+
+            res.status(401).send('Corrupt chain')
+          }
+        }
+        console.log('Blockchain Saved')
+        fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
+        res.status(200).send('Chain logged')
+      } else {
+        console.log('No Prior - Blockchain Saved')
+        fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
+        res.status(200).send('Chain logged')
+      }
+    }
   })
 }

@@ -24,17 +24,19 @@ exports.getCreateArea = (req, res, next) => {
 
 exports.postCreateArea = (req, res, next) => {
   console.log(req)
-  var Area = req.body.Area
   var Lower = req.body.Lower
   var Upper = req.body.Upper
-  var ID = req.body.ID
-
-
-  CreateBlock('Create Price Function', ID, Upper, Lower, Area)
-  .then(() => {
-    res.locals.Type && res.redirect('/User');  
-    res.status(200)
-  })
+  var Pending = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Pending.json'))
+  var temp = {
+      Type : 'Create Price Function',
+      ID : 'Server',
+      TimeStamp : new Date().getTime().toString(),
+      Top: Upper,
+      Bottom: Lower
+  }
+  Pending.push(temp)
+  fs.writeFileSync('./middleware/Blockchain/Storage/Pending.json', JSON.stringify(Pending, null, 4))
+  res.redirect('/User')
 };
 
 exports.getDashboard = (req, res, next) => {

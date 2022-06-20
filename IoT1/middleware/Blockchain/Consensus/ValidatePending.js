@@ -38,11 +38,11 @@ const GenerateTemporaryBlocks = () => {
     .then(async EventBlock => {
         if(temp.Type === 'Create Node'){
             temp = await CreateNode(EventBlock.Hash, JSON.stringify(temp))
-        } else if (Block.Type === 'Create Provider') {
+        } else if (temp.Type === 'Create Provider') {
             temp = await CreateProvider(EventBlock.Hash, JSON.stringify(temp))
-        } else if (Block.Type === 'Create Price Function') {
+        } else if (temp.Type === 'Create Price Function') {
             temp = await CreatePriceFunction(EventBlock.Hash, JSON.stringify(temp))
-        } else if (Block.Type === 'Create Transaction'){
+        } else if (temp.Type === 'Create Transaction'){
             temp = await CreateTransaction(EventBlock.Hash, JSON.stringify(temp))
         }
 
@@ -233,4 +233,4 @@ const CreateTransaction = (EventHash, Data) => {
     }
 }
 
-setInterval(ValidatePending, 15000)
+setInterval(ValidatePending, 5000)

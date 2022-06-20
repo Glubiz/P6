@@ -28,36 +28,37 @@ exports.getUser = async (req, res, next) => {
     var now = new Date().getTime().toString()
     if(req.session.Type === 'Provider'){
         UserDB.findOne(
-            {
-                where : {
-                    Email : Email
+        {
+            where : {
+                Email : Email
+            }
+        }
+        )
+        .then(result => {
+            var Chain
+            if(fs.existsSync('./middleware/Blockchain/Storage/Master.json')){
+                try{
+                    Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
+                    var Customers = []
+                    var temp = Chain.Transactions.filter(e => e.ProviderID === result.HashID && parseInt(e.DateTime) >= parseInt(now - (3600 * 1000)))
+                    if(temp.length > 0){
+                        Customers.push(temp)
+                    }
+                    Data.Customer = Customers
+
+                    var Prices = []
+                    var temp = Chain.PriceFunctions.filter(e => e.ProviderID === result.HashID)
+                    if(temp.length > 0){
+                        Prices.push(temp)
+                    }
+                    Data.Prices = Prices
+                } catch {
+                    Data.Customer = []
+                    Data.Prices = []
+
+                    console.log("Could not load chain")
                 }
             }
-            )
-            .then(result => {
-            var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
-            var Areas = Chain.Providers.filter(e => e.ProviderID === result.HashID)
-            console.log(result.HashID)
-            if(Areas.length > 0){
-                Areas = Areas[0].Areas
-                Data.Areas = Areas
-            } 
-
-            var Customers = []
-            for (let i = 0; i < Chain.Areas.length; i++){
-                var temp = Chain.Areas[i].Transactions.filter(e => e.ProviderID === result.HashID && parseInt(e.DateTime) >= parseInt(now - (3600 * 1000)))
-                if(temp.length > 0){
-                    Customers.push(temp)
-                }
-            }
-            Data.Customer = Customers
-
-            var Prices = []
-            var Areas = Chain.PriceFunctions.filter(e => e.ProviderID === result.HashID)
-            Prices = Areas
-            console.log(Prices)
-
-            Data.Prices = Prices
         })
     }
 
@@ -261,11 +262,8 @@ exports.postReject = (req, res) => {
 
 exports.postApprove = (req, res) => {
     const ID = req.body.ID
-    var Type
     var UserID
     var Key
-    const AreaCode = "9000"
-    var Now = new Date().getTime().toString()
 
     PendingDB.findOne({
         where: {
@@ -273,30 +271,18 @@ exports.postApprove = (req, res) => {
         }
     })
     .then(async result => {
+        console.log(result);
         if(result.Type === 'Provider'){
-            Type = 'Create Provider'
-            UserID = SHA256(result.UserID, result.Date).toString()
-            await CreateBlock(Type, UserID, false, '*')//Add to blockchain here
-            
-            UserDB.update({Type : result.Type, HashID: UserID}, {where: {Email: result.UserID}});
-        } else if (result.Type === 'Node'){
-            Type = 'Create Node'
-            UserID = SHA256(result.UserID, Now).toString()
-            await CreateBlock(Type, UserID, Area = AreaCode)
-        }
-        ApiKeys.findOne({
-            where: {
-                HashID : UserID
+            var Pending = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Pending.json'))
+            var temp = {
+                Type : 'Create Provider',
+                ID : 'Server',
+                TimeStamp : result.Date
             }
-        })
-        .then(result => {
-        
-            Key = SHA256(UserID, "none", "hashthis").toString()
-            ApiKeys.create({
-                Key : Key,
-                HashID : UserID
-            })
-        })
+            Pending.push(temp)
+            fs.writeFileSync('./middleware/Blockchain/Storage/Pending.json', JSON.stringify(Pending, null, 4))
+            UserDB.update({Type : result.Type}, {where: {Email: result.UserID}});
+        }
         PendingDB.destroy({
             where: {
                 id: ID

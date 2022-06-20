@@ -13,21 +13,13 @@ Subscriber.on('ValidatedBlock', (Block) => {
 
     Chain.Events.push(Block.EventBlock)
     if(Block.EventBlock.Type === 'Create Node'){
-        if(Block.temp.PreviousHash === Chain.Nodes[Chain.Nodes.length - 1].Hash){
-            Chain.Nodes.push(Block.temp)
-        }
+        Chain.Nodes.push(Block.temp)
     } else if(Block.EventBlock.Type === 'Create Provider'){
-        if(Block.temp.PreviousHash === Chain.Providers[Chain.Providers.length - 1].Hash){
-            Chain.Providers.push(Block.temp)
-        }
+        Chain.Providers.push(Block.temp)
     } else if(Block.EventBlock.Type === 'Create PriceFunction'){
-        if(Block.temp.PreviousHash === Chain.PriceFunctions[Chain.PriceFunctions.length - 1].Hash){
-            Chain.PriceFunctions.push(Block.temp)
-        }
+        Chain.PriceFunctions.push(Block.temp)
     } else if(Block.EventBlock.Type === 'Create Transaction'){
-        if(Block.temp.PreviousHash === Chain.Transactions[Chain.Transactions.length - 1].Hash){
-            Chain.Transactions.push(Block.temp)
-        }
+        Chain.Transactions.push(Block.temp)
     }
     fs.writeFileSync('./middleware/Blockchain/Storage/Master.json', JSON.stringify(Chain, null, 4))
 

@@ -1,0 +1,54 @@
+{
+    "Chain": "Master",
+    "Instantiated": "1655731482534",
+    "Events": [
+        {
+            "Type": "Create Genesis",
+            "Caller": "System",
+            "Hash": "3188b2e501ec094fa41298592bd98967e409ec3eb1508258431c4ac94b31810b",
+            "PreviousHash": "None",
+            "TimeStamp": "1655731482534"
+        },
+        {
+            "Type": "Create Node",
+            "Caller": "a440401c89a6f0de88d57447fb7811a058c8c92644a7f904310b163aa229357e",
+            "Hash": "d5d83a1c87e69d103d01a9398337c2c818cb39e4135f02061229446e46c03daf",
+            "PreviousHash": "3188b2e501ec094fa41298592bd98967e409ec3eb1508258431c4ac94b31810b",
+            "TimeStamp": "1655731482536"
+        },
+        {
+            "Type": "Create Node",
+            "Caller": "28df1ded24f93828a1406e801c10d193d7a68160ae3558c5a9555e4a78d5a883",
+            "Hash": "c21cb71b233ddd3a20ad978bdfec88486452d4c4ec7b7115743b038c7818e6d3",
+            "PreviousHash": "d5d83a1c87e69d103d01a9398337c2c818cb39e4135f02061229446e46c03daf",
+            "TimeStamp": "1655731520449"
+        }
+    ],
+    "Providers": [],
+    "PriceFunctions": [],
+    "Nodes": [
+        {
+            "EventHash": "d5d83a1c87e69d103d01a9398337c2c818cb39e4135f02061229446e46c03daf",
+            "NodeID": "a440401c89a6f0de88d57447fb7811a058c8c92644a7f904310b163aa229357e",
+            "Hash": "fa0b107f821e49295fd558f1fe251d7bdebaa8727c50c4bea6f6594c7e8fc91d",
+            "PreviousHash": "d5d83a1c87e69d103d01a9398337c2c818cb39e4135f02061229446e46c03daf",
+            "TimeStamp": "1655731482536",
+            "Address": "N/A",
+            "Blocked": false,
+            "Pings": 0,
+            "PingUpdated": "1655731482536"
+        },
+        {
+            "EventHash": "c21cb71b233ddd3a20ad978bdfec88486452d4c4ec7b7115743b038c7818e6d3",
+            "NodeID": "28df1ded24f93828a1406e801c10d193d7a68160ae3558c5a9555e4a78d5a883",
+            "Hash": "bf25a75b6ffa9e0a819e5dd9543aaf75aa21beae72d9c530fe465b5c53b0753a",
+            "PreviousHash": "fa0b107f821e49295fd558f1fe251d7bdebaa8727c50c4bea6f6594c7e8fc91d",
+            "TimeStamp": "1655731520449",
+            "Address": "N/A",
+            "Blocked": false,
+            "Pings": 0,
+            "PingUpdated": "1655731520449"
+        }
+    ],
+    "Transactions": []
+}

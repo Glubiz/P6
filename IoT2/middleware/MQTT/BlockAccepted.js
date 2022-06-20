@@ -16,6 +16,7 @@ Subscriber.on('BlockAccepted', (Block) => {
 
         SendPayload(JSON.stringify(Block), 'ValidatedBlock')
     }
+    
 })
 
 module.exports = Subscriber

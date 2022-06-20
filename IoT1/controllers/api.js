@@ -10,8 +10,8 @@ const Usage = require('../middleware/Usage')
 //Starts scripts to run in the background
 const Transactions = require('../middleware/Blockchain/Transactions/AddTransaction')
 const CreateEvent = require('../middleware/Blockchain/CreateBlock/CreateBlock')
-const Price = require('../middleware/Blockchain/Utilities/PriceFunctions')
-const Providers = require('../middleware/Blockchain/Utilities/Providers')
+const ServerData = require('../middleware/Blockchain/Utilities/ServerData')
+const PostBlockchain = require('../middleware/Blockchain/Utilities/PostBlockchain')
 
 //MQTT Listeners
 const RequestChain = require('../middleware/MQTT/RequestChain')

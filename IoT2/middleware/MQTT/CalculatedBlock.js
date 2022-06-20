@@ -21,8 +21,13 @@ Subscriber.on('CalculatedBlock', (Block) => {
                 console.log(List[i].Node, Self.ID)
                 if(List[i].Node == Self.ID){
                     console.log('New Block Received')
+                    let Publisher = Block.Publisher
                     Block = JSON.stringify(Block)
-                    NextValidatedBlock(Block)
+                    if(List.length >= 10){
+                        Self.ID !== Publisher && NextValidatedBlock(Block)
+                    } else {
+                        NextValidatedBlock(Block)
+                    }
                 }
             }
         }
