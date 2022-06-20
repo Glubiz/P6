@@ -8,7 +8,6 @@ const PendingDB = require('../models/Pending')
 const UserDB = require('../models/user')
 
 //Middleware
-const Validators = require('../middleware/Blockchain/Consensus/SelectValidator')
 const CreateBlock = require('../middleware/Blockchain/CreateBlock/CreateBlock')
 const Snap = require('../middleware/Blockchain/Utilities/Snap')
 const Pings = require('../middleware/Blockchain/Utilities/Pings')
@@ -18,10 +17,8 @@ const TruncateProviders = require('../middleware/Blockchain/Utilities/TruncatePr
 
 
 exports.addNode = (req, res, next) => {
-  var IP = req.query.IP
-  var AreaCode = req.query.AreaCode
   var Now = new Date().getTime().toString()
-  var chainID = SHA256(IP + AreaCode + Now).toString()
+  var chainID = req.query.ID
 
   var Key = SHA256(chainID + "none" + "hashthis").toString()
   ApiKeys.create({
@@ -36,9 +33,9 @@ exports.addNode = (req, res, next) => {
   .catch(err => {
       console.log(err)
   })
-  CreateBlock('Create Node', chainID, AreaCode)
+  CreateBlock('Create Node', chainID)
   .then(() => {
-    res.status(200).send({ChainID : chainID, APIKey : Key})
+    res.status(200).send({APIKey : Key})
   })
 }
 
@@ -81,7 +78,6 @@ exports.fetchEventHash = (req, res, next) => {
 }
 
 exports.fetchTruncatedChain = (req, res, next) => {
-  var AreaCode = req.query.AreaCode
   var APIKey = req.query.APIKey
   
   ApiKeys.findOne({where : {Key : APIKey}})
@@ -90,7 +86,7 @@ exports.fetchTruncatedChain = (req, res, next) => {
       res.status(401).send('Not allowed')
     }
 
-    var Chain = await TruncateChain(AreaCode.toString())
+    var Chain = await TruncateChain()
     res.status(200).send(JSON.stringify(Chain, null, 4))
   })
 }

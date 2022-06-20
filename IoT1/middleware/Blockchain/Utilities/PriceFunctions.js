@@ -33,6 +33,7 @@ const PriceFunctions = () => {
             }
         }
     })
+    .catch(err => console.log(err))
 }
 
 setInterval(PriceFunctions, 30 * 1000)

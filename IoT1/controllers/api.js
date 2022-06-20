@@ -9,12 +9,21 @@ const Usage = require('../middleware/Usage')
 
 //Starts scripts to run in the background
 const Transactions = require('../middleware/Blockchain/Transactions/AddTransaction')
-const CreateEvent = require('../middleware/Blockchain/CreateBlock/CreateBlock');
-const Broadcast = require('../middleware/Blockchain/Utilities/SendTransaction')
-const Reciever = require('../middleware/Blockchain/Utilities/RecieveTransaction')
+const CreateEvent = require('../middleware/Blockchain/CreateBlock/CreateBlock')
 const Price = require('../middleware/Blockchain/Utilities/PriceFunctions')
 const Providers = require('../middleware/Blockchain/Utilities/Providers')
 
+//MQTT Listeners
+const RequestChain = require('../middleware/MQTT/RequestChain')
+const AddPendingBlock = require('../middleware/MQTT/AddPendingBlock')
+const NewNode = require('../middleware/MQTT/NewNode')
+const ValidatedBlock = require('../middleware/MQTT/ValidatedBlock')
+const ValidatorCandidates = require('../middleware/MQTT/ValidatorCandidates')
+const CalculatedBlock = require('../middleware/MQTT/CalculatedBlock')
+const BlockAccepted = require('../middleware/MQTT/BlockAccepted')
+
+
+const ValidatePendingBlocks = require('../middleware/Blockchain/Consensus/ValidatePending')
 const GenerateValidators = require('../middleware/Blockchain/Consensus/GenerateValidators')
 const CollectedValidators = require('../middleware/Blockchain/Consensus/CollectedValidators')
 

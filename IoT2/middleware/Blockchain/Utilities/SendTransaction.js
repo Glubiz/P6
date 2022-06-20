@@ -11,7 +11,6 @@ const Publish = (Block, Type) => {
     Block.Type = Type
     //Publishes the block
     Publisher.publish('Block', JSON.stringify(Block))
-
 }
 
 

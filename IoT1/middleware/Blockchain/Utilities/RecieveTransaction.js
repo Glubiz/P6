@@ -66,8 +66,7 @@ Subscriber.on('Block', (Block) => {
     } else if (Block.Type === 'Validators'){
         console.log(Block.Type);
 
-        //Used to find out how many votes each node has received
-        CollectedValidators.CollectedValidators(JSON.stringify(Block))
+
     } else if (Block.Type === 'Ping'){
         console.log(Block.Type);
 

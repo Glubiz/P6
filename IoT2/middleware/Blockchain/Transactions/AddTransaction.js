@@ -10,7 +10,7 @@ const Server = require('../../../util/server')
 const URL = Server + 'fetchEventHash'
 
 const Add = () => {
-    if(fs.existsSync('./middleware/Blockchain/Storage/Master.json')){
+    if(fs.existsSync('./middleware/Blockchain/Storage/Master.json') && fs.existsSync('./middleware/Storage/Usage.json')){
 
         //Gets the time as a decimal
         var time = new Date()

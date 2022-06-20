@@ -26,18 +26,7 @@ const validateChain = (Chain) => {
         }
     }
 
-    for(let data in Chain.Area){
-        var Hash = hash(data.EventHash + data.AreaID, data.PreviousHash, data.DateTime)
-        if(Hash == data.Hash){
-            continue
-        } else {
-            return new Promise((reject) => {
-                reject(data)
-            });
-        }
-    }
-
-    for(let data in Chain.Area[0].Nodes[0]){
+    for(let data in Chain.Nodes){
         var Hash = hash(data.EventHash + data.NodeID, data.PreviousHash, data.DateTime)
         if(Hash == data.Hash){
             continue
@@ -48,7 +37,7 @@ const validateChain = (Chain) => {
         }
     }
 
-    for(let data in Chain.Area[0].Transactions[0]){
+    for(let data in Chain.Transactions){
         var Hash = hash(data.EventHash + data.NodeID + data.Provider + data.Price, data.PreviousHash, data.DateTime)
         if(Hash == data.Hash){
             continue
@@ -86,38 +75,38 @@ const validateChain = (Chain) => {
     });
 }
 
-//Activates the validation if the node has been voted as a validator
-const runValidation = () => {
-    CollectedValidators.CountedValidators()
-    .then(List => {
-        var Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
+// //Activates the validation if the node has been voted as a validator
+// const runValidation = () => {
+//     CollectedValidators.CountedValidators()
+//     .then(List => {
+//         var Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
         
-        if(List.length > 0){
+//         if(List.length > 0){
 
-            //Checks if the node is in the top 50% of the blockchain. If it is, then start validating
-            for (var i = 0; i < List.length / 2; i++) {
-                if(List[i].Node == Self.ChainID){
-                    validateChain("Self")
-                    .then(Chain => {
-                        Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
-                        console.log(Chain)
-                        //If the validation was successful send the validated chain to the other nodes in the area
-                        Publish(JSON.stringify(Chain), 'Validation OK')
-                    })
-                    .catch(err => {
-                        //Roll back mode to come
+//             //Checks if the node is in the top 50% of the blockchain. If it is, then start validating
+//             for (var i = 0; i < List.length / 2; i++) {
+//                 if(List[i].Node == Self.ChainID){
+//                     validateChain("Self")
+//                     .then(Chain => {
+//                         Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
+//                         console.log(Chain)
+//                         //If the validation was successful send the validated chain to the other nodes in the area
+//                         Publish(JSON.stringify(Chain), 'Validation OK')
+//                     })
+//                     .catch(err => {
+//                         //Roll back mode to come
     
-                    })
-                }
-            }
-        }
+//                     })
+//                 }
+//             }
+//         }
 
-    })
-}
+//     })
+// }
 
-setInterval(runValidation, 60000)
+// setInterval(runValidation, 60000)
 
-module.exports = {validateChain, runValidation}
+module.exports = {validateChain}
 // Skal bruges et andet sted
 // if (now - parseInt(data.timeStamp) >= 10080 && data.Pings > 100){
 //     fs.writeFileSync('./../Storage/Master.json', JSON.stringify(Chain, null, 4))

@@ -8,36 +8,36 @@ var countedArr = []
 const PrepareArrays = () => {
     var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
     arr = []
-    for(let i = 0; i < Chain.Area[0].Nodes.length; i++) {
-        arr.push({Node: Chain.Area[0].Nodes[i].NodeID, Count: 0})
+    for(let i = 0; i < Chain.Nodes.length; i++) {
+        arr.push({Node: Chain.Nodes[i].NodeID, Count: 0})
     }
     return new Promise((resolve) => {
-        resolve()
+        resolve(arr)
     });
 }
 
-//Clears the pending list which contains the votes that needs to be counted
-const ClearPending = () => {
-    pending = []
-    return new Promise((resolve) => {
-        resolve()
-    });
-}
+// //Clears the pending list which contains the votes that needs to be counted
+// const ClearPending = () => {
+//     pending = []
+//     return new Promise((resolve) => {
+//         resolve()
+//     });
+// }
 
-//The script that runs the above mentioned functions (runs ever minute)
-const DataHandler = async() => {
-    await PrepareArrays()
+// //The script that runs the above mentioned functions (runs ever minute)
+// const DataHandler = async() => {
+//     await PrepareArrays()
     
-    ClearPending()
-}
+//     // ClearPending()
+// }
 
-setInterval(DataHandler, 60000)
+// setInterval(DataHandler, 60000)
 
 //Exports 2 functions one to add the pending votes, and one to count up and sort the list of votes.
 module.exports = {
     CollectedValidators (Block) {
         Block = JSON.parse(Block)
-        Block = {Validators : Block.Validators, Sender : Block.Sender}
+        Block = {Validators : Block.Validators, Sender : Block.Publisher}
         let index = false
         for(let i = 0; i < pending.length; i++) {
             if(pending[i].Sender === Block.Sender){
@@ -50,9 +50,9 @@ module.exports = {
             pending[index] = Block
         }
     },
-    CountedValidators () {
+    async CountedValidators () {
         if(pending.length > 0){
-            countedArr = arr
+            countedArr = await PrepareArrays()
             //Loops all the nodes to further loop all the selected validators
             for(let i = 0; i < pending.length; i++) {
                 //Loops all selected validators and adds them up

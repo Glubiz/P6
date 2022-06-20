@@ -1,3 +1,3 @@
-const Server = 'https://projectp6.herokuapp.com/'
+const Server = 'https://project6v2.herokuapp.com/'
 
 module.exports = Server

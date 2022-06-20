@@ -1,16 +1,11 @@
 //NPM Modules
 const fs = require('fs')
-const axios = require('axios')
 
 //Middleware
-const Broadcast = require('../Utilities/SendTransaction')
-
-//Constants
-const Server = require('../../../util/server')
-const URL = Server + 'fetchEventHash'
+const SendPayload = require('../../MQTT/SendPayload')
 
 const Add = () => {
-    if(fs.existsSync('./middleware/Blockchain/Storage/Master.json')){
+    if(fs.existsSync('./middleware/Blockchain/Storage/Master.json') && fs.existsSync('./middleware/Storage/Usage.json')){
 
         //Gets the time as a decimal
         var time = new Date()
@@ -26,7 +21,6 @@ const Add = () => {
     
         //Loading options to choose from
         var Prices = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
-        Prices = Prices.PriceFunctions.filter(Price => Price.Areas === '*' || Price.Areas === Self.AreaCode)
         
         //If the price is lower than the last one, save the provider.
         if (Prices.length > 0){
@@ -41,28 +35,7 @@ const Add = () => {
                     ChosenProvider = {Provider: Price.ProviderID, Price: parseFloat(temp).toFixed(2)}
                 }
             }
-        
-            //Inform the cloud
-            axios({
-                method: 'post',
-                url: URL,
-                params: {
-                    ID : Self.ChainID,
-                    APIKey : Self.APIKey,
-                    Provider : ChosenProvider.Provider,
-                    Area : '9000', 
-                    Usage : Usage.Usage
-                },
-            })
-            .then(async response => {
-                console.log(response.data)
-                
-                //Send the block to the other nodes in the area
-                Broadcast(JSON.stringify(response.data), 'Transaction')
-            })
-            .catch(err => {
-                console.error(err)
-            })
+            SendPayload(JSON.stringify({Type: 'Create Transaction', ID : Self.ID, TimeStamp: new Date().getTime().toString(), Usage: Usage.Usage, Provider: ChosenProvider.Provider}), 'PendingBlock')
         }
     }
 }
