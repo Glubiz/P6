@@ -61,22 +61,14 @@ main{
 .video{
     background-image: url("/images/power.mp4");
     background-repeat: no-repeat;
-    background-size: 150rem;
-    background-position: 160% 50%;
-    @include respond(tab) {
-        background-size: 150rem;
-        background-position: 50% 50%;
-    }
-    @include respond(big) {
-        background-size: 250rem;
-        background-position: 200% 50%;
-    }
+    background-size: 70%;
+    background-position: 100% 50%;
 }
 
 .blockchain{
     background-image: url("/images/blockchain.png");
     background-repeat: no-repeat;
-    background-size: 120rem;
+    background-size: 70%;
     background-position: 0% 50%;
 }
 
