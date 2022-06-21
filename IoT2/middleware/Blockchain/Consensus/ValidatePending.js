@@ -8,28 +8,30 @@ const SendPayload = require('./../../MQTT/SendPayload')
 
 //Activates the validation if the node has been voted as a validator
 const ValidatePending = () => {
-    CollectedValidators.CountedValidators()
-    .then(async List => {
-        var Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
-        
-        if(List.length > 0){
-
-            //Checks if the node is in the top 50% of the blockchain. If it is, then start validating
-            for (var i = 0; i <= parseInt(List.length / 2); i++) {
-                if(List[i].Node == Self.ID){
-                    console.log('I have been choosen')
-                    if(fs.existsSync('./middleware/Blockchain/Storage/Pending.json')){
-                        if(JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Pending.json')).length > 0){
-                            GenerateTemporaryBlocks()
+    if(fs.existsSync('./middleware/Storage/Keys.json')){
+        CollectedValidators.CountedValidators()
+        .then(async List => {
+            var Self = JSON.parse(fs.readFileSync('./middleware/Storage/Keys.json'))
+            
+            if(List.length > 0){
+    
+                //Checks if the node is in the top 50% of the blockchain. If it is, then start validating
+                for (var i = 0; i <= parseInt(List.length / 2); i++) {
+                    if(List[i].Node == Self.ID){
+                        console.log('I have been chosen')
+                        if(fs.existsSync('./middleware/Blockchain/Storage/Pending.json')){
+                            if(JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Pending.json')).length > 0){
+                                GenerateTemporaryBlocks()
+                            }
                         }
                     }
                 }
             }
-        }
-        return new Promise((resolve) => {
-            resolve()
-        });
-    })
+            return new Promise((resolve) => {
+                resolve()
+            });
+        })
+    }
 }
 
 const GenerateTemporaryBlocks = () => {

@@ -5,7 +5,7 @@ const SHA256 = require('crypto-js/sha256');
 //Middleware
 const StartUp = require('../middleware/StartUp')
 const Alive = require('../middleware/Alive')
-const Usage = require('../middleware/Usage')
+// const Usage = require('../middleware/Usage')
 
 //Starts scripts to run in the background
 const Transactions = require('../middleware/Blockchain/Transactions/AddTransaction')
