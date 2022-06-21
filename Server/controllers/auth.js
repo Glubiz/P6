@@ -277,7 +277,8 @@ exports.postApprove = (req, res) => {
             var temp = {
                 Type : 'Create Provider',
                 ID : 'Server',
-                TimeStamp : result.Date
+                TimeStamp : new Date(result.Date).getTime().toString(),
+                Email : result.UserID
             }
             Pending.push(temp)
             fs.writeFileSync('./middleware/Blockchain/Storage/Pending.json', JSON.stringify(Pending, null, 4))

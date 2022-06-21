@@ -1,5 +1,7 @@
 const fs = require('fs')
 const Hash = require('./../Utilities/Hash')
+const SHA256 = require('crypto-js/sha256');
+
 
 const CollectedValidators = require('./CollectedValidators')
 const SendPayload = require('./../../MQTT/SendPayload')
@@ -132,18 +134,21 @@ const CreateProvider = (EventHash, Data) => {
         var PreviousHash = EventHash
     }
 
+    var ProviderID = SHA256(Data.Email + Data.TimeStamp).toString()
+
     //Event Hash
-    var ProviderHash = Hash(EventHash + Data.ID, PreviousHash, Data.TimeStamp)
+    var ProviderHash = Hash(EventHash + ProviderID, PreviousHash, Data.TimeStamp)
 
     // Loads the data into the block with key value pairs to be ready to be sent to the blockchain
     var Block = { 
         'EventHash' : EventHash,
-        'ProviderID' : Data.ID,
+        'ProviderID' : ProviderID,
         'Hash' : ProviderHash,
         'PreviousHash' : PreviousHash,
         'TimeStamp' : Data.TimeStamp,
         'Blocked' : false,
-        'Private' : false
+        'Private' : false,
+        'Email' : Data.Email
     }
 
     return new Promise((resolve) => {

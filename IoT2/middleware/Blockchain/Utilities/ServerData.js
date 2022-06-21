@@ -19,14 +19,22 @@ const ServerData = () => {
         },
     })
     .then(result => {
-        console.log(result.data.length)
         if (result.data){
-            var temp = {
-                Type: result.data.Type, 
-                ID : Self.ID, 
-                TimeStamp: result.data.TimeStamp.toString(), 
-                Top: result.data.Top, 
-                Bottom: result.data.Bottom
+            if(result.data.Type === 'Create Price Function'){
+                var temp = {
+                    Type: result.data.Type, 
+                    ID : result.data.ID, 
+                    TimeStamp: result.data.TimeStamp.toString(), 
+                    Top: result.data.Top, 
+                    Bottom: result.data.Bottom
+                }
+            } else {
+                var temp = {
+                    Type: result.data.Type, 
+                    ID : Self.ID, 
+                    TimeStamp: result.data.TimeStamp.toString(), 
+                    Email: result.data.Email
+                }
             }
             console.log(temp)
 

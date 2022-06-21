@@ -9,6 +9,8 @@ const UserDB = require('../models/user')
 
 //Middleware
 const CreateBlock = require('../middleware/Blockchain/CreateBlock/CreateBlock')
+const Link = require('../middleware/Blockchain/Utilities/LinkProviderToDB')
+
 const Snap = require('../middleware/Blockchain/Utilities/Snap')
 const Pings = require('../middleware/Blockchain/Utilities/Pings')
 const TruncateChain = require('../middleware/Blockchain/Utilities/TruncateChain')

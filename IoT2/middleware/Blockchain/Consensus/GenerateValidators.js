@@ -9,7 +9,6 @@ const SelectValidators = () => {
 
     if(fs.existsSync('./middleware/Blockchain/Storage/Master.json')){
         var Chain = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Master.json'))
-
         var Block = []
 
         //Finds half of the nodes for validating
@@ -39,6 +38,7 @@ const SelectValidators = () => {
                 i--
             }
         }
+
     } else {
         return new Promise((reject) => {
             reject()
@@ -62,7 +62,6 @@ const SendValidators = async () => {
         })
     }
 }
+setInterval(SendValidators, 30000)
 
-setInterval(SendValidators, 10000)
-
-module.exports = SendValidators()
+module.exports = SendValidators

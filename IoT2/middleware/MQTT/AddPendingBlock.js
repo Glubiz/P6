@@ -10,10 +10,12 @@ Subscriber.on('PendingBlock', (Block) => {
     delete Block.Publisher
 
     if(fs.existsSync('./middleware/Blockchain/Storage/Pending.json')){
-        var PendingBlocks = readFileSync('./middleware/Blockchain/Storage/Pending.json')
+        var PendingBlocks = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Pending.json'))
         var Check = PendingBlocks.filter(e => e.TimeStamp === Block.TimeStamp && e.ID === Block.ID)
-
-        if(!Check){
+        console.log('Block', Block)
+        console.log('Check = ', Check)
+        if(Check.length === 0){
+            console.log('Check passed')
             PendingBlocks.push(Block)
             fs.writeFileSync('./middleware/Blockchain/Storage/Pending.json', JSON.stringify(PendingBlocks, null, 4))
         }

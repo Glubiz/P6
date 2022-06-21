@@ -29,7 +29,7 @@ exports.postCreateArea = (req, res, next) => {
   var Pending = JSON.parse(fs.readFileSync('./middleware/Blockchain/Storage/Pending.json'))
   var temp = {
       Type : 'Create Price Function',
-      ID : 'Server',
+      ID : res.locals.Email,
       TimeStamp : new Date().getTime().toString(),
       Top: Upper,
       Bottom: Lower
